@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KM.dev — AI Developer Course</title>
+<meta name="description" content="Build websites with AI. Learn how to turn an idea into a real website using Claude as your AI coding partner.">
+<meta name="theme-color" content="#f4f3ef">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/01-foundation.css">
+<link rel="stylesheet" href="assets/css/02-chrome.css">
+<link rel="stylesheet" href="assets/css/03-sections.css">
+</head>
+<body>
+
+<a class="skip" href="#main" data-en="Skip to content" data-nl="Naar de inhoud">Skip to content</a>
+
+<!-- 30 · LOADING EXPERIENCE -->
+<div class="loader" aria-hidden="true">
+  <div class="loader__center">
+    <div class="loader__mark"><span>KM.DEV</span></div>
+    <div class="loader__status">Initializing experience</div>
+  </div>
+  <div class="loader__foot">
+    <span class="loader__count">01 / 04</span>
+    <span class="loader__track"><i class="loader__bar"></i></span>
+    <span class="loader__count">AI DEVELOPER COURSE</span>
+  </div>
+</div>
+
+<div class="pt" aria-hidden="true"></div>
+
+<!-- 32 · NAVIGATION -->
+<header class="nav">
+  <div class="shell nav__inner">
+    <a class="brand" href="index.html" aria-label="KM.dev — AI Developer Course">
+      KM.dev<i class="brand__dot"></i>
+      <span class="brand__sub">AI Course</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link is-active" href="index.html" data-en="Overview" data-nl="Overzicht">Overview</a>
+      <a class="nav__link" href="course.html" data-en="Course" data-nl="Cursus">Course</a>
+      <a class="nav__link" href="work.html" data-en="Work" data-nl="Werk">Work</a>
+      <a class="nav__link" href="faq.html" data-en="FAQ" data-nl="FAQ">FAQ</a>
+    </nav>
+
+    <div class="nav__right">
+      <div class="lang" role="group" aria-label="Language">
+        <button class="lang__btn is-active" data-lang="en" type="button">EN</button>
+        <button class="lang__btn" data-lang="nl" type="button">NL</button>
+      </div>
+      <a class="btn btn--sm" href="faq.html#enrol" data-magnetic="0.3" data-cursor="Start">
+        <span class="btn__label" data-en="Start learning" data-nl="Begin nu">Start learning</span>
+        <i class="btn__arrow"></i>
+      </a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="menu"
+              data-en-aria="Open menu" data-nl-aria="Menu openen" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu">
+  <div class="shell menu__inner">
+    <nav class="menu__list" aria-label="Menu">
+      <a class="menu__item" href="index.html"><span class="t-num menu__anim" style="--md:60ms">01</span><b class="menu__anim" style="--md:60ms">Overview</b><i class="menu__anim" style="--md:60ms" data-en="The experience" data-nl="De ervaring">The experience</i></a>
+      <a class="menu__item" href="course.html"><span class="t-num menu__anim" style="--md:120ms">02</span><b class="menu__anim" style="--md:120ms">Course</b><i class="menu__anim" style="--md:120ms" data-en="Eight chapters" data-nl="Acht hoofdstukken">Eight chapters</i></a>
+      <a class="menu__item" href="work.html"><span class="t-num menu__anim" style="--md:180ms">03</span><b class="menu__anim" style="--md:180ms">Work</b><i class="menu__anim" style="--md:180ms" data-en="What you build" data-nl="Wat je bouwt">What you build</i></a>
+      <a class="menu__item" href="faq.html"><span class="t-num menu__anim" style="--md:240ms">04</span><b class="menu__anim" style="--md:240ms">FAQ</b><i class="menu__anim" style="--md:240ms" data-en="Before you start" data-nl="Voor je begint">Before you start</i></a>
+    </nav>
+    <div class="menu__side">
+      <span class="t-tag">KM.dev / Amsterdam</span>
+      <p data-en="An AI development course from the studio behind KM.dev brand systems. Same standards, new medium."
+         data-nl="Een AI-ontwikkelcursus van de studio achter de KM.dev brand systems. Zelfde standaard, nieuw medium.">An AI development course from the studio behind KM.dev brand systems. Same standards, new medium.</p>
+      <a class="xlink" href="mailto:kkain25@gmail.com" data-no-route>kkain25@gmail.com<i class="btn__arrow"></i></a>
+    </div>
+  </div>
+  <div class="shell menu__foot">
+    <span class="mono">Build websites with AI</span>
+    <span class="mono">EN / NL</span>
+  </div>
+</div>
+
+<main class="page-main" id="main" data-page="index.html">
+
+<!-- ============================================================ 04 · HERO -->
+<section class="hero">
+  <div class="shell">
+    <div class="hero__eyebrow">
+      <span class="mono">KM.DEV / AI DEVELOPER COURSE</span>
+      <span class="line"></span>
+      <span class="mono" data-en="Self-paced" data-nl="In eigen tempo">Self-paced</span>
+    </div>
+
+    <div class="hero__head">
+      <div>
+        <h1 class="hero__title t-h1" data-split data-reveal="fade">Build websites<br>with AI.</h1>
+        <p class="hero__sub t-lead"
+           data-reveal style="--rd:340ms"
+           data-en="Learn how to turn an idea into a real website using Claude as your AI coding partner."
+           data-nl="Leer hoe je een idee omzet in een echte website, met Claude als je AI-coding partner.">Learn how to turn an idea into a real website using Claude as your AI coding partner.</p>
+
+        <div class="hero__actions" data-reveal style="--rd:460ms">
+          <a class="btn" href="faq.html#enrol" data-magnetic="0.32" data-cursor="Start">
+            <span class="btn__label" data-en="Start learning" data-nl="Begin met leren">Start learning</span>
+            <i class="btn__arrow"></i>
+          </a>
+          <a class="btn btn--ghost" href="#machine" data-magnetic="0.22" data-no-route>
+            <span class="btn__label" data-en="Explore the experience" data-nl="Ontdek de ervaring">Explore the experience</span>
+            <i class="btn__arrow"></i>
+          </a>
+        </div>
+      </div>
+
+      <aside class="hero__aside" data-reveal style="--rd:560ms">
+        <span class="t-tag is-plain mono" data-en="What this is" data-nl="Wat dit is">What this is</span>
+        <hr class="rule">
+        <div class="hero__stat"><span class="t-small" data-en="Chapters" data-nl="Hoofdstukken">Chapters</span><b>08</b></div>
+        <hr class="rule">
+        <div class="hero__stat"><span class="t-small" data-en="Prerequisite" data-nl="Voorkennis">Prerequisite</span><b data-en="None" data-nl="Geen">None</b></div>
+        <hr class="rule">
+        <div class="hero__stat"><span class="t-small" data-en="You ship" data-nl="Je levert">You ship</span><b data-en="A live site" data-nl="Een live site">A live site</b></div>
+        <hr class="rule">
+        <p class="t-small" data-en="Written and taught by Kain McKancy Lareine — the studio behind KM.dev."
+           data-nl="Geschreven en gegeven door Kain McKancy Lareine — de studio achter KM.dev.">Written and taught by Kain McKancy Lareine — the studio behind KM.dev.</p>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ==================================================== 05 · THE MACHINE -->
+  <div class="shell" id="machine">
+    <div class="machine" data-machine data-handoff>
+      <div class="machine__col">
+
+        <div class="stage">
+          <div class="stage__head">
+            <span class="stage__label">01 · Prompt</span>
+            <span class="chip" data-chip><i></i><span data-en="Idle" data-nl="Gereed">Idle</span></span>
+          </div>
+          <div class="prompt">
+            <div class="prompt__field" data-ph="Describe the website you want…"
+                 data-type="Build a hero section for a design studio. Big type, one clear call to action.">
+              <span class="prompt__ph" data-en="Describe the website you want…" data-nl="Beschrijf de website die je wilt…">Describe the website you want…</span>
+            </div>
+            <div class="prompt__foot">
+              <span class="mono" data-en="Claude · pair programmer" data-nl="Claude · pair programmer">Claude · pair programmer</span>
+              <span class="prompt__send"><span data-en="Send" data-nl="Stuur">Send</span><i class="btn__arrow"></i></span>
+            </div>
+          </div>
+          <div class="aistrip">
+            <span class="think"><span class="think__tick">✓</span><span data-en="Reading intent" data-nl="Intentie lezen">Reading intent</span></span>
+            <span class="think"><span class="think__tick">✓</span><span data-en="Choosing structure" data-nl="Structuur kiezen">Choosing structure</span></span>
+            <span class="think"><span class="think__tick">✓</span><span data-en="Writing files" data-nl="Bestanden schrijven">Writing files</span></span>
+          </div>
+        </div>
+
+        <div class="stage stage--ink machine__editor">
+          <div class="editor" style="flex:1">
+            <div class="editor__tabs" role="tablist" aria-label="Generated files">
+              <span class="editor__tab is-active" role="tab">index.html</span>
+              <span class="editor__tab is-pending" role="tab">styles.css</span>
+              <span class="editor__tab is-pending" role="tab">script.js</span>
+            </div>
+            <div class="editor__body"><div data-code></div></div>
+            <div class="term">
+              <div class="term__row"><b>›</b><span data-en="building…" data-nl="bouwen…">building…</span></div>
+              <div class="term__row"><b>›</b><span data-en="compiling…" data-nl="compileren…">compiling…</span></div>
+              <div class="term__row is-ok"><b>›</b><span data-en="ready — served on localhost:5173" data-nl="klaar — draait op localhost:5173">ready — served on localhost:5173</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="machine__col">
+        <div class="stage machine__preview">
+          <div class="frame" style="flex:1;border:0;border-radius:0">
+            <div class="frame__bar">
+              <span class="dots"><i></i><i></i><i></i></span>
+              <span class="url"><i class="url__lock"></i>nordwerk.studio</span>
+              <span class="mono" style="font-size:9.5px">LIVE</span>
+            </div>
+            <div class="frame__body">
+              <div class="machine__idle">
+                <span class="mono" data-en="Awaiting build" data-nl="Wacht op build">Awaiting build</span>
+                <span class="t-num">nothing rendered yet</span>
+              </div>
+              <div class="machine__skeleton">
+                <i style="--sd:0ms;width:36%"></i>
+                <i style="--sd:90ms;width:74%;height:26px"></i>
+                <i style="--sd:180ms;width:58%;height:26px"></i>
+                <i style="--sd:280ms;width:30%"></i>
+                <i style="--sd:380ms;width:100%;height:78px"></i>
+              </div>
+              <div class="site">
+                <div class="site__nav">
+                  <span class="site__logo">Nordwerk</span>
+                  <span class="site__menu"><i></i><i></i><i></i></span>
+                </div>
+                <div class="site__hero">
+                  <span class="site__title">Design that works.</span>
+                  <span class="site__copy"><i></i><i></i><i></i></span>
+                  <span class="site__cta">See the work</span>
+                </div>
+                <div class="site__grid"><span class="site__card"></span><span class="site__card"></span><span class="site__card"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="stage" style="padding:16px 18px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+          <span class="mono" data-en="Prompt → AI → Code → Browser → Website" data-nl="Prompt → AI → Code → Browser → Website">Prompt → AI → Code → Browser → Website</span>
+          <button class="xlink" type="button" data-replay data-cursor="Replay">
+            <span data-en="Run it again" data-nl="Speel opnieuw af">Run it again</span><i class="btn__arrow"></i>
+          </button>
+        </div>
+      </div>
+
+      <svg class="ghost-cursor" viewBox="0 0 16 22" fill="none" aria-hidden="true">
+        <path d="M1 1l13.2 8.4-5.9.9-2.8 5.6L1 1z" fill="#0d0d0d" stroke="#f4f3ef" stroke-width="1.1"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="shell"><div class="marquee">
+  <div class="marquee__track">
+    <span>Prompt better. Build better.</span><span>·</span><span>From idea to interface</span><span>·</span>
+    <span>Don't blindly generate. Understand.</span><span>·</span><span>Ship something real</span><span>·</span>
+    <span>Prompt better. Build better.</span><span>·</span><span>From idea to interface</span><span>·</span>
+    <span>Don't blindly generate. Understand.</span><span>·</span><span>Ship something real</span><span>·</span>
+  </div>
+</div></div>
+
+<!-- ================================================== 08/09 · TRANSFORM -->
+<section class="transform on-dark">
+  <div class="transform__track" data-transform>
+    <div class="transform__pin">
+      <div class="shell">
+        <div class="transform__steps">
+          <span class="tstep is-on"><i></i>Idea</span><span class="tstep__sep"></span>
+          <span class="tstep"><i></i>Prompt</span><span class="tstep__sep"></span>
+          <span class="tstep"><i></i>Code</span><span class="tstep__sep"></span>
+          <span class="tstep"><i></i>Website</span>
+        </div>
+      </div>
+
+      <div class="shell transform__stage">
+        <div class="tpanel is-on">
+          <p class="tpanel__idea">“I want a website for my creative studio.”
+            <small data-en="This is where every project starts" data-nl="Hier begint elk project">This is where every project starts</small>
+          </p>
+        </div>
+
+        <div class="tpanel">
+          <div class="tpanel__prompt">
+            <span class="t-tag" style="margin-bottom:18px">Prompt</span>
+            <p>Build a responsive one-page site for a creative studio.<span class="add"> A 12-column grid, oversized Space Grotesk headlines, asymmetric project rows, generous whitespace, one accent colour, and a single call to action. No stock imagery — draw the compositions in CSS.</span></p>
+          </div>
+        </div>
+
+        <div class="tpanel">
+          <div class="tpanel__code">
+            <div class="editor">
+              <div class="editor__tabs">
+                <span class="editor__tab is-active">index.html</span>
+                <span class="editor__tab">styles.css</span>
+              </div>
+              <div class="editor__body"><div data-tcode></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tpanel">
+          <div class="tpanel__site">
+            <div class="frame">
+              <div class="frame__bar">
+                <span class="dots"><i></i><i></i><i></i></span>
+                <span class="url"><i class="url__lock"></i>studiovanhorn.com</span>
+              </div>
+              <div class="frame__body">
+                <div class="site is-live" style="--sp:34px">
+                  <div class="site__nav"><span class="site__logo">Vanhorn</span><span class="site__menu"><i></i><i></i><i></i></span></div>
+                  <div class="site__hero">
+                    <span class="site__title">We build brands that behave.</span>
+                    <span class="site__copy"><i></i><i></i><i></i></span>
+                    <span class="site__cta">Selected work</span>
+                  </div>
+                  <div class="site__grid"><span class="site__card"></span><span class="site__card"></span><span class="site__card"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="shell transform__foot">
+        <span class="mono" data-en="One object. Four states. Driven by your scroll." data-nl="Eén object. Vier staten. Aangedreven door je scroll.">One object. Four states. Driven by your scroll.</span>
+        <span class="transform__progress"><i></i></span>
+        <span class="mono">KM.DEV</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= 11 · ERROR → AI → FIX -->
+<section class="section">
+  <div class="shell">
+    <div class="sec-head" data-reveal>
+      <div class="sec-head__meta">
+        <span class="t-num">03 / 08</span>
+        <span class="mono" data-en="Live demo" data-nl="Live demo">Live demo</span>
+      </div>
+      <div class="sec-head__body">
+        <h2 class="t-h2" data-split>Something breaks.<br>Then you fix it.</h2>
+        <p class="t-lead" data-en="Generating code is the easy half. The course is about the other half: reading an error, describing it accurately, and knowing whether the fix you were handed is the right one."
+           data-nl="Code genereren is de makkelijke helft. Deze cursus gaat over de andere helft: een error lezen, hem precies beschrijven, en beoordelen of de voorgestelde fix ook echt klopt.">Generating code is the easy half. The course is about the other half: reading an error, describing it accurately, and knowing whether the fix you were handed is the right one.</p>
+      </div>
+    </div>
+
+    <div class="fix" style="margin-top:clamp(34px,4vw,60px)" data-fix data-reveal>
+      <div class="fix__side">
+        <div class="frame fix__browser">
+          <div class="frame__bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="url"><i class="url__lock"></i>nordwerk.studio/newsletter</span>
+            <span class="chip is-error" data-fixchip><i></i><span data-en="Broken" data-nl="Kapot">Broken</span></span>
+          </div>
+          <div class="frame__body">
+            <div class="fix__app">
+              <span class="t-tag is-plain mono">Newsletter</span>
+              <h4 class="t-h4" data-en="One email a month. Nothing else." data-nl="Eén mail per maand. Verder niets.">One email a month. Nothing else.</h4>
+              <button class="fix__btn" type="button" data-app-btn
+                      data-errmsg="Nothing happens. Console: Cannot read properties of null"
+                      data-okmsg="Subscribed. The handler is listening again."
+                      data-cursor="Click">
+                <span data-en="Subscribe" data-nl="Aanmelden">Subscribe</span>
+              </button>
+              <span class="fix__toast"><span></span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage stage--ink fix__editor">
+          <div class="editor" style="flex:1">
+            <div class="editor__tabs"><span class="editor__tab is-active">script.js</span></div>
+            <div class="editor__body"><div data-fixcode></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fix__side">
+        <div class="chat">
+          <div class="chat__head">
+            <span class="chat__who"><span class="chat__avatar">AI</span>Claude</span>
+            <span class="mono" data-en="Pair programmer" data-nl="Pair programmer">Pair programmer</span>
+          </div>
+          <div class="chat__body">
+            <div class="msg msg--me" data-en="The subscribe button doesn't do anything. Nothing in the console except a null error."
+                 data-nl="De aanmeldknop doet niets. Alleen een null-error in de console.">The subscribe button doesn't do anything. Nothing in the console except a null error.</div>
+            <div class="msg msg--ai" data-en-html="<b>Problem detected</b>Your script looks for <code>.btn-subscribe</code>, but the button in the markup uses <code>.btn-sub</code>. <code>querySelector</code> returns <code>null</code>, so the listener is never attached — and the click has nothing to trigger."
+                 data-nl-html="<b>Probleem gevonden</b>Je script zoekt naar <code>.btn-subscribe</code>, maar de knop in de markup heet <code>.btn-sub</code>. <code>querySelector</code> geeft <code>null</code> terug, dus de listener wordt nooit gekoppeld — de klik heeft niets om te activeren."><b>Problem detected</b>Your script looks for <code>.btn-subscribe</code>, but the button in the markup uses <code>.btn-sub</code>. <code>querySelector</code> returns <code>null</code>, so the listener is never attached — and the click has nothing to trigger.</div>
+            <div class="msg msg--ai" data-en-html="<b>Proposed fix</b>Match the selector to the markup and guard the call with <code>?.</code> so a missing element can never crash the page again."
+                 data-nl-html="<b>Voorgestelde fix</b>Laat de selector overeenkomen met de markup en beveilig de aanroep met <code>?.</code>, zodat een ontbrekend element de pagina nooit meer laat crashen."><b>Proposed fix</b>Match the selector to the markup and guard the call with <code>?.</code> so a missing element can never crash the page again.</div>
+          </div>
+          <div class="chat__foot">
+            <button class="btn btn--sm" type="button" data-ask data-magnetic="0.25" data-cursor="Ask">
+              <span class="btn__label" data-en="Ask Claude" data-nl="Vraag Claude">Ask Claude</span><i class="btn__arrow"></i>
+            </button>
+            <button class="btn btn--sm btn--ghost" type="button" data-apply disabled data-magnetic="0.25" data-cursor="Apply">
+              <span class="btn__label" data-en="Apply fix" data-nl="Pas fix toe">Apply fix</span><i class="btn__arrow"></i>
+            </button>
+            <span class="mono" style="margin-left:auto" data-en="Try the button first" data-nl="Probeer eerst de knop">Try the button first</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== 12 · BEFORE / AFTER -->
+<section class="section-tight">
+  <div class="shell">
+    <div class="sec-head" data-reveal style="margin-bottom:clamp(28px,3.4vw,50px)">
+      <div class="sec-head__meta">
+        <span class="t-num">04 / 08</span>
+        <span class="mono" data-en="Drag" data-nl="Sleep">Drag</span>
+      </div>
+      <div class="sec-head__body">
+        <h2 class="t-h2" data-split>From a sentence<br>to a shipped site.</h2>
+      </div>
+    </div>
+
+    <div class="ba" data-ba data-cursor="Drag" data-reveal="fade">
+      <div class="ba__pane ba__pane--before">
+        <p class="idea">“I need a website for my brand.”</p>
+        <p class="t-small" style="max-width:34ch" data-en="A sentence. No structure, no hierarchy, no idea what it should look like yet."
+           data-nl="Eén zin. Geen structuur, geen hiërarchie, nog geen beeld.">A sentence. No structure, no hierarchy, no idea what it should look like yet.</p>
+      </div>
+
+      <div class="ba__pane ba__pane--after on-dark">
+        <div class="ba__built">
+          <div class="ba__built-nav">
+            <span class="brand" style="color:var(--on-ink)">Halden<i class="brand__dot"></i></span>
+            <span class="mono">Studio — Amsterdam</span>
+          </div>
+          <h3>Brands that hold up in daylight.</h3>
+          <div class="ba__built-grid"><div></div><div></div><div></div></div>
+        </div>
+      </div>
+
+      <span class="ba__tag ba__tag--l">Idea</span>
+      <span class="ba__tag ba__tag--r">Built</span>
+
+      <div class="ba__handle" aria-label="Compare idea and result">
+        <span class="ba__grip">DRAG</span>
+        <span class="ba__pct">50%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== 16 · STATEMENT -->
+<section class="statement on-dark">
+  <div class="shell">
+    <div class="statement__lines">
+      <span class="statement__l statement__l--a" data-split data-reveal="fade">AI writes.</span>
+      <span class="statement__l statement__l--b" data-split data-reveal="fade" style="--rd:180ms">You build.</span>
+    </div>
+    <div class="statement__foot" data-reveal style="--rd:320ms">
+      <span class="mono">16 / Position</span>
+      <p data-en="KM.dev teaches you how to think, prompt, build, debug and ship with AI. The model produces the code. The decisions stay yours."
+         data-nl="KM.dev leert je denken, prompten, bouwen, debuggen en publiceren met AI. Het model levert de code. De beslissingen blijven van jou.">KM.dev teaches you how to think, prompt, build, debug and ship with AI. The model produces the code. The decisions stay yours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= COURSE ENTRY POINT -->
+<section class="section">
+  <div class="shell">
+    <div class="sec-head" data-reveal>
+      <div class="sec-head__meta">
+        <span class="t-num">06 / 08</span>
+        <span class="mono" data-en="Curriculum" data-nl="Programma">Curriculum</span>
+      </div>
+      <div class="sec-head__body">
+        <h2 class="t-h2" data-split>Learn by building.</h2>
+        <p class="t-lead" data-en="Eight chapters, one continuous project. You start with an idea and finish with a site that is online, understood, and yours to change."
+           data-nl="Acht hoofdstukken, één doorlopend project. Je begint met een idee en eindigt met een site die online staat, die je begrijpt, en die je zelf kunt aanpassen.">Eight chapters, one continuous project. You start with an idea and finish with a site that is online, understood, and yours to change.</p>
+        <div style="margin-top:26px">
+          <a class="btn" href="course.html" data-magnetic="0.3" data-cursor="View">
+            <span class="btn__label" data-en="See the curriculum" data-nl="Bekijk het programma">See the curriculum</span><i class="btn__arrow"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="facts" data-reveal data-stagger="90" style="margin-top:clamp(40px,5vw,72px)">
+      <div class="fact"><b>01 — 02</b><span class="t-small" data-en="Think and prompt. Decide what you are building before you ask for it."
+        data-nl="Denken en prompten. Bepaal wat je bouwt vóórdat je erom vraagt.">Think and prompt. Decide what you are building before you ask for it.</span></div>
+      <div class="fact"><b>03 — 04</b><span class="t-small" data-en="Build and understand. Turn instructions into code you can actually read."
+        data-nl="Bouwen en begrijpen. Zet instructies om in code die je echt kunt lezen.">Build and understand. Turn instructions into code you can actually read.</span></div>
+      <div class="fact"><b>05 — 06</b><span class="t-small" data-en="Break and fix. Test everything, then debug it with AI instead of guessing."
+        data-nl="Breken en repareren. Test alles en debug met AI in plaats van te gokken.">Break and fix. Test everything, then debug it with AI instead of guessing.</span></div>
+      <div class="fact"><b>07 — 08</b><span class="t-small" data-en="Polish and ship. Make it feel professional, then put it online."
+        data-nl="Afwerken en publiceren. Laat het professioneel voelen en zet het online.">Polish and ship. Make it feel professional, then put it online.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================ 34 · FINAL EXPERIENCE -->
+<section class="final on-dark">
+  <div class="shell">
+    <h2 class="final__h" data-split data-reveal="fade">Your next website<br>starts with a prompt.</h2>
+    <div class="final__actions" data-reveal style="--rd:280ms">
+      <a class="btn btn--accent" href="faq.html#enrol" data-magnetic="0.34" data-cursor="Start">
+        <span class="btn__label" data-en="Start learning" data-nl="Begin met leren">Start learning</span><i class="btn__arrow"></i>
+      </a>
+      <a class="btn btn--ghost" href="course.html" data-magnetic="0.22">
+        <span class="btn__label" data-en="Read the curriculum" data-nl="Lees het programma">Read the curriculum</span><i class="btn__arrow"></i>
+      </a>
+    </div>
+    <div class="loop" data-loop>
+      <span class="loop__w">Prompt</span><span class="loop__sep"></span>
+      <span class="loop__w">Code</span><span class="loop__sep"></span>
+      <span class="loop__w">Website</span><span class="loop__sep"></span>
+      <span class="loop__w">KM.dev</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer on-dark">
+  <div class="shell">
+    <div class="footer__top">
+      <div>
+        <p class="footer__mark">Build websites<br>with AI.</p>
+        <p class="t-small" style="margin-top:22px;max-width:34ch" data-en="An AI developer course by KM.dev — Amsterdam."
+           data-nl="Een AI developer course van KM.dev — Amsterdam.">An AI developer course by KM.dev — Amsterdam.</p>
+      </div>
+      <div class="footer__col">
+        <h4 data-en="Course" data-nl="Cursus">Course</h4>
+        <ul>
+          <li><a href="index.html" data-en="Overview" data-nl="Overzicht">Overview</a></li>
+          <li><a href="course.html" data-en="Curriculum" data-nl="Programma">Curriculum</a></li>
+          <li><a href="work.html" data-en="What you build" data-nl="Wat je bouwt">What you build</a></li>
+          <li><a href="faq.html" data-en="FAQ" data-nl="FAQ">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4 data-en="Studio" data-nl="Studio">Studio</h4>
+        <ul>
+          <li><a href="https://kainmckancylareine.github.io/KM-DEV/index.html" target="_blank" rel="noopener" data-no-route>KM.dev</a></li>
+          <li><a href="mailto:kkain25@gmail.com" data-no-route>kkain25@gmail.com</a></li>
+          <li><a href="faq.html#enrol" data-en="Start learning" data-nl="Begin met leren">Start learning</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="mono">© 2026 KM.dev</span>
+      <span class="mono">Amsterdam, NL</span>
+      <span class="mono">Prompt · Code · Website</span>
+    </div>
+  </div>
+</footer>
+
+<!-- 18 · PROJECT PREVIEW FOLLOWER — designed compositions, drawn in CSS -->
+<div class="follower" aria-hidden="true">
+  <div class="follower__inner">
+    <div class="pv pv--portfolio" data-pv="portfolio">
+      <div class="pv__bar"><i></i><i></i><i></i></div>
+      <div class="pv__canvas"><span class="pv__h">Selected work</span><span class="pv__l"></span><span class="pv__l" style="width:58%"></span><div class="pv__row"><span class="pv__box"></span><span class="pv__box"></span></div></div>
+    </div>
+    <div class="pv pv--saas" data-pv="saas">
+      <div class="pv__bar"><i></i><i></i><i></i></div>
+      <div class="pv__canvas"><span class="pv__h">Ship faster</span><span class="pv__l"></span><div class="pv__row"><span class="pv__box"></span><span class="pv__box"></span><span class="pv__box"></span></div></div>
+    </div>
+    <div class="pv pv--shop" data-pv="shop">
+      <div class="pv__bar"><i></i><i></i><i></i></div>
+      <div class="pv__canvas"><span class="pv__h" style="font-size:15px">New in</span><div class="pv__row"><span class="pv__box"></span><span class="pv__box"></span><span class="pv__box"></span></div><div class="pv__row"><span class="pv__box"></span><span class="pv__box"></span><span class="pv__box"></span></div></div>
+    </div>
+    <div class="pv pv--dash" data-pv="dash">
+      <div class="pv__bar"><i></i><i></i><i></i></div>
+      <div class="pv__canvas"><span class="pv__h" style="font-size:14px;color:#f4f3ef">Usage</span><div class="bars"><i style="height:40%"></i><i style="height:70%"></i><i style="height:52%"></i><i style="height:88%"></i><i style="height:64%"></i></div><span class="pv__l"></span></div>
+    </div>
+    <div class="pv pv--brand" data-pv="brand">
+      <div class="pv__bar"><i></i><i></i><i></i></div>
+      <div class="pv__canvas"><span class="pv__h">Hello.</span><span class="pv__l"></span><span class="pv__l" style="width:50%"></span></div>
+    </div>
+    <div class="pv pv--startup" data-pv="startup">
+      <div class="pv__bar"><i></i><i></i><i></i></div>
+      <div class="pv__canvas"><span class="pv__h">We are building it.</span><span class="pv__l"></span><div class="pv__row"><span class="pv__box"></span><span class="pv__box"></span></div></div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/core.js"></script>
+<script src="assets/js/modules.js"></script>
+</body>
+</html>

@@ -4968,12 +4968,12 @@ window.KM = window.KM || {};
    server, not in this file.
 
      1. Create a project at supabase.com
-     2. Settings → API → copy the Project URL and the anon public key
+     2. Settings → API keys → copy the Project URL and the publishable key
      3. Paste them below and commit
      4. Run db/schema.sql then db/seed.sql in the SQL editor
-     5. Sign up at /signup.html with kain@km.dev — the bootstrap table in the
-        schema makes that account an admin on creation. Nothing about the
-        password is stored here or anywhere else in the front end.
+     5. Sign up at /signup.html — an address listed in the admin_bootstrap
+        table becomes an admin the moment the account is created. Nothing
+        about any password is stored here or anywhere else in the front end.
 
    Leave them empty and the platform runs in preview mode: the same interface
    against a store in this browser, clearly labelled, so nothing pretends to
@@ -4981,13 +4981,13 @@ window.KM = window.KM || {};
    ========================================================================== */
 
 window.KM_CONFIG = {
-  supabaseUrl: '',
-  supabaseAnonKey: '',
+  supabaseUrl: 'https://ufmgkqdgrcxfcmeibbve.supabase.co',
+  supabaseAnonKey: 'sb_publishable_Rj4I0Qw8P4v08TKs-o-DrQ_wn6Kor05',
 
   courseSlug: 'ai-web-developer',
 
   /* Loaded only when the two values above are set. */
-  supabaseScript: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js'
+  supabaseScript: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js'
 };
 
 /* ==========================================================================
@@ -5041,6 +5041,26 @@ window.KMT = (function () {
       'Voorbeeldaccounts — één klik, geen wachtwoord om te onthouden',
 
     /* ------------------------------------------------------------ nav/auth */
+    'Account created. Confirm your email address, then log in.':
+      'Account aangemaakt. Bevestig je e-mailadres en log daarna in.',
+    'An account with that email already exists.':
+      'Er bestaat al een account met dat e-mailadres.',
+    'No account found for that email address.':
+      'Geen account gevonden bij dat e-mailadres.',
+    'That email and password do not match an account.':
+      'Dat e-mailadres en wachtwoord horen niet bij een account.',
+    'That password does not match this account.':
+      'Dat wachtwoord hoort niet bij dit account.',
+    'Not signed in.': 'Niet ingelogd.',
+    'Lesson not found.': 'Les niet gevonden.',
+    'Level not found.': 'Level niet gevonden.',
+    'Password reset needs a mail server, so it is only available once Supabase is connected.':
+      'Een wachtwoordherstel heeft een mailserver nodig en werkt daarom pas als Supabase gekoppeld is.',
+    'Invalid login credentials': 'Onjuiste inloggegevens',
+    'Email not confirmed': 'E-mailadres nog niet bevestigd',
+    'User already registered': 'Dit e-mailadres is al geregistreerd',
+    'Password should be at least 6 characters.':
+      'Het wachtwoord moet minstens 6 tekens lang zijn.',
     'Log in': 'Inloggen',
     'Log out': 'Uitloggen',
     'Start learning': 'Begin met leren',

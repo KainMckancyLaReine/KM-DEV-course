@@ -49,6 +49,26 @@ window.KMT = (function () {
       'Voorbeeldaccounts — één klik, geen wachtwoord om te onthouden',
 
     /* ------------------------------------------------------------ nav/auth */
+    'Account created. Confirm your email address, then log in.':
+      'Account aangemaakt. Bevestig je e-mailadres en log daarna in.',
+    'An account with that email already exists.':
+      'Er bestaat al een account met dat e-mailadres.',
+    'No account found for that email address.':
+      'Geen account gevonden bij dat e-mailadres.',
+    'That email and password do not match an account.':
+      'Dat e-mailadres en wachtwoord horen niet bij een account.',
+    'That password does not match this account.':
+      'Dat wachtwoord hoort niet bij dit account.',
+    'Not signed in.': 'Niet ingelogd.',
+    'Lesson not found.': 'Les niet gevonden.',
+    'Level not found.': 'Level niet gevonden.',
+    'Password reset needs a mail server, so it is only available once Supabase is connected.':
+      'Een wachtwoordherstel heeft een mailserver nodig en werkt daarom pas als Supabase gekoppeld is.',
+    'Invalid login credentials': 'Onjuiste inloggegevens',
+    'Email not confirmed': 'E-mailadres nog niet bevestigd',
+    'User already registered': 'Dit e-mailadres is al geregistreerd',
+    'Password should be at least 6 characters.':
+      'Het wachtwoord moet minstens 6 tekens lang zijn.',
     'Log in': 'Inloggen',
     'Log out': 'Uitloggen',
     'Start learning': 'Begin met leren',

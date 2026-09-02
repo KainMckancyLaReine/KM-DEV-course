@@ -1,6 +1,7 @@
 /* End-to-end acceptance run for the academy, in preview mode.
    Drives the full student flow and the full admin flow the way a person would. */
 const { chromium } = require('playwright');
+const { prepare } = require('./preview');
 
 const BASE = 'http://localhost:8099';
 const noise = /ERR_TUNNEL|fonts\.g|favicon|ERR_FAILED/;
@@ -12,7 +13,7 @@ function log(ok, msg, extra) {
 
 (async () => {
   const b = await chromium.launch();
-  const ctx = await b.newContext({ viewport: { width: 1440, height: 950 } });
+  const ctx = await prepare(await b.newContext({ viewport: { width: 1440, height: 950 } }));
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
   const page = await ctx.newPage();
   const errs = [];

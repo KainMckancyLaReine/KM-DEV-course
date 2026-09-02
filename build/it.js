@@ -1,7 +1,8 @@
 const { chromium } = require('playwright');
+const { prepare } = require('./preview');
 (async () => {
   const b = await chromium.launch();
-  const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
+  const ctx = await prepare(await b.newContext({ viewport: { width: 1440, height: 900 } }));
   const page = await ctx.newPage();
   const errs = [];
   page.on('pageerror', e => errs.push('PAGEERROR ' + e.message));

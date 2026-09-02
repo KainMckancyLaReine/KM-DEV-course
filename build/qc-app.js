@@ -1,6 +1,7 @@
 /* Responsive + console + reduced-motion check for every academy page,
    signed in as a student and again as an admin. Also captures screenshots. */
 const { chromium } = require('playwright');
+const { prepare } = require('./preview');
 
 const BASE = 'http://localhost:8099';
 const noise = /ERR_TUNNEL|fonts\.g|favicon|ERR_FAILED/;
@@ -37,6 +38,7 @@ async function signIn(page, who) {
 /* The sandbox has no route to Google Fonts; blocking the request keeps
    networkidle from waiting on a connection that will never open. */
 async function noFonts(ctx) {
+  await prepare(ctx);
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
 }
 

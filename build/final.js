@@ -1,10 +1,11 @@
 const { chromium } = require('playwright');
+const { prepare } = require('./preview');
 (async () => {
   const b = await chromium.launch();
   const errs = [];
 
   // 1 · reduced motion
-  const rm = await b.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+  const rm = await prepare(await b.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' }));
   const p1 = await rm.newPage();
   p1.on('pageerror', e => errs.push('RM ' + e.message));
   await p1.goto('http://localhost:8099/index.html', { waitUntil: 'networkidle' });
@@ -18,7 +19,7 @@ const { chromium } = require('playwright');
   console.log('reduced-motion · statement visible:', await p1.locator('.statement__l--a .reveal-word').first().evaluate(e => getComputedStyle(e).opacity));
 
   // 2 · layout shift
-  const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
+  const ctx = await prepare(await b.newContext({ viewport: { width: 1440, height: 900 } }));
   const p2 = await ctx.newPage();
   await p2.addInitScript(() => {
     window.__cls = 0;

@@ -10,13 +10,19 @@
      node build/i18n-scan.js
 */
 const { chromium } = require('playwright');
+const { prepare } = require('./preview');
 
 const BASE = 'http://localhost:8099';
 
-const PAGES = [
+/* Signed out. A signed-in visitor is redirected off these pages, so walking
+   them in a logged-in session silently checks the dashboard three times. */
+const AUTH = [
   ['/login.html', 'form'],
   ['/signup.html', 'form'],
-  ['/reset.html', 'form'],
+  ['/reset.html', 'form']
+];
+
+const PAGES = [
   ['/app-dashboard.html', '.meter__pct'],
   ['/app-course.html', '.level'],
   ['/app-lesson.html?l=what-is-ai-assisted-development', '.lesson__title'],
@@ -56,7 +62,13 @@ const ADMIN = [
 ];
 
 async function noFonts(ctx) {
+  await prepare(ctx);
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+}
+
+async function signOut(page) {
+  await page.goto(BASE + '/app-settings.html', { waitUntil: 'networkidle' });
+  await page.evaluate(async () => { if (window.KMDB) { await KMDB.init(); await KMDB.signOut(); } });
 }
 
 async function signIn(page, who) {
@@ -136,6 +148,7 @@ const IGNORE = [
   /^\{[A-Z0-9 _]+\}$/,                 /* prompt placeholders */
   /^Level \d+/,                        /* "Level" is the same word in Dutch */
   /^Prompt \/ \d+$/,
+  /^km\.dev$/,                         /* the brand, in the back link */
   /Academy$/                           /* the product name, not a phrase */
 ];
 
@@ -172,6 +185,10 @@ const IGNORE = [
     }
   }
 
+  await signOut(page);
+  await page.evaluate(() => { try { localStorage.setItem('km-lang', 'en'); } catch (e) {} });
+  await sweep(AUTH, 'signed out');
+
   await signIn(page, 'User B');
   await sweep(PAGES, 'student');
 
@@ -183,7 +200,7 @@ const IGNORE = [
      proves the engine runs, not merely that the dictionary is complete. */
   const leftover = new Map();
   await page.evaluate(() => { try { localStorage.setItem('km-lang', 'nl'); } catch (e) {} });
-  for (const [url, sel] of PAGES.concat(ADMIN)) {
+  for (const [url, sel] of AUTH.concat(PAGES, ADMIN)) {
     if (SKIP_PAGES.test(url)) continue;
     await page.goto(BASE + url, { waitUntil: 'networkidle' });
     try { await page.waitForSelector(sel, { timeout: 12000 }); } catch (e) {}

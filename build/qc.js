@@ -1,4 +1,5 @@
 const { chromium } = require('playwright');
+const { prepare } = require('./preview');
 
 (async () => {
   const base = process.argv[2] || 'http://localhost:8099';
@@ -9,7 +10,7 @@ const { chromium } = require('playwright');
 
   for (const p of pages) {
     for (const s of sizes) {
-      const ctx = await browser.newContext({ viewport:{width:s.w,height:s.h}, deviceScaleFactor:1 });
+      const ctx = await prepare(await browser.newContext({ viewport:{width:s.w,height:s.h}, deviceScaleFactor:1 }));
       const page = await ctx.newPage();
       const errs = [];
       page.on('console', m => { if (m.type()==='error' && !/ERR_TUNNEL|fonts.g/.test(m.text())) errs.push(m.text()); });

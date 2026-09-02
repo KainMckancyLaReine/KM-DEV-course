@@ -318,10 +318,16 @@ window.KM = window.KM || {};
   const CACHE = new Map();
   const bundled = () => !!window.KM_PAGES;
 
+  /* The marketing site and the academy load different scripts, so a soft swap
+     only makes sense within one of them. Crossing between the two is a normal
+     browser navigation. */
+  const APP_PAGES = /^(app-|admin\.|login\.|signup\.|reset\.|README-academy\.)/;
+  const spaceOf = (key) => APP_PAGES.test(key) ? 'app' : 'site';
+
   function pageKey(href) {
     if (!href) return 'index.html';
     if (href.charAt(0) === '#' && bundled()) {
-      const k = href.slice(1).split('#')[0];
+      const k = href.slice(1).split('?')[0].split('#')[0];
       return (window.KM_PAGES[k] ? k : 'index') + '.html';
     }
     const u = new URL(href, location.href);
@@ -344,7 +350,9 @@ window.KM = window.KM || {};
     const doc = new DOMParser().parseFromString(html, 'text/html');
     const main = doc.querySelector('.page-main');
     if (!main) throw new Error('no main');
-    const payload = { html: main.innerHTML, title: doc.title, page: main.dataset.page || key };
+    const payload = { html: main.innerHTML, title: doc.title,
+                      page: main.dataset.page || key,
+                      space: main.dataset.space || 'site' };
     CACHE.set(key, payload);
     return payload;
   }
@@ -369,6 +377,7 @@ window.KM = window.KM || {};
     KM.destroyPage();
     main.innerHTML = payload.html;
     main.dataset.page = payload.page;
+    main.dataset.space = payload.space || 'site';
     document.title = payload.title;
     window.scrollTo(0, 0);
 
@@ -377,7 +386,8 @@ window.KM = window.KM || {};
     });
 
     if (push !== false) {
-      const url = bundled() ? '#' + pageKey(href).replace('.html', '') : href;
+      const q = href.indexOf('?') >= 0 ? '?' + href.split('?')[1].split('#')[0] : '';
+      const url = bundled() ? '#' + pageKey(href).replace('.html', '') + q : href;
       history.pushState({ href: href }, '', url);
     }
 
@@ -408,6 +418,7 @@ window.KM = window.KM || {};
       if (/^(https?:)?\/\//i.test(href) && new URL(href, location.href).origin !== location.origin) return;
       if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
       if (!/\.html($|[?#])/.test(href) && href !== './' && href !== '/') return;
+      if (!bundled() && spaceOf(pageKey(href)) !== spaceOf(pageKey(location.href))) return;
       e.preventDefault();
       if (pageKey(href) === pageKey(location.href)) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
       KM.go(href, true);
@@ -422,7 +433,7 @@ window.KM = window.KM || {};
   /* deep link straight into a page of the single-file bundle */
   function deepLink() {
     if (!bundled() || !location.hash) return null;
-    const key = location.hash.slice(1).split('#')[0];
+    const key = location.hash.slice(1).split('?')[0].split('#')[0];
     return (window.KM_PAGES[key] && key !== 'index') ? location.hash : null;
   }
 

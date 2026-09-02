@@ -1,0 +1,643 @@
+{
+  "course": {
+    "slug": "ai-web-developer",
+    "title": "AI Web Developer",
+    "description": "From your first Claude prompt to a complete production-ready website.",
+    "published": true
+  },
+
+  "levels": [
+    {
+      "slug": "think-like-a-builder",
+      "title": "Think Like a Builder",
+      "description": "Understand how websites are actually put together, and what changes when an AI writes the code.",
+      "lessons_file": "level-01.json"
+    },
+    {
+      "slug": "mastering-claude",
+      "title": "Mastering Claude",
+      "description": "Learn to direct a model instead of hoping for a good answer: context, constraints, design direction, existing code.",
+      "lessons_file": "level-02.json"
+    },
+    {
+      "slug": "your-first-website",
+      "title": "Your First Website",
+      "description": "Take one idea from an empty folder to a responsive page that works on a phone.",
+      "lessons": [
+        ["create-the-project", "Create the project", 12],
+        ["plan-the-website", "Plan the website", 14],
+        ["generate-the-first-structure", "Generate the first structure", 15],
+        ["build-the-navigation", "Build the navigation", 16],
+        ["build-the-hero", "Build the hero", 16],
+        ["create-sections", "Create sections", 15],
+        ["responsive-design", "Responsive design", 18],
+        ["mobile-optimization", "Mobile optimization", 15],
+        ["connect-interactions", "Connect interactions", 16]
+      ]
+    },
+    {
+      "slug": "prompt-engineering-for-developers",
+      "title": "Prompt Engineering for Developers",
+      "description": "The nine prompt shapes that do the work, and how to chain them into a session that goes somewhere.",
+      "lessons": [
+        ["context-prompts", "Context prompts", 12],
+        ["role-prompts", "Role prompts", 10],
+        ["constraint-prompts", "Constraint prompts", 13],
+        ["design-prompts", "Design prompts", 15],
+        ["code-prompts", "Code prompts", 14],
+        ["debugging-prompts", "Debugging prompts", 14],
+        ["refactoring-prompts", "Refactoring prompts", 12],
+        ["iteration-prompts", "Iteration prompts", 12],
+        ["multi-step-prompts", "Multi-step prompts", 15],
+        ["prompt-chains", "Prompt chains", 16]
+      ]
+    },
+    {
+      "slug": "build-like-a-professional",
+      "title": "Build Like a Professional",
+      "description": "The difference between a page that works and a page a studio would ship.",
+      "lessons": [
+        ["design-systems", "Design systems", 16],
+        ["spacing", "Spacing", 13],
+        ["typography", "Typography", 16],
+        ["color-systems", "Color systems", 14],
+        ["components", "Components", 15],
+        ["reusable-code", "Reusable code", 14],
+        ["animations", "Animations", 16],
+        ["micro-interactions", "Micro-interactions", 15],
+        ["accessibility", "Accessibility", 18],
+        ["performance", "Performance", 17]
+      ]
+    },
+    {
+      "slug": "debugging-with-claude",
+      "title": "Debugging with Claude",
+      "description": "Read the failure, describe it precisely, and verify the fix instead of trusting it.",
+      "lessons": [
+        ["understanding-errors", "Understanding errors", 13],
+        ["console-errors", "Console errors", 14],
+        ["broken-layouts", "Broken layouts", 15],
+        ["javascript-errors", "JavaScript errors", 15],
+        ["responsive-bugs", "Responsive bugs", 14],
+        ["ai-debugging-prompts", "AI debugging prompts", 14],
+        ["finding-the-root-cause", "Finding the root cause", 16],
+        ["testing-fixes", "Testing fixes", 13],
+        ["refactoring-bad-code", "Refactoring bad code", 15]
+      ]
+    },
+    {
+      "slug": "advanced-web-building",
+      "title": "Advanced Web Building",
+      "description": "Layout, state, data and architecture — the parts a generated page usually gets wrong.",
+      "lessons": [
+        ["complex-layouts", "Complex layouts", 17],
+        ["advanced-interactions", "Advanced interactions", 16],
+        ["animations-advanced", "Animations", 16],
+        ["state", "State", 17],
+        ["forms", "Forms", 16],
+        ["data", "Data", 15],
+        ["api-concepts", "API concepts", 16],
+        ["reusable-components", "Reusable components", 15],
+        ["architecture", "Architecture", 18]
+      ]
+    },
+    {
+      "slug": "ship-it",
+      "title": "Ship It",
+      "description": "Test it, tighten it, put it online, and check the things that only break in public.",
+      "lessons": [
+        ["testing", "Testing", 15],
+        ["responsive-qa", "Responsive QA", 14],
+        ["performance-final", "Performance", 15],
+        ["seo-basics", "SEO basics", 13],
+        ["accessibility-final", "Accessibility", 15],
+        ["deployment", "Deployment", 16],
+        ["domains", "Domains", 12],
+        ["final-polish", "Final polish", 14]
+      ]
+    }
+  ],
+
+  "projects": [
+    {
+      "level": "your-first-website",
+      "slug": "first-landing-page",
+      "title": "Build your first landing page",
+      "description": "One page, one message, one call to action — built from a brief you write yourself.",
+      "brief": {
+        "client": "A two-person photography studio moving from Instagram to a site of their own.",
+        "goal": "A single page that makes someone email them.",
+        "requirements": [
+          "A hero with one clear message and one call to action",
+          "A short about section written in the studio's voice",
+          "A grid of six work slots, drawn in CSS — no stock photography",
+          "Working navigation, including on a phone",
+          "Readable at 360px wide and at 1920px"
+        ],
+        "prompts": ["project-scaffold", "hero-section", "responsive-pass"],
+        "checklist": [
+          "Project folder created with index.html, styles.css, script.js",
+          "Hero written and built",
+          "Navigation works on desktop and mobile",
+          "Six work slots laid out on a grid",
+          "Contact call to action reaches a real mailto or form",
+          "Checked at 360px, 768px and 1440px",
+          "No console errors"
+        ]
+      }
+    },
+    {
+      "level": "build-like-a-professional",
+      "slug": "premium-brand-website",
+      "title": "Build a premium brand website",
+      "description": "Take the same content and raise it to studio standard: a real type scale, a real spacing system, motion that means something.",
+      "brief": {
+        "client": "A small furniture maker who sells through galleries and wants to be taken seriously online.",
+        "goal": "A site that looks like it cost money, without a photo budget.",
+        "requirements": [
+          "A documented design system: colour tokens, type scale, spacing scale",
+          "At least four reusable components built from those tokens",
+          "One considered motion system with consistent easings and durations",
+          "Keyboard operable end to end, with visible focus states",
+          "No layout shift on load"
+        ],
+        "prompts": ["design-system", "component-spec", "motion-system"],
+        "checklist": [
+          "Tokens defined in one place and used everywhere",
+          "Type scale applied consistently",
+          "Four or more components reused across sections",
+          "Motion tiers defined and applied",
+          "Focus states visible on every interactive element",
+          "prefers-reduced-motion path implemented",
+          "Lighthouse accessibility pass reviewed"
+        ]
+      }
+    },
+    {
+      "level": "advanced-web-building",
+      "slug": "interactive-web-application",
+      "title": "Build an interactive web application",
+      "description": "Move past pages: state, data, forms and components that hold up when someone actually uses them.",
+      "brief": {
+        "client": "A running club that wants members to log routes and see them on a shared board.",
+        "goal": "An application, not a page — state that survives a refresh.",
+        "requirements": [
+          "A data model written down before any code",
+          "Create, read, update and delete for one entity",
+          "Form validation with useful error messages",
+          "Loading, empty and error states for every view",
+          "State that survives a page refresh"
+        ],
+        "prompts": ["data-model", "state-management", "empty-states"],
+        "checklist": [
+          "Data model documented",
+          "All four operations work",
+          "Validation messages explain how to fix the problem",
+          "Loading, empty and error states designed",
+          "State restored after refresh",
+          "No unhandled promise rejections in the console"
+        ]
+      }
+    },
+    {
+      "level": "ship-it",
+      "slug": "final-project",
+      "title": "Final project — build your own complete website",
+      "description": "A real client brief. Everything from the course, in one build, put online under your own name.",
+      "final": true,
+      "brief": {
+        "client": "A fictional creative company of your choosing. Name it, give it a point of view, and write its copy yourself.",
+        "goal": "A complete website that you would put in front of a paying client.",
+        "requirements": [
+          "Responsive from 360px to 1920px",
+          "A deliberate type system, not defaults",
+          "Working mobile navigation",
+          "Motion that serves the content and respects reduced motion",
+          "Interactions that actually work — no decoration pretending to be a control",
+          "Keyboard accessible with visible focus",
+          "Fast: no oversized assets, no layout shift",
+          "Deployed to a live URL"
+        ],
+        "prompts": ["project-scaffold", "design-system", "responsive-pass", "final-qa"],
+        "checklist": [
+          "Brief written: client, audience, one job the site must do",
+          "Structure planned before the first prompt",
+          "Design system defined",
+          "All sections built",
+          "Responsive QA at three widths",
+          "Accessibility pass: keyboard, contrast, labels",
+          "Performance pass: images, fonts, layout shift",
+          "Deployed and reachable at a public URL",
+          "Final read-through of every line of copy"
+        ]
+      }
+    }
+  ],
+
+  "assessments": [
+    {
+      "slug": "foundation-assessment",
+      "level": "think-like-a-builder",
+      "title": "Foundation Assessment",
+      "subtitle": "Do you know what you are building?",
+      "passing_score": 70,
+      "questions": [
+        {
+          "type": "single",
+          "question": "A browser has downloaded index.html, styles.css and script.js. Which one decides what the page *means*?",
+          "options": ["index.html", "styles.css", "script.js", "All three equally"],
+          "correct": [0],
+          "why": "HTML carries the structure and meaning — headings, paragraphs, links, buttons. CSS decides how that meaning looks, JavaScript decides how it behaves. A screen reader, a search engine and a browser with CSS disabled all still get the meaning from the HTML alone."
+        },
+        {
+          "type": "multi",
+          "question": "Which of these run on the visitor's own device rather than on a server? Select all that apply.",
+          "options": ["Rendering your CSS", "Sending a password to be checked", "Running your JavaScript", "Storing rows in a database"],
+          "correct": [0, 2],
+          "why": "CSS and JavaScript execute in the visitor's browser, which is why anything the browser can see, the visitor can see. Checking a password and storing data happen on a server precisely because they must not be under the visitor's control."
+        },
+        {
+          "type": "tf",
+          "question": "If code appears in the browser's Sources panel, a visitor can read it.",
+          "options": ["True", "False"],
+          "correct": [0],
+          "why": "Anything the browser downloads is readable by whoever is using the browser. This is the single most useful security fact for a front-end developer: never put a secret in code the browser receives."
+        },
+        {
+          "type": "single",
+          "question": "Claude returns a page that looks right but uses one 4MB photograph as the hero background. What is the honest description of what happened?",
+          "options": [
+            "Claude made a mistake",
+            "Claude did what you asked, because you never mentioned performance",
+            "The model is not capable of optimising images",
+            "This is unavoidable with AI-generated code"
+          ],
+          "correct": [1],
+          "why": "The model optimises for what you specified. Performance was not in the brief, so it was not in the output. Almost every complaint about AI-generated code is really a missing constraint."
+        },
+        {
+          "type": "scenario",
+          "question": "You are about to build a page for a bakery. You have one hour. What do you do first?",
+          "options": [
+            "Ask Claude to build a bakery website",
+            "Write down who visits the page and the one thing they should be able to do",
+            "Choose fonts and colours",
+            "Set up a project folder and a build tool"
+          ],
+          "correct": [1],
+          "why": "Every later decision — layout, hierarchy, what gets cut — resolves against the answer to that question. An hour spent building the wrong page is an hour gone; five minutes deciding what the page is for is what makes the other fifty-five useful."
+        },
+        {
+          "type": "single",
+          "question": "Which of these is genuinely outside what Claude can do for you?",
+          "options": [
+            "Write a responsive navigation component",
+            "Explain why your layout collapses at 400px",
+            "Know whether your client will like the result",
+            "Refactor a 200-line file into smaller pieces"
+          ],
+          "correct": [2],
+          "why": "Taste, context about a specific person, and responsibility for the decision stay with you. That is not a limitation to work around — it is the part of the job that remains yours."
+        },
+        {
+          "type": "multi",
+          "question": "Which steps belong in an AI development workflow *before* you ask for any code? Select all that apply.",
+          "options": ["Describe the goal", "Give context", "Define constraints", "Inspect the output"],
+          "correct": [0, 1, 2],
+          "why": "Goal, context and constraints all come before the first request. Inspecting output is step seven — it cannot happen until something exists, and it is the step people skip most often."
+        },
+        {
+          "type": "tf",
+          "question": "Frontend and backend is a distinction about where code runs, not about how difficult it is.",
+          "options": ["True", "False"],
+          "correct": [0],
+          "why": "Front end runs on the visitor's device; back end runs on a machine you control. Difficulty has nothing to do with it — a front-end animation system can be far harder than a CRUD endpoint."
+        },
+        {
+          "type": "single",
+          "question": "You ask for a landing page and get one that is technically fine but reads like every other landing page. What is the most useful next move?",
+          "options": [
+            "Ask again and hope for a better result",
+            "Rewrite it yourself from scratch",
+            "Name what is generic about it and give constraints that remove those options",
+            "Switch to a different model"
+          ],
+          "correct": [2],
+          "why": "Generic output is the average of everything the model has seen, which is exactly what you get when nothing rules anything out. Every constraint you add removes a wrong answer."
+        },
+        {
+          "type": "single",
+          "question": "What is the practical reason to read generated code rather than only running it?",
+          "options": [
+            "So you can write it yourself next time",
+            "So you can change it, judge it, and know what will break",
+            "Because reading code is faster than testing it",
+            "Because generated code is usually wrong"
+          ],
+          "correct": [1],
+          "why": "You do not need to be able to write it from memory. You need to be able to change it on request, judge whether it is any good, and predict what a change will affect. That is the whole difference between owning a site and merely possessing one."
+        }
+      ]
+    },
+    {
+      "slug": "claude-fundamentals",
+      "level": "mastering-claude",
+      "title": "Claude Fundamentals",
+      "subtitle": "Can you direct a model?",
+      "passing_score": 70,
+      "questions": [
+        {
+          "type": "prompt",
+          "question": "Which prompt gives Claude the most useful context?",
+          "options": [
+            "Build me a website for a dentist.",
+            "Build a modern, professional website for a dental practice.",
+            "Build a one-page site for a two-dentist practice in Utrecht whose visitors are mostly nervous first-timers. The one action is booking an appointment. Calm, plenty of whitespace, large readable type, no stock smiles.",
+            "Build a dentist website with a hero, services, about, and contact section."
+          ],
+          "correct": [2],
+          "why": "Only the third names the audience, the emotional state they arrive in, the single action, and what to avoid. The fourth names structure but leaves every judgement call open — and structure without intent is how you get a page that is organised and still says nothing."
+        },
+        {
+          "type": "single",
+          "question": "What actually happens when you say 'remember what we discussed earlier' in a fresh conversation?",
+          "options": [
+            "The model retrieves your previous session",
+            "Nothing — a new conversation starts with no memory of the old one",
+            "It reads your project files automatically",
+            "It asks you to log in"
+          ],
+          "correct": [1],
+          "why": "Context is what is in the current conversation, nothing more. This is why re-establishing context at the start of a session is a skill, not a chore."
+        },
+        {
+          "type": "multi",
+          "question": "Which of these are constraints, in the useful sense? Select all that apply.",
+          "options": [
+            "No external libraries",
+            "Make it look nice",
+            "Must work at 360px wide",
+            "Use semantic HTML and keep contrast above 4.5:1"
+          ],
+          "correct": [0, 2, 3],
+          "why": "A constraint rules something out in a way you could check afterwards. 'Make it look nice' rules nothing out and cannot be verified, so it changes nothing about the output."
+        },
+        {
+          "type": "single",
+          "question": "You paste 400 lines of your own CSS and ask for a change to one component. What should you do to get a reliable answer?",
+          "options": [
+            "Paste more of the file for safety",
+            "Say which component, what should change, and what must not change",
+            "Ask for a full rewrite so it is consistent",
+            "Remove the comments first"
+          ],
+          "correct": [1],
+          "why": "Working with existing code is mostly about fencing the change. Naming what must stay the same is what stops a helpful model from redesigning three things you liked."
+        },
+        {
+          "type": "tf",
+          "question": "A longer prompt is always a better prompt.",
+          "options": ["True", "False"],
+          "correct": [1],
+          "why": "Length is a side effect, not the goal. A long prompt full of adjectives is still vague; a short prompt that names the audience, the action and two hard constraints is not."
+        },
+        {
+          "type": "single",
+          "question": "Which sentence gives real design direction?",
+          "options": [
+            "Make it modern and clean",
+            "Use a nice font and good spacing",
+            "Editorial layout: one accent colour, oversized headline set tight, generous whitespace, asymmetric rows, no cards",
+            "Make it look like Apple"
+          ],
+          "correct": [2],
+          "why": "The third names decisions a developer could act on and you could check. 'Modern and clean' and 'like Apple' are compliments, not instructions — and the model will resolve them into the most average version of that idea."
+        },
+        {
+          "type": "scenario",
+          "question": "Claude gives you a component that works, but the class names clash with your existing system. What is the highest-value response?",
+          "options": [
+            "Accept it and rename by hand afterwards",
+            "Tell Claude your naming convention and ask it to conform, then reuse that instruction for the rest of the session",
+            "Start a new conversation",
+            "Ask it to avoid classes entirely"
+          ],
+          "correct": [1],
+          "why": "Conventions are context. Stating one once and reusing it turns a series of one-off corrections into a session that stays on your rails."
+        },
+        {
+          "type": "multi",
+          "question": "Which parts belong in a first development prompt? Select all that apply.",
+          "options": ["The goal", "The audience", "What to avoid", "How grateful you are"],
+          "correct": [0, 1, 2],
+          "why": "Goal, audience and exclusions all change the output. Politeness does not — it is fine to be polite, but it is not doing any work."
+        },
+        {
+          "type": "single",
+          "question": "You want three variations of a hero to choose between. What is the reliable way to ask?",
+          "options": [
+            "Ask for a hero, then ask again twice",
+            "Ask for three variations that differ on one named axis, in one message",
+            "Ask for 'some options'",
+            "Ask for a hero and say 'be creative'"
+          ],
+          "correct": [1],
+          "why": "Naming the axis — layout, tone, density — makes the variations genuinely different and comparable. 'Some options' produces three versions of the same idea."
+        },
+        {
+          "type": "tf",
+          "question": "If the first result is wrong, the fastest fix is usually to rewrite the prompt rather than to describe the problem.",
+          "options": ["True", "False"],
+          "correct": [1],
+          "why": "Describing what is wrong keeps everything that was right. Rewriting from scratch throws away the parts you had already got working, and often reintroduces problems you had already fixed."
+        }
+      ]
+    },
+    {
+      "slug": "prompt-engineering-assessment",
+      "level": "prompt-engineering-for-developers",
+      "title": "Prompt Engineering Assessment",
+      "subtitle": "Nine shapes, one session.",
+      "passing_score": 70,
+      "draft": true,
+      "questions": []
+    },
+    {
+      "slug": "debugging-challenge",
+      "level": "debugging-with-claude",
+      "title": "Debugging Challenge",
+      "subtitle": "Find the cause, not the symptom.",
+      "passing_score": 70,
+      "draft": true,
+      "questions": []
+    },
+    {
+      "slug": "final-assessment",
+      "level": "ship-it",
+      "title": "Final Assessment",
+      "subtitle": "Everything, at once.",
+      "passing_score": 70,
+      "draft": true,
+      "questions": []
+    }
+  ],
+
+  "prompts": [
+    {
+      "category": "Start",
+      "slug": "project-scaffold",
+      "title": "Start a project from nothing",
+      "purpose": "Opens a session with enough context that the first result is worth editing.",
+      "body": "I am building a one-page website for {WHO}. Their visitors are {AUDIENCE}, and the single thing the page must get them to do is {ACTION}.\n\nBefore writing any code, propose a section-by-section structure and tell me what you would put in each section and why. Do not write HTML yet.\n\nConstraints: plain HTML, CSS and JavaScript in three files. No frameworks, no external libraries, no stock imagery. Must be readable at 360px wide.",
+      "explanation": {
+        "context": "Who the site is for and who reads it — every layout decision resolves against this.",
+        "constraints": "Three files, no dependencies, a hard minimum width. Each one removes a category of wrong answer.",
+        "output": "A structure with reasoning, not code. You review the plan before anything is expensive to change.",
+        "iteration": "Once the structure is agreed, ask for one section at a time and keep this message in the conversation."
+      }
+    },
+    {
+      "category": "Design",
+      "slug": "design-system",
+      "title": "Define a design system before building",
+      "purpose": "Stops the model from inventing a new colour and a new spacing value in every section.",
+      "body": "Define a small design system for this project before we build anything.\n\nGive me: a colour set of no more than six values with the role of each; a type scale of five sizes with line-height and letter-spacing; a spacing scale based on a single unit; and a border-radius scale.\n\nWrite them as CSS custom properties on :root. Every later component must use only these values — no literal colours or pixel values outside this block.",
+      "explanation": {
+        "context": "The model is told there will be later components, so it designs a system rather than one page.",
+        "constraints": "Fixed counts force real decisions. 'No literals outside this block' is checkable in review.",
+        "output": "A token block you can read in thirty seconds and reuse in every prompt that follows.",
+        "iteration": "Paste the token block at the top of later prompts instead of re-describing the style."
+      }
+    },
+    {
+      "category": "Design",
+      "slug": "hero-section",
+      "title": "Build a hero that is not a template",
+      "purpose": "Gets a first screen with a point of view instead of headline-subtitle-button.",
+      "body": "Build the hero section only.\n\nThe message is: {ONE SENTENCE}. The single action is {ACTION}.\n\nArt direction: oversized headline set tight, one accent colour from the tokens, generous whitespace, asymmetric composition, no card, no gradient, no stock imagery. The supporting line must be under 20 words.\n\nUse only the design tokens already defined. Return the HTML and the CSS for this section, nothing else.",
+      "explanation": {
+        "context": "One message and one action, so the section has a job.",
+        "constraints": "The exclusions are doing most of the work — each removes a default the model would otherwise reach for.",
+        "output": "Scoped to one section, so you can judge it properly instead of skimming a whole page.",
+        "iteration": "Ask for two more versions that differ only in composition, then choose."
+      }
+    },
+    {
+      "category": "Code",
+      "slug": "component-spec",
+      "title": "Ask for a component, not a snippet",
+      "purpose": "Produces a component you can reuse rather than markup you will paste twice.",
+      "body": "Build a reusable {COMPONENT} component.\n\nStates to handle: rest, hover, focus-visible, active, disabled, loading.\nIt must work on a light and a dark surface, be operable by keyboard, and use only the existing design tokens.\n\nGive me the markup, the CSS, and one sentence on how to use it. Keep all its styles under a single class namespace.",
+      "explanation": {
+        "context": "Naming it a component tells the model it will be used more than once.",
+        "constraints": "Listing the states is what stops you discovering the missing focus style two weeks later.",
+        "output": "Markup, CSS and usage — enough to drop in and reuse.",
+        "iteration": "Ask for a variant by naming only what differs from the base."
+      }
+    },
+    {
+      "category": "Responsive",
+      "slug": "responsive-pass",
+      "title": "Do a responsive pass on real widths",
+      "purpose": "Turns 'make it responsive' into something you can verify.",
+      "body": "Review this section for these widths: 360, 768, 1024, 1440.\n\nFor each width tell me what breaks and why before you change anything. Then give me the smallest set of changes that fixes it.\n\nRules: no fixed pixel widths on containers, no horizontal page scroll at any width, tap targets at least 44px, and text must not drop below 15px.",
+      "explanation": {
+        "context": "Named widths turn a vague quality into a test.",
+        "constraints": "Four hard rules that cover the majority of real responsive failures.",
+        "output": "Diagnosis first, then a minimal change set — so you are not handed a rewrite.",
+        "iteration": "Fix one width at a time and re-check the others; responsive fixes often trade against each other."
+      }
+    },
+    {
+      "category": "Debug",
+      "slug": "debug-root-cause",
+      "title": "Debug by describing, not guessing",
+      "purpose": "Gets a cause instead of a plausible-sounding patch.",
+      "body": "Something is wrong and I want the cause before a fix.\n\nWhat I expected: {EXPECTED}\nWhat happens instead: {ACTUAL}\nWhen it started: {WHEN}\nConsole output: {PASTE}\nRelevant code: {PASTE}\n\nList the possible causes in order of likelihood with the reasoning for each. Tell me what I can check to distinguish between them. Do not write a fix yet.",
+      "explanation": {
+        "context": "Expected, actual and timing are the three facts that make a bug diagnosable.",
+        "constraints": "'Do not write a fix yet' is the important line — it stops the conversation jumping to a patch.",
+        "output": "Ranked causes plus a way to tell them apart, so you learn something either way.",
+        "iteration": "Once you have confirmed the cause, ask for the smallest fix and say what must not change."
+      }
+    },
+    {
+      "category": "Animation",
+      "slug": "motion-system",
+      "title": "Define a motion system",
+      "purpose": "Stops every animation having its own random duration and easing.",
+      "body": "Define one motion system for this project.\n\nGive me duration tiers for micro interactions, UI transitions, content reveals and full-screen story moments, with one easing curve per tier and a sentence on when to use each.\n\nAnimate transform and opacity only. Include a prefers-reduced-motion rule that replaces every cinematic transition with a simple fade and leaves the interface fully usable.",
+      "explanation": {
+        "context": "A system, not an effect — the model designs for reuse.",
+        "constraints": "Transform and opacity only is a performance decision. Reduced motion is not optional.",
+        "output": "Tokens plus guidance, so later prompts can just say 'use the UI tier'.",
+        "iteration": "When something feels wrong, change the tier it uses before you change the number."
+      }
+    },
+    {
+      "category": "Refactor",
+      "slug": "state-management",
+      "title": "Get state under control",
+      "purpose": "For the moment a page turns into an application.",
+      "body": "This code has state scattered across several places. Before changing anything, list every piece of state, where it lives now, and who reads or writes it.\n\nThen propose a single structure that holds it, and show me how one existing feature would read from it. Do not rewrite everything yet.\n\nKeep it plain JavaScript, no libraries.",
+      "explanation": {
+        "context": "An inventory first — you cannot restructure what has not been listed.",
+        "constraints": "One feature migrated, not all of them, so you can judge the approach cheaply.",
+        "output": "A structure and a worked example.",
+        "iteration": "Migrate feature by feature and test after each one."
+      }
+    },
+    {
+      "category": "Refactor",
+      "slug": "data-model",
+      "title": "Write the data model down first",
+      "purpose": "Prevents an application built around whatever shape the first API response happened to have.",
+      "body": "I am building {APPLICATION}. Before any code, write the data model.\n\nFor each entity: its fields, their types, which are required, and how entities relate. Note where data is created, changed and deleted, and what must be true at all times.\n\nThen tell me which of these must be enforced on the server rather than in the browser, and why.",
+      "explanation": {
+        "context": "Naming the application lets the model infer entities you have not thought of.",
+        "constraints": "Asking what must hold at all times surfaces the rules that later become validation.",
+        "output": "A model plus a client/server split — the second half is the security-relevant part.",
+        "iteration": "Revisit the model whenever a feature does not fit it; that resistance is information."
+      }
+    },
+    {
+      "category": "Performance",
+      "slug": "empty-states",
+      "title": "Design the states nobody remembers",
+      "purpose": "Loading, empty and error states are where generated interfaces are thinnest.",
+      "body": "For each view in this application, design the loading, empty and error state.\n\nLoading: a skeleton matching the real layout, no spinner, no layout shift when content arrives.\nEmpty: explain what would normally be here and give the one action that fills it.\nError: say what went wrong in plain language and give a way forward. No apologies, no error codes as the headline.\n\nUse the existing tokens and components.",
+      "explanation": {
+        "context": "Applies to every view, so you get a consistent set rather than one nice empty state.",
+        "constraints": "Named rules per state — each one prevents a specific common failure.",
+        "output": "Designs for the three states, in your own system.",
+        "iteration": "Test by disconnecting the network and by deleting all your data."
+      }
+    },
+    {
+      "category": "SEO",
+      "slug": "seo-pass",
+      "title": "A useful SEO pass",
+      "purpose": "The parts that are structural rather than superstitious.",
+      "body": "Review this page for the structural parts of search visibility.\n\nCheck: one h1 that describes the page, a heading order with no skipped levels, a title and meta description written for a human, alt text that says what the image communicates, semantic landmarks, and a link to every page that should be reachable.\n\nTell me what is wrong and why it matters before changing anything. Ignore keyword density.",
+      "explanation": {
+        "context": "Scoped to structure, which is what actually holds up.",
+        "constraints": "'Ignore keyword density' rules out the folklore.",
+        "output": "Findings with reasoning, so you can decide what to act on.",
+        "iteration": "Fix headings first; most other findings depend on the document outline being right."
+      }
+    },
+    {
+      "category": "Final Polish",
+      "slug": "final-qa",
+      "title": "The pass before you ship",
+      "purpose": "One structured review instead of clicking around hoping.",
+      "body": "Do a final review of this site as if you were handing it to a paying client.\n\nGo through: spacing consistency, type scale adherence, alignment, colour usage against the tokens, hover and focus states on every interactive element, keyboard order, responsive behaviour at 360 / 768 / 1440, console errors, and layout shift on load.\n\nReturn a list of findings ordered by how much each one hurts, with the file and the reason. Do not fix anything yet.",
+      "explanation": {
+        "context": "The client framing raises the standard the review is measured against.",
+        "constraints": "A named checklist, so nothing is reviewed by vibe.",
+        "output": "A prioritised list you can work through, not a rewrite.",
+        "iteration": "Fix from the top, re-run the review, and stop when the remaining findings are genuinely cosmetic."
+      }
+    }
+  ]
+}

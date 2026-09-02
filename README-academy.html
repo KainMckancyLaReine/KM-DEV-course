@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setup — KM.dev Academy</title>
+<meta name="description" content="How to connect the KM.dev Academy backend.">
+<meta name="theme-color" content="#f4f3ef">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/01-foundation.css">
+<link rel="stylesheet" href="assets/css/02-chrome.css">
+<link rel="stylesheet" href="assets/css/03-sections.css">
+<link rel="stylesheet" href="assets/css/04-app.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="pt" aria-hidden="true"></div>
+
+<header class="nav is-stuck">
+  <div class="shell nav__inner">
+    <a class="brand" href="app-dashboard.html" aria-label="KM.dev Academy">
+      KM.dev<i class="brand__dot"></i><span class="brand__sub">Academy</span>
+    </a>
+    <nav class="nav__links" aria-label="Course" data-learning-nav></nav>
+    <div class="nav__right">
+      <button class="nav__link" type="button" data-open-palette aria-label="Search">
+        Search <kbd style="font-family:'Space Mono',monospace;font-size:10px;border:1px solid var(--line);border-radius:5px;padding:2px 5px;margin-left:6px">⌘K</kbd>
+      </button>
+      <div data-account style="display:flex;align-items:center;gap:10px"></div>
+    </div>
+  </div>
+</header>
+
+<main class="page-main" id="main" data-page="README-academy.html" data-space="app">
+<section class="app" style="padding-top:calc(var(--nav-h) + 40px)">
+  <div class="shell">
+    <div class="app__head"><div>
+      <span class="t-tag">Setup</span>
+      <h1 class="app__title" style="margin-top:14px">Connecting the backend.</h1>
+      <p class="t-lead" style="margin-top:16px">Five steps, about ten minutes. Until they are done the
+        academy runs in preview mode, which uses the same interface against a store in this browser.</p>
+    </div></div>
+
+    <div class="dash">
+      <div class="panel">
+        <div class="panel__head"><h3>What preview mode is</h3></div>
+        <p class="blk-p">Every screen, every interaction and every piece of course content is real.
+          What is not real is the account: sign-ups, sessions and progress live in
+          <code>localStorage</code> in the browser you are using, and they are gone if you clear it.
+          There is no server, so there is nothing to protect and nothing to trust.</p>
+        <p class="blk-p">It exists so the whole product can be walked through and judged before any
+          infrastructure is set up — not as a substitute for one. The banner says so on every page,
+          because a login screen that only pretends to be a login screen is worse than no login screen.</p>
+      </div>
+      <div class="panel">
+        <div class="panel__head"><h3>What changes when you connect it</h3></div>
+        <div class="minilist">
+          <div class="minilist__row"><span class="minilist__t">Accounts</span><span class="minilist__x">real, hashed by Supabase</span></div>
+          <div class="minilist__row"><span class="minilist__t">Sessions</span><span class="minilist__x">refreshed, survive a restart</span></div>
+          <div class="minilist__row"><span class="minilist__t">Password reset</span><span class="minilist__x">by email</span></div>
+          <div class="minilist__row"><span class="minilist__t">Progress</span><span class="minilist__x">Postgres, any device</span></div>
+          <div class="minilist__row"><span class="minilist__t">Authorization</span><span class="minilist__x">row level security</span></div>
+          <div class="minilist__row"><span class="minilist__t">Quiz grading</span><span class="minilist__x">server-side function</span></div>
+        </div>
+        <p class="t-small">Not one line of the interface changes. The data layer has two adapters
+          behind one API, and the config file decides which one runs.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:var(--gutter);display:flex;flex-direction:column;gap:var(--gutter)">
+      <div class="panel">
+        <div class="panel__head"><h3>01 — Create the project</h3></div>
+        <p class="blk-p">Make a new project at <a href="https://supabase.com" rel="noopener">supabase.com</a>.
+          The free tier is enough for this. Then open <strong>Settings → API</strong> and copy the
+          <strong>Project URL</strong> and the <strong>anon public</strong> key.</p>
+        <p class="t-small">The anon key is meant to be public — it identifies the project, it does not
+          grant access. Access is decided by the policies you install in the next step. Never put the
+          <em>service role</em> key anywhere near this repository.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel__head"><h3>02 — Install the schema</h3></div>
+        <p class="blk-p">In the SQL editor, run <code>db/schema.sql</code> and then <code>db/seed.sql</code>.
+          The first creates the tables, the row level security policies, the grading function and the
+          admin bootstrap table. The second fills in the course.</p>
+        <p class="t-small">Both are generated and committed, so a fresh environment is always one
+          copy-paste away from being identical to yours.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel__head"><h3>03 — Point the front end at it</h3></div>
+        <p class="blk-p">Open <code>assets/js/km-config.js</code> and paste the two values in:</p>
+        <div class="blk-code"><div class="blk-code__bar"><span>assets/js/km-config.js</span></div>
+          <div class="editor"><div class="editor__body">
+            <div class="code-line"><span class="code-line__n">1</span><span class="code-line__t">window.KM_CONFIG = {</span></div>
+            <div class="code-line"><span class="code-line__n">2</span><span class="code-line__t">  supabaseUrl: 'https://YOUR-PROJECT.supabase.co',</span></div>
+            <div class="code-line"><span class="code-line__n">3</span><span class="code-line__t">  supabaseAnonKey: 'YOUR-ANON-KEY',</span></div>
+            <div class="code-line"><span class="code-line__n">4</span><span class="code-line__t">  courseSlug: 'ai-web-developer'</span></div>
+            <div class="code-line"><span class="code-line__n">5</span><span class="code-line__t">};</span></div>
+          </div></div>
+        </div>
+        <p class="t-small">Commit it. The preview banner disappears on the next load and every screen
+          is talking to Postgres.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel__head"><h3>04 — Create the two accounts</h3></div>
+        <p class="blk-p">Go to <code>/signup.html</code> and create them normally:</p>
+        <ul class="blk-list">
+          <li class="blk-li"><i></i><span><strong>Kain</strong> — kain@km.dev. This address is in the
+            <code>admin_bootstrap</code> table that <code>seed.sql</code> installs, so the trigger that
+            creates the profile marks it as an admin at the moment of sign-up.</span></li>
+          <li class="blk-li"><i></i><span><strong>User B</strong> — userb@km.dev. An ordinary student
+            account, so you can see exactly what a student sees.</span></li>
+        </ul>
+        <p class="t-small">You choose both passwords in the browser. They are hashed by Supabase and
+          never appear in this repository — which is why there is no password written down anywhere in
+          it, including here.</p>
+        <p class="t-small">To add another admin later, either add the address to
+          <code>admin_bootstrap</code> before they sign up, or update their <code>role</code> in the
+          profiles table. A student cannot change their own role: a trigger rejects it.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel__head"><h3>05 — Check it refuses what it should</h3></div>
+        <p class="blk-p">Worth doing once, because it is the part nobody tests. Sign in as User B, open
+          the browser console and ask for something a student should not have:</p>
+        <div class="blk-code"><div class="blk-code__bar"><span>console</span></div>
+          <div class="editor"><div class="editor__body">
+            <div class="code-line"><span class="code-line__n">1</span><span class="code-line__t">// as a student — returns only their own row</span></div>
+            <div class="code-line"><span class="code-line__n">2</span><span class="code-line__t">await KMDB.admin.users()   // throws: forbidden</span></div>
+            <div class="code-line"><span class="code-line__n">3</span><span class="code-line__t">// the correct answers to a quiz are not selectable at all</span></div>
+          </div></div>
+        </div>
+        <p class="t-small">Both refusals come from the database, not from the interface. That is the
+          difference between hiding a button and having a permission.</p>
+      </div>
+    </div>
+
+    <div class="cta-band" style="margin-top:var(--gutter)">
+      <div>
+        <span class="t-tag">Everything else</span>
+        <h3 class="t-h3" style="margin-top:14px">The course itself is version-controlled.</h3>
+        <p class="t-lead" style="margin-top:14px">Levels, lessons, assessments, projects and prompts all
+          live in <code>content/*.json</code>. Run <code>build/gen_seed.py</code> and both the SQL seed
+          and the browser copy are regenerated from it.</p>
+      </div>
+      <a class="btn" href="app-dashboard.html"><span class="btn__label">Open the academy</span><i class="btn__arrow"></i></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer on-dark">
+  <div class="shell">
+    <div class="footer__bottom" style="border-top:0;padding-top:0">
+      <span class="mono">© 2026 KM.dev Academy</span>
+      <span class="mono">Learn · Build · Understand · Iterate · Ship</span>
+      <a class="mono" href="index.html">Back to km.dev</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/core.js"></script>
+<script src="assets/js/modules.js"></script>
+<script src="assets/js/km-config.js"></script>
+<script src="assets/js/seed-data.js"></script>
+<script src="assets/js/km-data.js"></script>
+<script src="assets/js/km-app.js"></script>
+</body>
+</html>

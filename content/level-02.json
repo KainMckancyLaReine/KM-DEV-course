@@ -1,0 +1,503 @@
+{
+  "lessons": [
+    {
+      "slug": "understanding-claude",
+      "title": "Understanding Claude",
+      "description": "What is actually happening when you send a message — and why that changes how you write one.",
+      "minutes": 10,
+      "content": [
+        {"t": "h", "text": "It is completing your document."},
+        {"t": "p", "text": "Underneath the conversation, the model is doing one thing: reading everything in front of it and producing what most plausibly comes next. Not looking anything up. Not running your code. Reading the whole conversation as one document and continuing it."},
+        {"t": "p", "text": "That sounds reductive until you notice what follows from it. **Everything in the conversation shapes the answer** — your first message, its own earlier replies, the code you pasted, the tone you used. If you want a different answer, change the document."},
+
+        {"t": "figure", "kind": "context", "caption": "Everything visible to the model when it answers"},
+
+        {"t": "h", "text": "Three consequences you can act on"},
+        {"t": "p", "text": "**It has no memory between conversations.** Yesterday's session is gone. Not hidden — gone. Re-establishing context at the start of a session is part of the job, not a workaround."},
+        {"t": "p", "text": "**Its own replies become part of the input.** If it makes a wrong assumption in message two and you do not correct it, that assumption is now context for messages three through twenty. Correct errors immediately, while they are cheap."},
+        {"t": "p", "text": "**Vagueness resolves to the average.** Ask for 'a modern website' and you get the centre of everything that has ever been called modern. That is not the model failing; that is the only honest answer to an unspecific question."},
+
+        {"t": "callout", "kind": "note", "title": "Why generic output is your fault, in a useful way", "text": "This is good news. If the output is average because the input was unspecific, then specificity is a lever you control. Nothing needs to change about the tool for your results to get dramatically better."},
+
+        {"t": "h", "text": "Confidence is not a signal"},
+        {"t": "p", "text": "The model has no separate channel for uncertainty. A guess is written in the same voice as a fact. You cannot read confidence off the prose — which means checking is not paranoia, it is the only available method."},
+
+        {"t": "demo", "kind": "context-compare", "title": "Watch specificity change the answer"},
+
+        {"t": "prompt", "n": "01", "title": "Make it show its reasoning",
+          "body": "Before you answer, tell me:\n1. What you understood my goal to be\n2. What you are assuming because I did not say\n3. What you would need to know to give a better answer\n\nThen answer.\n\nMy question: {QUESTION}",
+          "why": {
+            "context": "Forces the model's interpretation into the open before it commits to an answer.",
+            "constraints": "Three numbered items, in order, so it cannot skip the uncomfortable second one.",
+            "output": "Its reading of you, its assumptions, its gaps — and only then the answer.",
+            "iteration": "Item 2 is the gold. Every assumption listed is a decision you have not made yet."
+          }},
+
+        {"t": "task", "title": "Find your own vagueness", "steps": [
+          "Write a request for something you actually want to build.",
+          "Run it through the prompt above rather than sending it directly.",
+          "Read the assumptions it lists.",
+          "Rewrite your original request so that at least three of those assumptions are no longer necessary."
+        ], "done": "You have watched a vague request become a specific one, and you can now feel the difference in the answers."},
+
+        {"t": "quiz", "q": "You start a new conversation and say 'continue where we left off yesterday'. What happens?", "type": "single",
+          "options": [
+            "It retrieves the previous conversation",
+            "It has no access to it and will either say so or invent a plausible continuation",
+            "It searches your project files",
+            "It asks you to authenticate"
+          ],
+          "correct": [1],
+          "why": "A new conversation is empty. The second half of that answer is the dangerous part: asked to continue something it cannot see, a model may produce a fluent continuation of a conversation that never happened."},
+
+        {"t": "summary", "points": [
+          "The model continues the document in front of it. That document is your whole conversation.",
+          "No memory across sessions; its own replies become context within one.",
+          "Vague input resolves to average output — which makes specificity your lever.",
+          "Confidence carries no information about correctness."
+        ]}
+      ]
+    },
+
+    {
+      "slug": "how-claude-interprets-instructions",
+      "title": "How Claude interprets instructions",
+      "description": "The gap between what you said and what you meant, and how to close it.",
+      "minutes": 11,
+      "content": [
+        {"t": "h", "text": "It does what you said."},
+        {"t": "p", "text": "Almost every 'the AI got it wrong' moment is really a gap between the instruction and the intention. The model resolved an ambiguity you did not know you had left open. Learning to spot those ambiguities before you send is most of what prompting is."},
+
+        {"t": "h", "text": "Where the gaps hide"},
+        {"t": "p", "text": "**Words that sound like specifications but are not.** Modern, clean, professional, nice, sleek, minimal. Each one is a compliment about a result, not an instruction about how to get there. Two people using 'minimal' can mean opposite layouts."},
+        {"t": "p", "text": "**Scope you assumed was obvious.** 'Fix the header' — only the header, or also the navigation inside it? 'Make it responsive' — down to what width? On what device?"},
+        {"t": "p", "text": "**Silence about what must not change.** You ask for a colour change. You get a colour change and a restructured layout, because nothing said the layout was settled."},
+
+        {"t": "figure", "kind": "anatomy", "caption": "The four parts of an instruction that lands"},
+
+        {"t": "h", "text": "The fix: say what you mean by the word"},
+        {"t": "p", "text": "Do not remove 'minimal' from your vocabulary. Define it inline. 'Minimal — meaning one accent colour, no borders, no shadows, whitespace instead of dividers.' Now it is checkable, and you have also just clarified it for yourself."},
+
+        {"t": "code", "lang": "js", "filename": "before-and-after.txt", "code": "// vague\n\"Make the card look better and more modern.\"\n\n// specific\n\"Increase the card's internal padding to 32px, remove the drop\n shadow, replace the 1px border with a 1px hairline in --line,\n and set the title to the h3 size from the type scale.\n Do not change the layout or the copy.\""},
+
+        {"t": "callout", "kind": "tip", "title": "Add the fence", "text": "Almost every change instruction should end with a sentence saying what must stay the same. 'Do not change the layout, the copy, or the class names.' One line, and you stop getting helpful surprises."},
+
+        {"t": "h", "text": "Literal by default"},
+        {"t": "p", "text": "Ask for 'a few examples' and you might get three, or seven. Ask for three and you get three. Numbers, file names, element names and exact values all collapse ambiguity for free — use them wherever you actually have a preference."},
+
+        {"t": "demo", "kind": "instruction-gap", "title": "Spot the ambiguity"},
+
+        {"t": "prompt", "n": "02", "title": "Have it find your ambiguities first",
+          "body": "Here is an instruction I am about to send you:\n\n\"{YOUR INSTRUCTION}\"\n\nDo not carry it out. Instead, list every way it could reasonably be interpreted differently from what I probably meant. For each, say what extra sentence would remove the ambiguity.",
+          "why": {
+            "context": "Your real instruction, examined before it costs you a wrong build.",
+            "constraints": "'Do not carry it out' is essential or you get the work instead of the review.",
+            "output": "A list of ambiguities with the exact sentence that closes each one.",
+            "iteration": "Paste the improved instruction back and compare the result with what you would have got."
+          }},
+
+        {"t": "task", "title": "Rewrite three instructions", "steps": [
+          "Take these: 'make it look professional', 'fix the mobile version', 'clean up this code'.",
+          "Rewrite each one so that a stranger could tell whether it had been done correctly.",
+          "Send both versions of one of them in separate conversations.",
+          "Compare the two results side by side."
+        ], "done": "You have measured the cost of a vague instruction in output quality, on your own work."},
+
+        {"t": "quiz", "q": "You ask for a colour change and get a redesigned layout as well. What was missing?", "type": "single",
+          "options": [
+            "A more powerful model",
+            "A sentence saying what must not change",
+            "More detail about the colour",
+            "A shorter prompt"
+          ],
+          "correct": [1],
+          "why": "Without a fence, an unmentioned area is fair game. Naming what is settled is as important as naming what should change — and it takes one sentence."},
+
+        {"t": "summary", "points": [
+          "Wrong output is usually an ambiguity you left open.",
+          "Adjectives like 'modern' and 'clean' specify nothing until you define them inline.",
+          "State scope: what changes, and explicitly what does not.",
+          "Exact numbers and names remove ambiguity at no cost."
+        ]}
+      ]
+    },
+
+    {
+      "slug": "context",
+      "title": "Context",
+      "description": "The single highest-leverage thing you control.",
+      "minutes": 12,
+      "content": [
+        {"t": "h", "text": "Context is everything."},
+        {"t": "p", "text": "Claude can only work with the information you give it. Not your repository, not your client meeting, not the thing you decided in the shower. If it is not in the conversation, it does not exist — and the model will fill the gap with the most average plausible thing."},
+
+        {"t": "figure", "kind": "context", "caption": "The four kinds of context, and what each one buys you"},
+
+        {"t": "h", "text": "The four kinds worth giving"},
+        {"t": "p", "text": "**Project context** — what you are building and who for. Changes structure and tone.\n**Technical context** — stack, files, versions, conventions. Changes the code shape.\n**Design context** — tokens, references, rules. Changes how it looks.\n**Conversational context** — what you already agreed. Changes how much you have to repeat."},
+
+        {"t": "h", "text": "More is not automatically better"},
+        {"t": "p", "text": "Pasting your entire codebase is not context, it is noise. The useful test for any piece of information: **would the answer be different without it?** If not, leave it out. A focused 200 words beats an unfocused 2,000."},
+
+        {"t": "demo", "kind": "context-compare", "title": "The same request at three levels of context"},
+
+        {"t": "callout", "kind": "tip", "title": "Keep a project brief", "text": "Write your goal, audience, stack, conventions and design tokens once, in a text file. Paste it at the top of any new session. Ten seconds of copying replaces ten minutes of re-explaining, and the model stops rediscovering your project every day."},
+
+        {"t": "h", "text": "Context decays as a session grows"},
+        {"t": "p", "text": "In a long conversation, something said early can lose against forty messages of more recent material. When a rule you set at the start starts slipping, restate it. Not as a complaint — as a line: 'Reminder: three files, no libraries, tokens only.' It works, and it costs nothing."},
+
+        {"t": "code", "lang": "js", "filename": "project-brief.txt", "code": "PROJECT — Vlaam Bakery, one page\nAUDIENCE — locals, mostly on phones, mostly before 9am\nONE ACTION — see today's bread and the opening hours\nSTACK — plain HTML/CSS/JS, three files, no libraries\nCONVENTIONS — BEM class names, tokens on :root, no inline styles\nTOKENS — --ink #0d0d0d  --paper #fff  --accent #c6ff4a\n          --space 8px  --radius 24px\nCONSTRAINTS — works from 360px, no stock photography,\n              readable in bright daylight on a phone"},
+
+        {"t": "prompt", "n": "03", "title": "Open with a brief",
+          "body": "{PASTE YOUR PROJECT BRIEF}\n\nThat is the whole project. Read it back to me in three sentences so I can check you have understood it, and tell me the single most important decision that the brief does not yet answer.\n\nDo not write code yet.",
+          "why": {
+            "context": "The entire brief in one message, so nothing has to be inferred.",
+            "constraints": "A read-back in three sentences forces compression, which exposes misunderstanding.",
+            "output": "Confirmation plus the most important missing decision.",
+            "iteration": "Answer that question, add it to the brief file, and reuse the improved brief next session."
+          }},
+
+        {"t": "task", "title": "Write your brief", "steps": [
+          "Create `brief.txt` and fill in the six lines from the example for a project you want to build.",
+          "Open a session with the prompt above.",
+            "Answer the missing decision it identifies and add the answer to the file.",
+          "Keep the file. You will paste it at the start of every session from here on."
+        ], "done": "You have a reusable context block. This one file will save you more time than any prompt template."},
+
+        {"t": "quiz", "q": "Which piece of context would most change the answer to 'build me a hero section'?", "type": "single",
+          "options": [
+            "That you prefer tabs to spaces",
+            "That the visitors are nervous first-time patients and the one action is booking",
+            "That you are using VS Code",
+            "That you would like it to look nice"
+          ],
+          "correct": [1],
+          "why": "Audience and the single action change the message, the hierarchy, the tone and the layout. Editor and indentation change nothing about the design, and 'look nice' specifies nothing at all."},
+
+        {"t": "summary", "points": [
+          "If it is not in the conversation, it does not exist.",
+          "Four kinds: project, technical, design, conversational.",
+          "Judge each addition by whether it would change the answer.",
+          "Keep a brief file and reuse it; restate key rules in long sessions."
+        ]}
+      ]
+    },
+
+    {
+      "slug": "writing-your-first-development-prompt",
+      "title": "Writing your first development prompt",
+      "description": "The six-part structure, used on something real.",
+      "minutes": 13,
+      "content": [
+        {"t": "h", "text": "Six parts, in this order."},
+        {"t": "p", "text": "A development prompt that works has the same shape every time. Not a template to paste — a checklist to run through, so nothing important is left to inference."},
+
+        {"t": "figure", "kind": "anatomy", "caption": "The six parts of a development prompt"},
+
+        {"t": "list", "ordered": true, "items": [
+          "**Goal** — what this thing must do, in one sentence.",
+          "**Context** — who it is for, what it is part of, what already exists.",
+          "**Constraints** — what is ruled out. Technical and creative.",
+          "**Direction** — the specific visual or structural decisions you have already made.",
+          "**Scope** — exactly what you want back, and what you do not.",
+          "**Output format** — files, language, whether you want explanation with it."
+        ]},
+
+        {"t": "h", "text": "Watch it assemble"},
+        {"t": "p", "text": "Start with the request everyone writes, then add one part at a time and notice what each addition removes from the space of possible answers."},
+
+        {"t": "code", "lang": "js", "filename": "assembling.txt", "code": "1  Build a hero section.\n\n2  + goal\n   Build a hero section whose job is to get a visitor to book a table.\n\n3  + context\n   ...for a twelve-seat restaurant. Visitors are mostly on phones,\n   deciding between three places, in a hurry.\n\n4  + constraints\n   ...Plain HTML and CSS, no libraries, no stock photography,\n   readable at 360px, supporting line under 20 words.\n\n5  + direction\n   ...Oversized headline set tight, one accent colour, generous\n   whitespace, asymmetric, no card, no gradient.\n\n6  + scope and output\n   Return only the HTML and CSS for this section, using the tokens\n   below. Then list three decisions I might disagree with."},
+
+        {"t": "p", "text": "Line 1 could be answered ten thousand ways. Line 6 could be answered perhaps a dozen — and all dozen are things you would consider shipping. That narrowing is the entire skill."},
+
+        {"t": "demo", "kind": "prompt-builder", "title": "Build one, part by part"},
+
+        {"t": "callout", "kind": "note", "title": "You are also writing this for yourself", "text": "Half the value arrives before you press send. You cannot state the goal, the audience and the one action without deciding them — and most weak websites are weak because nobody ever did."},
+
+        {"t": "prompt", "n": "04", "title": "Your first real development prompt",
+          "body": "GOAL — Build a hero section that gets a visitor to {ACTION}.\n\nCONTEXT — This is the first screen of a one-page site for {WHO}. Visitors are {AUDIENCE}, usually on a phone, usually deciding between options.\n\nCONSTRAINTS — Plain HTML and CSS. No libraries. No stock photography. Must be readable at 360px. Supporting line under 20 words.\n\nDIRECTION — Oversized headline set tight. One accent colour. Generous whitespace. Asymmetric composition. No card, no gradient, no shadow.\n\nTOKENS —\n{PASTE TOKENS}\n\nSCOPE — This section only. Do not build the rest of the page.\n\nOUTPUT — The HTML and the CSS, in two blocks. Then list three decisions I might reasonably disagree with.",
+          "why": {
+            "context": "Audience and situation are stated, so hierarchy and tone follow from something real.",
+            "constraints": "Six exclusions, each removing a default the model would otherwise reach for.",
+            "output": "One section, two blocks, plus a list of debatable calls — reviewable in one sitting.",
+            "iteration": "Argue with one of the three decisions. That exchange teaches you more than the code did."
+          }},
+
+        {"t": "task", "title": "Send it for real", "steps": [
+          "Fill in every placeholder for a project of your own.",
+          "Send it. Save the result as `index.html` and `styles.css`.",
+          "Open it at 360px wide and read it as if you were the visitor.",
+          "Pick one of the three decisions it listed and push back on it.",
+          "Keep the improved version."
+        ], "done": "You have written a complete development prompt and had a real exchange about the result. Every build from here is this, at a larger scale."},
+
+        {"t": "quiz", "q": "Which part of the six is most often missing, and most expensive when it is?", "type": "single",
+          "options": ["Output format", "Constraints", "Goal", "Scope"],
+          "correct": [1],
+          "why": "Constraints are what remove wrong answers. Without them the output is defensible but generic, and you spend the next hour discovering one by one what you did not want."},
+
+        {"t": "summary", "points": [
+          "Goal, context, constraints, direction, scope, output — in that order.",
+          "Each part narrows the space of possible answers.",
+          "Scope to one piece so you can genuinely review it.",
+          "Ask for debatable decisions and argue with one."
+        ]}
+      ]
+    },
+
+    {
+      "slug": "good-prompts-vs-bad-prompts",
+      "title": "Good prompts vs bad prompts",
+      "description": "Six real pairs, and what separates them.",
+      "minutes": 12,
+      "content": [
+        {"t": "h", "text": "The difference is never length."},
+        {"t": "p", "text": "It is whether a stranger could tell if the result was correct. That is the test. Run any prompt through it and you will know immediately whether it is doing any work."},
+
+        {"t": "demo", "kind": "versus", "title": "Six pairs, side by side"},
+
+        {"t": "h", "text": "Pair one — the layout"},
+        {"t": "p", "text": "**Weak:** Make the page layout better.\n**Strong:** The three sections currently stack in one column at every width. Above 900px, put the image and the text side by side at 5:7, with 48px between them. Keep the stacked order on mobile."},
+        {"t": "p", "text": "'Better' cannot be checked. Widths, ratios and gaps can be measured with a ruler."},
+
+        {"t": "h", "text": "Pair two — the bug"},
+        {"t": "p", "text": "**Weak:** The menu is broken.\n**Strong:** Tapping the menu button below 768px opens the panel, but tapping it again does not close it. Console shows no errors. It worked before I added the scroll listener in script.js line 40."},
+        {"t": "p", "text": "The second gives expected, actual, boundary and timing — four facts, and the cause is usually obvious from them alone."},
+
+        {"t": "h", "text": "Pair three — the style"},
+        {"t": "p", "text": "**Weak:** Make it feel premium.\n**Strong:** Premium here means: one accent colour used no more than twice per screen, headline tracking at -0.03em, no shadows, hairline borders in --line, and at least 96px of vertical space between sections."},
+        {"t": "p", "text": "Same word, defined inline. Now it is five checkable rules instead of a hope."},
+
+        {"t": "h", "text": "Pair four — the refactor"},
+        {"t": "p", "text": "**Weak:** Clean up this code.\n**Strong:** This file repeats the same card markup four times with different text. Extract it into one function that takes title, body and href. Do not change the rendered HTML or the class names."},
+
+        {"t": "h", "text": "Pair five — the exploration"},
+        {"t": "p", "text": "**Weak:** Give me some options for the hero.\n**Strong:** Give me three hero variations that differ only in composition: one centred, one left-aligned with the image right, one full-bleed with the headline overlaid. Same copy and tokens in all three."},
+
+        {"t": "h", "text": "Pair six — the review"},
+        {"t": "p", "text": "**Weak:** Is this good?\n**Strong:** Review this section for spacing consistency against the 8px scale, type scale adherence, contrast ratios, and keyboard operability. List findings worst-first with the reason. Do not fix anything yet."},
+
+        {"t": "callout", "kind": "tip", "title": "The stranger test", "text": "Could someone who has never met you tell whether the result satisfies the prompt? If not, the prompt is a wish. Rewrite it until the answer is yes."},
+
+        {"t": "prompt", "n": "05", "title": "Grade your own prompt",
+          "body": "Grade this prompt out of 10 on: clarity of goal, sufficiency of context, quality of constraints, checkability of the result.\n\n\"{YOUR PROMPT}\"\n\nFor each category, say what is missing and give the exact sentence that would fix it. Then show me the rewritten prompt.",
+          "why": {
+            "context": "Four named categories rather than a general opinion.",
+            "constraints": "Asking for the exact fixing sentence prevents 'be more specific' as feedback.",
+            "output": "Scores, gaps, fixes and a rewrite you can use immediately.",
+            "iteration": "Run both versions and compare. You only need to do this a few times before you internalise it."
+          }},
+
+        {"t": "task", "title": "Grade three of your own", "steps": [
+          "Find three prompts you have actually sent this week.",
+          "Run each through the grading prompt.",
+            "Note which category scores lowest across all three — that is your personal weak spot.",
+          "Write one sentence you will add to every prompt from now on to cover it."
+        ], "done": "You know your own failure pattern, which is more useful than any template."},
+
+        {"t": "quiz", "q": "Which prompt gives Claude the most useful context?", "type": "prompt",
+          "options": [
+            "Make a website.",
+            "Make a modern website for my business.",
+            "Build a responsive landing page for a premium architecture studio: 12-column grid, oversized headlines, three project rows, one call to action, no stock imagery.",
+            "Build a website with a hero, about, services and contact section."
+          ],
+          "correct": [2],
+          "why": "Only the third names the subject, the structure, the visual direction and an exclusion. The fourth names sections but leaves every judgement open — organised, and still says nothing."},
+
+        {"t": "summary", "points": [
+          "The test is checkability, not length.",
+          "Define your adjectives inline or they specify nothing.",
+          "For bugs: expected, actual, boundary, timing.",
+          "For options: name the axis they should differ on."
+        ]}
+      ]
+    },
+
+    {
+      "slug": "giving-claude-constraints",
+      "title": "Giving Claude constraints",
+      "description": "Every constraint removes a wrong answer. That is the whole mechanism.",
+      "minutes": 11,
+      "content": [
+        {"t": "h", "text": "Constraints are not restrictions. They are direction."},
+        {"t": "p", "text": "Without them, the model chooses from everything it has ever seen and lands on the middle. Each constraint you add deletes a region of that space. Enough of them and what remains is your work rather than the average of everyone's."},
+
+        {"t": "figure", "kind": "narrowing", "caption": "What each constraint removes"},
+
+        {"t": "h", "text": "Five kinds"},
+        {"t": "p", "text": "**Technical** — plain HTML/CSS/JS, three files, no libraries, must work in Safari 16.\n**Structural** — one h1, semantic landmarks, no nested grids deeper than two.\n**Visual** — one accent colour, no shadows, no gradients, hairline borders only.\n**Behavioural** — works without JavaScript, keyboard operable, respects reduced motion.\n**Negative** — no cards, no carousels, no stock photography, no emoji."},
+
+        {"t": "callout", "kind": "note", "title": "Negative constraints are underrated", "text": "Saying what you do not want is often faster and more precise than describing what you do. 'No cards' rules out a whole family of layouts in two words, and forces something more considered in their place."},
+
+        {"t": "h", "text": "Make them checkable"},
+        {"t": "p", "text": "A constraint you cannot verify is a preference. 'Fast' is a preference. 'No single asset over 200KB, no layout shift on load' is a constraint — you can open the Network panel and settle it."},
+
+        {"t": "code", "lang": "js", "filename": "constraints.txt", "code": "preference          →  constraint\n\nfast                →  no asset over 200KB, no layout shift\naccessible          →  keyboard operable, contrast 4.5:1, visible focus\nresponsive          →  no horizontal scroll from 360px to 1920px\nclean code          →  no repeated values, tokens only, no file over 300 lines\nsubtle animation    →  transform and opacity only, nothing over 600ms"},
+
+        {"t": "demo", "kind": "constraint-lab", "title": "Add constraints, watch the space shrink"},
+
+        {"t": "h", "text": "How many is too many"},
+        {"t": "p", "text": "Constraints that conflict produce confused output. If you ask for maximum whitespace and maximum information density, something has to give and the model will pick for you. When results start feeling compromised, look for two rules pulling in opposite directions and decide which one you actually care about."},
+
+        {"t": "prompt", "n": "06", "title": "A constraint block you can reuse",
+          "body": "For everything in this session, these constraints apply. Confirm them once, then hold them without me repeating myself.\n\nTECHNICAL — plain HTML, CSS and JavaScript in three files. No libraries, no build step, no external requests except Google Fonts.\n\nSTRUCTURAL — semantic HTML, one h1 per page, no heading levels skipped, all interactive elements are real buttons or links.\n\nVISUAL — only the tokens I have given you. No shadows, no gradients, no rounded corners beyond --radius. One accent colour, used sparingly.\n\nBEHAVIOURAL — keyboard operable with visible focus. Contrast at least 4.5:1. Full prefers-reduced-motion path. Page is meaningful with JavaScript disabled.\n\nNEGATIVE — no card layouts, no carousels, no stock photography, no emoji, no lorem ipsum.\n\nIf a request of mine would break one of these, say so instead of quietly ignoring it.",
+          "why": {
+            "context": "Session-wide, so later prompts can be short.",
+            "constraints": "All five kinds, each item checkable.",
+            "output": "A confirmation now; compliance for the rest of the session.",
+            "iteration": "The last line is the one that matters most — it turns silent compromises into a conversation."
+          }},
+
+        {"t": "task", "title": "Write your own block", "steps": [
+          "Copy the constraint block and adapt every line to how you actually want to work.",
+          "Save it as `constraints.txt` next to your project brief.",
+          "Use it to open your next session.",
+          "Each time you find yourself correcting the same thing twice, add a line."
+        ], "done": "You have a reusable standard. Your prompts get shorter and your output gets better at the same time."},
+
+        {"t": "quiz", "q": "Which of these are constraints in the useful sense?", "type": "multi",
+          "options": [
+            "No external libraries",
+            "Make it look premium",
+            "No horizontal scroll from 360px upward",
+            "Animate transform and opacity only"
+          ],
+          "correct": [0, 2, 3],
+          "why": "Three of them can be verified by someone who has never met you. 'Premium' cannot be checked until you define what you mean by it — at which point it becomes several real constraints."},
+
+        {"t": "summary", "points": [
+          "Each constraint deletes a region of possible answers.",
+          "Five kinds: technical, structural, visual, behavioural, negative.",
+          "If you cannot verify it, it is a preference — rewrite it.",
+          "Keep a reusable constraint block and ask to be told when a request conflicts with it."
+        ]}
+      ]
+    },
+
+    {
+      "slug": "giving-claude-design-direction",
+      "title": "Giving Claude design direction",
+      "description": "How to describe a look precisely enough that it can be built.",
+      "minutes": 13,
+      "content": [
+        {"t": "h", "text": "Describe decisions, not impressions."},
+        {"t": "p", "text": "'Modern', 'clean', 'premium', 'bold' are reactions to a finished thing. They cannot be executed. Design direction that works names the decisions that produce the reaction — and those you can state, check and argue about."},
+
+        {"t": "h", "text": "The five axes"},
+        {"t": "p", "text": "**Typography** — families, scale, weights, tracking, line height, how large the largest thing is.\n**Space** — the base unit, the section rhythm, how much air around the type.\n**Colour** — how many, in what roles, how often the accent appears.\n**Composition** — grid, symmetry, alignment, where the eye lands first.\n**Motion** — what moves, how far, how fast, and what stays still."},
+
+        {"t": "figure", "kind": "axes", "caption": "Five axes — a look is a position on each"},
+
+        {"t": "p", "text": "Any style you admire can be described as a position on those five. Do that and you have a brief. Say 'modern' and you have a mood."},
+
+        {"t": "h", "text": "Translating a reference honestly"},
+        {"t": "p", "text": "Naming a site you like is a shortcut that mostly fails — the model has an average impression of it at best, and you may not agree on what makes it good. Instead, look at the thing you like and write down what it is doing."},
+
+        {"t": "code", "lang": "js", "filename": "translating.txt", "code": "\"like a Swiss design annual\"\n\n→ TYPE   one grotesque, three sizes only, headline at 8vw,\n         tracking -0.04em, body at 17px / 1.6\n→ SPACE  8px base, 128px between sections, 64px gutters\n→ COLOUR paper, ink, one accent used twice per page\n→ COMP   12-column grid, hard left alignment, asymmetric,\n         generous margins, no centred text\n→ MOTION reveals under 600ms, transform and opacity only,\n         nothing loops, nothing bounces"},
+
+        {"t": "demo", "kind": "direction-lab", "title": "Move one axis at a time"},
+
+        {"t": "callout", "kind": "tip", "title": "Change one axis per iteration", "text": "If a result is not right, resist rewriting the whole direction. Move one axis — make the headline larger, or double the section spacing — and look again. You learn what each axis is worth, and you stop losing the parts that were already good."},
+
+        {"t": "h", "text": "Give tokens, not adjectives"},
+        {"t": "p", "text": "The strongest version of design direction is not prose at all. It is a block of custom properties plus three sentences of composition rules. The model then has your system rather than an interpretation of your mood."},
+
+        {"t": "prompt", "n": "07", "title": "Design direction that can be executed",
+          "body": "Here is the design direction. Use it exactly; do not introduce values outside it.\n\nTYPOGRAPHY — Display: {FAMILY}, weight 500, tracking -0.03em, line-height 0.98. Body: {FAMILY}, 17px, line-height 1.6. Labels: monospace, 11px, uppercase, tracking 0.16em. Five sizes total, no others.\n\nSPACE — 8px base unit. Section padding 120px top and bottom. Container 1280px with 24px gutters.\n\nCOLOUR — {TOKENS}. The accent appears at most twice per screen. No shadows. Borders are 1px in --line only.\n\nCOMPOSITION — 12-column grid, left-aligned, asymmetric. Nothing centred except a deliberate full-screen statement. Whitespace instead of dividers.\n\nMOTION — reveals 560ms, UI transitions 280ms, one easing curve. Transform and opacity only.\n\nBuild {SECTION} to this direction. Then tell me which of these rules you found hardest to satisfy and why.",
+          "why": {
+            "context": "A complete system rather than a mood, so nothing has to be guessed.",
+            "constraints": "'No values outside this' is what stops a fourteenth grey appearing in section three.",
+            "output": "The section, plus the friction points — which are where your system is weak.",
+            "iteration": "Fix the system, not the section. Then rebuild and everything downstream improves."
+          }},
+
+        {"t": "task", "title": "Translate something you like", "steps": [
+          "Find a site whose design you admire.",
+          "Write down its position on all five axes. Measure where you can — use the inspector.",
+          "Turn that into a direction block like the one above.",
+          "Build one section to it, and compare against the original."
+        ], "done": "You have converted taste into instructions. This is the skill that separates directing a model from hoping."},
+
+        {"t": "quiz", "q": "Which of these gives real design direction?", "type": "single",
+          "options": [
+            "Make it modern and clean",
+            "Use a nice font and good spacing",
+            "One grotesque, three sizes, headline at 8vw with -0.04em tracking, 128px between sections, one accent used twice per page",
+            "Make it look like a high-end agency site"
+          ],
+          "correct": [2],
+          "why": "Only the third names decisions that can be executed and checked. The others describe a feeling and leave every actual choice to the model — which will resolve them into the most average version of that feeling."},
+
+        {"t": "summary", "points": [
+          "Name decisions, not impressions.",
+          "Five axes: typography, space, colour, composition, motion.",
+          "Translate references by measuring them, not by naming them.",
+          "Tokens plus three composition rules beat any amount of adjective."
+        ]}
+      ]
+    },
+
+    {
+      "slug": "working-with-existing-code",
+      "title": "Working with existing code",
+      "description": "The skill that matters once your project is bigger than one file.",
+      "minutes": 14,
+      "content": [
+        {"t": "h", "text": "Fencing the change."},
+        {"t": "p", "text": "Building from nothing is the easy case. The real work is changing something that already exists without breaking the parts that were fine. Do that badly and every fix costs you two regressions."},
+
+        {"t": "h", "text": "Give the minimum that makes the answer correct"},
+        {"t": "p", "text": "Not the whole repository. Not one isolated line either. The relevant piece, plus whatever it depends on — the tokens it uses, the markup it styles, the function it calls. If you cannot decide, ask what else it needs to see before it answers."},
+
+        {"t": "code", "lang": "js", "filename": "how-to-ask.txt", "code": "Here is the component I want to change:\n{THE COMPONENT}\n\nHere are the tokens it uses:\n{TOKENS}\n\nHere is the markup it styles:\n{MARKUP}\n\nCHANGE — the card padding from 24px to 32px and the title\n         from the h4 size to the h3 size.\n\nDO NOT CHANGE — the layout, the class names, the markup\n         structure, or anything outside this component.\n\nReturn only the lines that changed, with two lines of\ncontext either side."},
+
+        {"t": "callout", "kind": "tip", "title": "Ask for a diff, not a file", "text": "'Return only the lines that changed' is the single most useful habit in this lesson. You can review six lines properly. You cannot review a regenerated 400-line file, so you will skim it, and something will slip through."},
+
+        {"t": "h", "text": "State your conventions once"},
+        {"t": "p", "text": "Naming, file structure, whether you use classes or utilities, how you handle state. Say it once at the start of a session and it applies to everything after. Say it never and you will spend the session renaming things by hand."},
+
+        {"t": "demo", "kind": "diff-review", "title": "Review a change properly"},
+
+        {"t": "h", "text": "When it rewrites more than you asked"},
+        {"t": "p", "text": "This will happen. The response is not to accept it and tidy up afterwards — it is to say so plainly: 'That changed the layout as well. Give me only the padding and font-size change, with the layout untouched.' Being specific about the overreach gets you a corrected diff rather than another full rewrite."},
+
+        {"t": "h", "text": "Understand before you change"},
+        {"t": "p", "text": "If you are about to modify code you do not understand — generated or inherited — spend one message on comprehension first. It is faster than the debugging session you are otherwise scheduling for yourself."},
+
+        {"t": "prompt", "n": "08", "title": "Understand first, then change",
+          "body": "Here is a file I did not write:\n\n{PASTE}\n\nBefore any changes, explain it to me:\n1. What it does, in two sentences\n2. What each function is responsible for\n3. What it assumes about the rest of the project\n4. Anything here that would surprise me later\n\nDo not suggest improvements and do not change anything yet.",
+          "why": {
+            "context": "The actual file, so the explanation is about your code and not a generic pattern.",
+            "constraints": "Numbered, and explicitly no changes — comprehension is the whole deliverable.",
+            "output": "Understanding, plus the assumptions and traps you would otherwise find at the worst moment.",
+            "iteration": "Now make your change, and you will be able to tell whether the answer is right."
+          }},
+
+        {"t": "task", "title": "Change one thing, safely", "steps": [
+          "Take a file from an earlier lesson that you no longer remember in detail.",
+          "Run the comprehension prompt above and read the answer.",
+          "Ask for one small change, with an explicit do-not-change list, and request only the changed lines.",
+          "Apply the diff by hand. Reload and confirm nothing else moved."
+        ], "done": "You have made a surgical change to code you did not write. That is the daily reality of working on anything real."},
+
+        {"t": "quiz", "q": "What is the most reliable way to stop a small change turning into a rewrite?", "type": "single",
+          "options": [
+            "Paste less code",
+            "Name what must not change, and ask for only the changed lines",
+            "Ask for a shorter answer",
+            "Use a more capable model"
+          ],
+          "correct": [1],
+          "why": "The fence plus the diff request is what does it. Pasting less removes context the model needs; asking for brevity does not stop it touching the layout."},
+
+        {"t": "summary", "points": [
+          "Give the relevant code plus what it depends on — not everything, not one line.",
+          "Always name what must not change.",
+          "Ask for changed lines only, so you can actually review them.",
+          "Understand unfamiliar code before you modify it."
+        ]}
+      ]
+    }
+  ]
+}

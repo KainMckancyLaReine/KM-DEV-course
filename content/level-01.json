@@ -1,0 +1,422 @@
+{
+  "lessons": [
+    {
+      "slug": "what-is-ai-assisted-development",
+      "title": "What is AI-assisted development?",
+      "description": "The job did not disappear. It moved.",
+      "minutes": 9,
+      "content": [
+        {"t": "h", "text": "The work moved. It did not vanish."},
+        {"t": "p", "text": "There is a story going around that AI writes the website now and you just ask nicely. It is wrong in a specific and useful way. A model can produce a page faster than any human can type one. What it cannot do is decide whether that page is the right page — and that decision is most of the job."},
+        {"t": "p", "text": "So the work moves. Away from remembering syntax, towards **deciding, directing, reading and judging**. You will still open a code editor. You will spend less time typing into it and far more time looking at what came back and asking whether it deserves to ship."},
+
+        {"t": "figure", "kind": "shift", "caption": "What a developer spends time on, before and after"},
+
+        {"t": "h", "text": "What actually changes"},
+        {"t": "p", "text": "Three things get dramatically cheaper: the first draft, the boring parts, and the explanation. A layout that used to cost an afternoon costs a minute. A regular expression you would have looked up costs nothing. An unfamiliar piece of code can be explained back to you line by line."},
+        {"t": "p", "text": "Three things get no cheaper at all: knowing what to build, knowing whether it is good, and being responsible for it when it breaks. Those are the parts a client is actually paying for, and they are the parts this course is about."},
+
+        {"t": "callout", "kind": "note", "title": "The uncomfortable version", "text": "If your only skill is producing code that works, that skill is now commodity. If you can decide what should exist, direct a model towards it, and tell the difference between good and merely working — you have more leverage than you have ever had."},
+
+        {"t": "h", "text": "Generation is not the hard part"},
+        {"t": "p", "text": "Watch someone new to this and you will see the same pattern. They ask for a website. They get one. It looks plausible. They ask for a change. They get a different plausible thing, and something that worked before quietly stops working. Twenty minutes later they have a folder of code nobody understands, including them."},
+        {"t": "p", "text": "Nothing went wrong technically. What went wrong is that no one was steering. Every prompt was a fresh wish rather than a step in a build."},
+
+        {"t": "demo", "kind": "context-compare", "title": "The same request, two ways"},
+
+        {"t": "h", "text": "The mental model that works"},
+        {"t": "p", "text": "Treat the model as an extremely fast, extremely well-read colleague who has never seen your project, has no opinion about your client, and will do exactly what you asked rather than what you meant. That colleague is genuinely valuable. They are not a replacement for knowing what you want."},
+        {"t": "list", "items": [
+          "You decide what to build. The model proposes how.",
+          "You give context. Without it, you get the average of everything it has ever read.",
+          "You read the output. Not to admire it — to judge it.",
+          "You own the result. The model is not on the invoice."
+        ]},
+
+        {"t": "prompt", "n": "01", "title": "A first prompt that earns its place",
+          "body": "I am learning AI-assisted web development. Explain, in plain language and in under 200 words, the difference between what a browser downloads and what a server does. Assume I have never written code. Use one concrete example: someone opening a bakery's website on their phone.",
+          "why": {
+            "context": "It states who you are and what you already know, so the answer is pitched at you rather than at nobody.",
+            "constraints": "Under 200 words, plain language, one example. Each one rules out a kind of answer you did not want.",
+            "output": "An explanation, not code — which is the right output for the question being asked.",
+            "iteration": "If a sentence loses you, quote it back and ask for that sentence alone to be re-explained. Do not restart."
+          }},
+
+        {"t": "task", "title": "Try it before the next lesson", "steps": [
+          "Open Claude and run the prompt above, unchanged.",
+          "Read the answer and find the one sentence you are least sure about.",
+          "Quote that sentence back and ask for it to be explained differently.",
+          "Notice how much better the second answer is — and that the improvement came from you, not the model."
+        ], "done": "You have had a conversation rather than made a request. That distinction is the whole course."},
+
+        {"t": "quiz", "q": "What gets cheaper with AI assistance, and what does not?", "type": "single",
+          "options": [
+            "Everything gets cheaper at roughly the same rate",
+            "Producing code gets much cheaper; deciding what to build and judging quality do not",
+            "Only boilerplate gets cheaper; real code is unaffected",
+            "Nothing changes, the tools are just faster autocomplete"
+          ],
+          "correct": [1],
+          "why": "First drafts and boilerplate collapse in cost. Judgement, taste and responsibility do not move at all — which is why they are where your value now sits."},
+
+        {"t": "summary", "points": [
+          "The work moved from typing to deciding, directing, reading and judging.",
+          "Generation is the cheap half. Steering is the half that is worth money.",
+          "Treat the model as a fast colleague with no context, not as an oracle.",
+          "You own the output, so you have to be able to read it."
+        ]}
+      ]
+    },
+
+    {
+      "slug": "how-websites-actually-work",
+      "title": "How websites actually work",
+      "description": "One request, three files, and a machine that does exactly what it is told.",
+      "minutes": 11,
+      "content": [
+        {"t": "h", "text": "A website is a conversation between two machines."},
+        {"t": "p", "text": "Someone types an address. Their browser sends a request across the network. A server somewhere answers with a file. The browser reads that file, discovers it needs a few more, asks for those too, and then draws the result on screen. That is the entire mechanism. Everything else is detail."},
+
+        {"t": "figure", "kind": "request", "caption": "What happens between typing an address and seeing a page"},
+
+        {"t": "h", "text": "The browser is not clever, and that is good news"},
+        {"t": "p", "text": "A browser does not interpret your intentions. It reads instructions and follows them precisely. If your page looks wrong, the browser is not confused — it is doing exactly what your code says. This is the single most useful belief you can hold while debugging: **the machine is not being difficult, your instructions are.**"},
+
+        {"t": "p", "text": "Watch the order it works in. First it reads the HTML and builds a tree of elements. Then it applies the CSS to decide how each element looks and where it sits. Then it runs the JavaScript, which can change either of those. Then it paints. When something appears and then jumps, you have usually watched that sequence happen out of order."},
+
+        {"t": "code", "lang": "html", "filename": "index.html", "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <title>Vlaam Bakery</title>\n    <link rel=\"stylesheet\" href=\"styles.css\">\n  </head>\n  <body>\n    <h1>Bread, daily, from six.</h1>\n    <script src=\"script.js\"></script>\n  </body>\n</html>"},
+
+        {"t": "p", "text": "That file is a complete website. It is not a good one, but nothing is missing. The `<link>` tells the browser to go and fetch a second file. The `<script>` tells it to fetch a third. Three requests, one page."},
+
+        {"t": "callout", "kind": "tip", "title": "Open the Network panel once", "text": "Right-click any page, choose Inspect, open the Network tab and reload. Every row is one request. This is not an advanced tool — it is the honest picture of what a website is, and it takes ten seconds to look at."},
+
+        {"t": "h", "text": "Why this matters for prompting"},
+        {"t": "p", "text": "When you know a page is files fetched over a network, a lot of vague requests turn into precise ones. 'Make it load faster' becomes 'reduce the number of requests and the size of the largest one'. 'It flashes when it loads' becomes 'the CSS arrives after the first paint'. You cannot ask for what you cannot name."},
+
+        {"t": "figure", "kind": "layers", "caption": "The three layers, and what each one is responsible for"},
+
+        {"t": "prompt", "n": "02", "title": "Read your own page back",
+          "body": "Here is my index.html:\n\n{PASTE FILE}\n\nWalk me through exactly what the browser does with this file, in order, from the moment it arrives. Say which additional files it will request and when. Point out anything that would delay the first paint. Do not suggest improvements yet — I want to understand the sequence first.",
+          "why": {
+            "context": "Your actual file, not a generic example, so the explanation is about your page.",
+            "constraints": "'In order' forces a sequence rather than a summary. 'No improvements yet' keeps the answer explanatory.",
+            "output": "A walkthrough you can check against the Network panel.",
+            "iteration": "Once you understand the sequence, ask for the single change that would most improve first paint."
+          }},
+
+        {"t": "task", "title": "Build the smallest possible website", "steps": [
+          "Make a folder called `first-site`.",
+          "Create `index.html` and paste the example above into it.",
+          "Double-click the file. It opens in your browser. That is a website.",
+          "Open the Network panel and reload. Count the failed requests — styles.css and script.js do not exist yet.",
+          "Create both files, empty, and reload. The failures disappear."
+        ], "done": "You have seen a page request files, fail to find them, and then find them. Most confusing bugs are a version of this."},
+
+        {"t": "quiz", "q": "A page renders, then a moment later the fonts and colours snap into place. What does that tell you?", "type": "single",
+          "options": [
+            "The server is slow",
+            "The browser painted before the stylesheet had arrived and been applied",
+            "The JavaScript failed",
+            "The images are too large"
+          ],
+          "correct": [1],
+          "why": "The browser paints what it has. If the stylesheet arrives after the first paint, you see the unstyled version first. Knowing the sequence turns a mysterious flicker into a specific, fixable cause."},
+
+        {"t": "summary", "points": [
+          "A website is files requested over a network and drawn by a browser.",
+          "The browser reads HTML, applies CSS, runs JavaScript, then paints — in that order.",
+          "The machine follows instructions exactly; wrong output means wrong instructions.",
+          "Naming the mechanism is what lets you ask a precise question about it."
+        ]}
+      ]
+    },
+
+    {
+      "slug": "frontend-vs-backend",
+      "title": "Frontend vs backend",
+      "description": "Not a difficulty ranking. A question of whose computer it runs on.",
+      "minutes": 10,
+      "content": [
+        {"t": "h", "text": "Whose computer is it running on?"},
+        {"t": "p", "text": "That is the whole distinction. Front end runs on the visitor's device, inside their browser. Back end runs on a machine you control. People treat this as a seniority ladder — it is not. It is a boundary, and the boundary has consequences you need to feel in your bones."},
+
+        {"t": "figure", "kind": "split", "caption": "The boundary, and what it means for trust"},
+
+        {"t": "h", "text": "The consequence that matters"},
+        {"t": "p", "text": "Anything running on the visitor's device is under the visitor's control. They can read it, pause it, change it and lie to it. This is not a flaw to be patched — it is what a browser is. A person can open the developer tools right now and edit any page they are looking at."},
+        {"t": "p", "text": "So: a check that lives in the browser is a convenience, not a rule. Hiding an admin button stops nobody. Validating a form in the browser makes it pleasant to fill in; it does not make the data safe. **Every rule that actually matters has to be enforced on the server.**"},
+
+        {"t": "callout", "kind": "warning", "title": "The mistake that ends careers early", "text": "Never put a secret in code the browser downloads. Not an API key, not a password, not a database credential. If the browser can read it, so can everyone who visits your site — including the person who is looking for exactly that."},
+
+        {"t": "p", "text": "This course's own platform is a working example. The interface hides the admin section from a student, because showing it would be confusing. But the actual protection is a rule on the database that refuses to return other people's data to a student's session, no matter what the browser asks for. The hidden button is manners. The database rule is security."},
+
+        {"t": "h", "text": "What lives where"},
+        {"t": "list", "items": [
+          "**Front end** — layout, typography, interactions, animation, form usability, anything the visitor sees or touches.",
+          "**Back end** — accounts and passwords, permissions, saved data, payments, anything that must be true regardless of what the browser claims.",
+          "**Both, deliberately** — validation. Check in the browser so the form is pleasant. Check again on the server because that is the check that counts."
+        ]},
+
+        {"t": "demo", "kind": "trust-boundary", "title": "Which side does this belong on?"},
+
+        {"t": "prompt", "n": "03", "title": "Ask where a rule belongs",
+          "body": "I am building {FEATURE}. List every rule that has to be true for it to work correctly.\n\nFor each rule, tell me whether it must be enforced on the server, whether it should also be checked in the browser for usability, and what an attacker could do if it were only checked in the browser.\n\nBe blunt about the consequences. I would rather be uncomfortable now.",
+          "why": {
+            "context": "Naming the feature lets the model infer rules you have not thought of.",
+            "constraints": "Forcing a server/browser answer per rule prevents a vague 'validate both sides' response.",
+            "output": "A table of decisions plus the consequence of getting each one wrong.",
+            "iteration": "Take the highest-consequence rule and ask how to enforce it on the server in your stack."
+          }},
+
+        {"t": "task", "title": "Break a page on purpose", "steps": [
+          "Open any site with a form that has a disabled submit button.",
+          "Right-click the button and choose Inspect.",
+          "Delete the `disabled` attribute in the elements panel.",
+          "The button is now clickable. You changed their page — on your machine only.",
+          "Sit with what that means for every check written in the browser."
+        ], "done": "You have felt the trust boundary rather than read about it. That feeling is what stops you writing an insecure feature later."},
+
+        {"t": "quiz", "q": "Your app hides the 'Delete user' button unless the logged-in account is an admin. Is that sufficient?", "type": "single",
+          "options": [
+            "Yes — a student cannot see the button, so they cannot use it",
+            "No — the browser can be edited, so the server must refuse the request as well",
+            "Yes, provided the button is removed rather than hidden with CSS",
+            "It depends on whether the site uses HTTPS"
+          ],
+          "correct": [1],
+          "why": "Hiding a control is user experience. The delete endpoint itself has to check who is asking and refuse anyone who is not an admin — that check is the security. HTTPS protects the message in transit; it says nothing about who is allowed to send it."},
+
+        {"t": "summary", "points": [
+          "Front end runs on their computer, back end on yours. That is the whole definition.",
+          "Anything the browser receives, the visitor can read and change.",
+          "Browser checks are for usability. Server checks are for correctness and safety.",
+          "Never put a secret in front-end code."
+        ]}
+      ]
+    },
+
+    {
+      "slug": "html-css-javascript",
+      "title": "HTML, CSS & JavaScript",
+      "description": "Structure, appearance and behaviour — and why keeping them separate makes AI output far easier to fix.",
+      "minutes": 14,
+      "content": [
+        {"t": "h", "text": "Three languages, three jobs."},
+        {"t": "p", "text": "HTML says what things *are*. CSS says how they *look*. JavaScript says how they *behave*. That separation is not academic tidiness — it is what lets you change one thing without breaking the other two, and it is the first thing to check when generated code becomes hard to work with."},
+
+        {"t": "figure", "kind": "layers", "caption": "Same content, three layers of responsibility"},
+
+        {"t": "h", "text": "HTML: meaning, not appearance"},
+        {"t": "p", "text": "Choosing `<button>` instead of `<div>` is not pedantry. A real button is focusable by keyboard, announces itself to a screen reader, and responds to the space bar — for free, because you used the right element. A `<div>` styled to look like a button has none of that until you rebuild it by hand, badly."},
+
+        {"t": "code", "lang": "html", "filename": "index.html", "code": "<!-- meaning is visible in the markup -->\n<article class=\"card\">\n  <h2>Sourdough</h2>\n  <p>Twenty-four hour ferment. Out at six.</p>\n  <button type=\"button\">Reserve a loaf</button>\n</article>"},
+
+        {"t": "p", "text": "Read that without any CSS and you still know what it is. That is the test. If you have to look at the stylesheet to work out what a piece of markup means, the markup is wrong."},
+
+        {"t": "h", "text": "CSS: a system, not a pile of rules"},
+        {"t": "p", "text": "Most generated CSS works and is still bad, for one reason: it repeats itself. A colour written in eleven places is eleven places to change. Custom properties fix this, and asking for them changes the quality of everything the model gives you afterwards."},
+
+        {"t": "code", "lang": "css", "filename": "styles.css", "code": ":root{\n  --ink: #0d0d0d;\n  --paper: #ffffff;\n  --accent: #c6ff4a;\n  --space: 8px;\n  --radius: 24px;\n}\n\n.card{\n  background: var(--paper);\n  border-radius: var(--radius);\n  padding: calc(var(--space) * 3);\n  color: var(--ink);\n}"},
+
+        {"t": "demo", "kind": "code-explainer", "title": "Change a value, watch the design move"},
+
+        {"t": "h", "text": "JavaScript: behaviour, added last"},
+        {"t": "p", "text": "The useful discipline is to build the page so it makes sense without JavaScript, then add behaviour on top. Not because visitors disable it, but because a page that depends on script for its basic meaning is a page that breaks completely when one line fails."},
+
+        {"t": "code", "lang": "js", "filename": "script.js", "code": "const button = document.querySelector('.card button');\n\nbutton?.addEventListener('click', () => {\n  button.textContent = 'Reserved';\n  button.disabled = true;\n});"},
+
+        {"t": "callout", "kind": "tip", "title": "The `?.` is not decoration", "text": "If `querySelector` finds nothing it returns `null`, and calling a method on `null` throws an error that stops every line of script after it. The `?.` says 'only if this exists'. One character, and the rest of your page keeps working."},
+
+        {"t": "prompt", "n": "04", "title": "Ask for the three layers to stay separate",
+          "body": "Build a {COMPONENT} using plain HTML, CSS and JavaScript in three separate files.\n\nRules:\n- HTML carries meaning only. Use semantic elements. No styling attributes, no presentational class names like `red-text`.\n- All colours, spacing and radii come from CSS custom properties defined once on :root.\n- JavaScript adds behaviour only. The component must still make sense with JavaScript switched off.\n\nAfter the code, list which decisions you made that I might reasonably disagree with.",
+          "why": {
+            "context": "Three files, named layers — the model now has an architecture to work inside.",
+            "constraints": "Each rule removes a specific bad habit: inline styles, magic values, script-dependent meaning.",
+            "output": "Code plus a list of debatable choices, which turns a delivery into a conversation.",
+            "iteration": "Argue with one item on that list. That exchange is where you learn the most."
+          }},
+
+        {"t": "task", "title": "Take the layers apart", "steps": [
+          "Ask Claude for a pricing card with the prompt above.",
+          "Save the three files and open the page.",
+            "Comment out the `<link>` to the stylesheet and reload. Can you still tell what everything is?",
+          "Restore it, then comment out the `<script>`. Is the card still readable?",
+          "If either answer is no, tell Claude which one and ask it to fix that specific failure."
+        ], "done": "You have tested the separation instead of trusting it. This is the fastest way to find out whether generated code is actually well built."},
+
+        {"t": "quiz", "q": "Why prefer `<button>` over a `<div>` with a click handler?", "type": "multi",
+          "options": [
+            "It is reachable and operable by keyboard without extra code",
+            "Screen readers announce it as a button",
+            "It responds to Enter and Space by default",
+            "It renders faster"
+          ],
+          "correct": [0, 1, 2],
+          "why": "Focusability, the announced role and keyboard activation all come free with the correct element. Rendering speed is not the reason — accessibility and less code you have to write and maintain are."},
+
+        {"t": "summary", "points": [
+          "HTML is meaning, CSS is appearance, JavaScript is behaviour.",
+          "Markup should be readable with no stylesheet attached.",
+          "Define colours and spacing once as custom properties, then reuse them.",
+          "Add behaviour last, and make sure the page survives without it."
+        ]}
+      ]
+    },
+
+    {
+      "slug": "what-claude-can-and-cannot-do",
+      "title": "What Claude can and cannot do",
+      "description": "An honest map of the tool, so you stop being surprised by it.",
+      "minutes": 11,
+      "content": [
+        {"t": "h", "text": "Knowing the edges is what makes it useful."},
+        {"t": "p", "text": "Most frustration with AI coding comes from expecting the wrong thing. Not because the tool is bad, but because nobody drew the map. So here is the map, honestly, including the parts that are inconvenient."},
+
+        {"t": "h", "text": "What it genuinely does well"},
+        {"t": "list", "items": [
+          "**First drafts of anything structured.** Layouts, components, forms, config files. Minutes instead of hours.",
+          "**Explaining code you did not write.** Line by line, at whatever level you ask for.",
+          "**Translating between languages and frameworks.** Same idea, different syntax.",
+          "**Finding the cause of an error you can describe.** Give it the message and the code and it is usually right.",
+          "**Boring correctness.** Accessibility attributes, responsive breakpoints, edge cases — provided you ask."
+        ]},
+
+        {"t": "h", "text": "What it cannot do, and will not tell you it cannot"},
+        {"t": "list", "items": [
+          "**Know your context.** It has never met your client and cannot see your files unless you show it.",
+          "**Remember yesterday.** A new conversation starts empty. Every time.",
+          "**Have taste on your behalf.** It will produce something defensible. Whether it is *right* is your call.",
+          "**See your screen.** 'It looks wrong' is not a description it can act on.",
+          "**Be certain.** It can be fluent and mistaken at the same time, with no change in tone."
+        ]},
+
+        {"t": "callout", "kind": "warning", "title": "Fluent and wrong look identical", "text": "This is the failure mode to internalise. Wrong answers arrive with exactly the same confidence as right ones. There is no tell. The only defence is to check — run it, read it, test the edge case."},
+
+        {"t": "figure", "kind": "context", "caption": "What the model can see when you ask it something"},
+
+        {"t": "h", "text": "Context is the whole game"},
+        {"t": "p", "text": "The model's world is what is in the current conversation. Not your repository, not last week, not the thing you meant. If you have not said it, it does not exist. This sounds limiting until you realise it is completely under your control — which makes it a skill rather than an obstacle."},
+
+        {"t": "demo", "kind": "context-compare", "title": "Same question, different amounts of context"},
+
+        {"t": "h", "text": "How to work with the uncertainty"},
+        {"t": "p", "text": "You do not need to verify every line. You need a habit that catches the expensive mistakes: run it before you believe it, read anything that touches data or permissions, and ask 'what would make this wrong?' whenever an answer arrives suspiciously neatly."},
+
+        {"t": "prompt", "n": "05", "title": "Make the model argue with itself",
+          "body": "Here is a solution you just gave me:\n\n{PASTE}\n\nNow argue against it. What are its weaknesses? Where would it break — unusual input, small screens, slow connections, someone using only a keyboard? What did you assume that I never told you?\n\nBe specific and do not soften it.",
+          "why": {
+            "context": "Its own output, so the critique is concrete rather than general advice.",
+            "constraints": "Named failure categories stop the answer being a shrug about edge cases.",
+            "output": "A list of weaknesses and — most valuable — the assumptions it silently made.",
+            "iteration": "Every assumption it names is a decision you never made. Make it now, explicitly."
+          }},
+
+        {"t": "task", "title": "Catch a confident mistake", "steps": [
+          "Ask Claude for a function that validates an email address with a regular expression.",
+          "Before running it, ask: 'What valid addresses does this reject, and what invalid ones does it accept?'",
+          "Read the answer. It will find real problems in its own code.",
+          "Ask why it wrote the imperfect version first."
+        ], "done": "You have seen fluent output that was not complete, and you found it by asking rather than by luck."},
+
+        {"t": "quiz", "q": "Which of these is a genuine limitation rather than a prompting problem?", "type": "single",
+          "options": [
+            "It produced generic output",
+            "It forgot a constraint from earlier in the conversation",
+            "It cannot know whether your client will like the design",
+            "It used a library you did not want"
+          ],
+          "correct": [2],
+          "why": "The other three are fixable by prompting better: add constraints, restate them, exclude the library. Whether a specific person likes a specific design is information the model does not have and cannot obtain."},
+
+        {"t": "summary", "points": [
+          "Excellent at first drafts, explanation, translation and diagnosable errors.",
+          "Cannot know your context, remember past sessions, or hold taste for you.",
+          "Fluent and wrong are indistinguishable — check, do not trust.",
+          "Context is the whole game, and it is entirely yours to control."
+        ]}
+      ]
+    },
+
+    {
+      "slug": "your-ai-development-workflow",
+      "title": "Your AI development workflow",
+      "description": "Thirteen steps you will use on every project for the rest of the course.",
+      "minutes": 13,
+      "content": [
+        {"t": "h", "text": "A workflow beats a good prompt."},
+        {"t": "p", "text": "People chase the perfect prompt. The people who actually ship have something duller and far more effective: an order they always work in. It stops the two failures that ruin AI-assisted builds — starting to code before you know what you are building, and accepting output before you have checked it."},
+
+        {"t": "figure", "kind": "workflow", "caption": "The thirteen steps, and where each kind of prompt belongs"},
+
+        {"t": "h", "text": "The thirteen steps"},
+        {"t": "list", "ordered": true, "items": [
+          "**Describe the goal.** One sentence. What must this thing do?",
+          "**Give context.** Who is it for, what exists already, what is it part of?",
+          "**Define constraints.** What is ruled out. This is where quality is decided.",
+          "**Give visual direction.** Specific enough to be checkable, not 'modern and clean'.",
+          "**Define technical requirements.** Files, dependencies, browser support, performance.",
+          "**Ask for implementation.** Only now. Scoped to one piece.",
+          "**Inspect the output.** Read it. Understand it. Do not skim it.",
+          "**Test.** Run it. Resize it. Use the keyboard. Open the console.",
+          "**Report problems.** Precisely: expected, actual, when it started.",
+          "**Iterate.** Small, named changes. Keep what works.",
+          "**Refactor.** Remove repetition once the shape has settled.",
+          "**Polish.** Spacing, motion, states, the last ten per cent.",
+          "**Ship.** Deploy, then check it again in public."
+        ]},
+
+        {"t": "callout", "kind": "note", "title": "Steps 1–5 are where the money is", "text": "Beginners start at step 6 and wonder why the result is generic. The first five steps cost ten minutes and determine everything the model produces afterwards. Skipping them does not save time; it moves the time to step 10, where it costs more."},
+
+        {"t": "h", "text": "What a real session looks like"},
+        {"t": "p", "text": "Not one prompt and a finished site. A conversation that narrows."},
+
+        {"t": "demo", "kind": "session", "title": "A real session, replayed"},
+
+        {"t": "p", "text": "Notice what happens there. The first exchange produces no code at all — it produces agreement about what is being built. The build then arrives in pieces small enough to judge. When something is wrong, the report is specific, so the fix is specific. Nothing gets rewritten from scratch, so nothing that worked quietly stops working."},
+
+        {"t": "h", "text": "Where it goes wrong"},
+        {"t": "list", "items": [
+          "**Asking for everything at once.** You cannot review a whole site in one read, so you do not review it.",
+          "**Vague problem reports.** 'It's broken' gets a guess. 'The nav overlaps the hero below 480px' gets a fix.",
+          "**Rewriting instead of adjusting.** Every rewrite reintroduces problems you had already solved.",
+          "**Believing it because it compiles.** Working and correct are different words."
+        ]},
+
+        {"t": "prompt", "n": "06", "title": "Open a session properly",
+          "body": "We are going to build {PROJECT} together over several messages. Before any code, confirm you have understood the following, and ask me about anything that is unclear or missing.\n\nGoal: {ONE SENTENCE}\nAudience: {WHO}\nOne action they should take: {ACTION}\nHard constraints: {LIST}\nVisual direction: {LIST}\nTechnical: plain HTML, CSS and JavaScript in three files, no libraries, must work from 360px up.\n\nThen propose a build order — which piece we should make first, and why.",
+          "why": {
+            "context": "Everything the model needs, in one place, at the start of the session.",
+            "constraints": "Stated once here rather than repeated in every later message.",
+            "output": "Confirmation, questions and a build order — no code until the plan is agreed.",
+            "iteration": "Its questions are the gaps in your own thinking. Answer them properly; that is the real value of this step."
+          }},
+
+        {"t": "task", "title": "Run the workflow once, end to end", "steps": [
+          "Pick something genuinely small: a single contact section.",
+          "Write out steps 1 to 5 in a text file before you open Claude.",
+          "Send the opening prompt above and answer whatever it asks.",
+          "Ask for the implementation. Read every line before you run it.",
+          "Test it at 360px and with the keyboard only. Report one problem precisely.",
+          "Iterate until it is right. Note how many messages it took."
+        ], "done": "You have completed one full loop. Every project in this course is this loop, repeated at a larger size."},
+
+        {"t": "quiz", "q": "Where do most AI-assisted builds actually go wrong?", "type": "single",
+          "options": [
+            "The model produces poor code",
+            "The developer starts at step 6 and skips goal, context and constraints",
+            "The technology is not mature enough",
+            "There are not enough good prompt templates available"
+          ],
+          "correct": [1],
+          "why": "The code is usually fine for what was asked. What is missing is the five steps before the asking — which is why the same model produces mediocre work for one person and excellent work for another."},
+
+        {"t": "summary", "points": [
+          "A repeatable order beats a clever prompt.",
+          "Steps 1 to 5 happen before any code exists, and decide the outcome.",
+          "Build in pieces small enough to actually review.",
+          "Report problems precisely; adjust rather than rewrite."
+        ]}
+      ]
+    }
+  ]
+}

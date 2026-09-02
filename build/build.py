@@ -62,16 +62,29 @@ def main():
     # ---------------------------------------------------------------- bundle
     print('build · single-file bundle')
     css = '\n'.join(read(os.path.join(ROOT, 'assets/css', f))
-                    for f in ['01-foundation.css', '02-chrome.css', '03-sections.css'])
+                    for f in ['01-foundation.css', '02-chrome.css', '03-sections.css', '04-app.css'])
     js = '\n'.join(read(os.path.join(ROOT, 'assets/js', f))
-                   for f in ['core.js', 'modules.js'])
+                   for f in ['core.js', 'modules.js', 'km-config.js', 'seed-data.js',
+                             'km-data.js', 'km-blocks.js', 'km-app.js', 'km-admin.js'])
+
+    import re as _re
+    if _re.search(r'</\s*script', js, _re.I):
+        raise SystemExit('a source file contains </script>, which would end the inline block')
+
+    bundled_pages = ['index.html', 'course.html', 'work.html', 'faq.html',
+                     'login.html', 'signup.html', 'reset.html', 'admin.html',
+                     'README-academy.html'] + \
+                    [f for f in sorted(os.listdir(ROOT)) if f.startswith('app-') and f.endswith('.html')]
 
     mains = {}
-    for name in ['index.html', 'course.html', 'work.html', 'faq.html']:
+    for name in bundled_pages:
         html = read(os.path.join(ROOT, name))
         m = MAIN_RE.search(html)
         t = re.search(r'<title>(.*?)</title>', html, re.S).group(1)
-        mains[name.replace('.html', '')] = {'html': m.group(2), 'title': t, 'page': name}
+        space = re.search(r'<main class="page-main"[^>]*data-space="([^"]*)"', html)
+        mains[name.replace('.html', '')] = {
+            'html': m.group(2), 'title': t, 'page': name,
+            'space': space.group(1) if space else 'site'}
 
     head, tail = shell_of(index)
     # strip the document scaffolding — the artifact host supplies it
@@ -93,7 +106,7 @@ def main():
                         '<title>KM.dev AI Course</title>')
     head = meta + '<style>\n' + css + '\n</style>\n' + body_head
     bundle = (head
-              + '<main class="page-main" id="main" data-page="index.html">\n'
+              + '<main class="page-main" id="main" data-page="index.html" data-space="site">\n'
               + mains['index']['html'] + '\n</main>\n'
               + tail
               + '<script>window.KM_PAGES = ' + json.dumps(mains) + ';</script>\n'

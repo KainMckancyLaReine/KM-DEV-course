@@ -40,7 +40,7 @@
       <span class="brand__sub">AI Course</span>
     </a>
 
-    <nav class="nav__links" aria-label="Primary">
+    <nav class="nav__links" aria-label="Primary" data-learning-nav>
       <a class="nav__link" href="index.html" data-en="Overview" data-nl="Overzicht">Overview</a>
       <a class="nav__link" href="course.html" data-en="Course" data-nl="Cursus">Course</a>
       <a class="nav__link is-active" href="work.html" data-en="Work" data-nl="Werk">Work</a>
@@ -52,10 +52,7 @@
         <button class="lang__btn is-active" data-lang="en" type="button">EN</button>
         <button class="lang__btn" data-lang="nl" type="button">NL</button>
       </div>
-      <a class="btn btn--sm" href="faq.html#enrol" data-magnetic="0.3" data-cursor="Start">
-        <span class="btn__label" data-en="Start learning" data-nl="Begin nu">Start learning</span>
-        <i class="btn__arrow"></i>
-      </a>
+      <div data-account style="display:flex;align-items:center;gap:10px"></div>
       <button class="burger" type="button" aria-expanded="false" aria-controls="menu"
               data-en-aria="Open menu" data-nl-aria="Menu openen" aria-label="Open menu">
         <span></span><span></span><span></span>
@@ -290,7 +287,7 @@
         <ul>
           <li><a href="https://kainmckancylareine.github.io/KM-DEV/index.html" target="_blank" rel="noopener" data-no-route>KM.dev</a></li>
           <li><a href="mailto:kkain25@gmail.com" data-no-route>kkain25@gmail.com</a></li>
-          <li><a href="faq.html#enrol" data-en="Start learning" data-nl="Begin met leren">Start learning</a></li>
+          <li><a href="signup.html" data-en="Start learning" data-nl="Begin met leren">Start learning</a></li>
         </ul>
       </div>
     </div>
@@ -333,6 +330,9 @@
 </div>
 
 <script src="assets/js/core.js"></script>
+<script src="assets/js/km-config.js"></script>
+<script src="assets/js/km-data.js"></script>
+<script src="assets/js/km-app.js"></script>
 <script src="assets/js/modules.js"></script>
 </body>
 </html>

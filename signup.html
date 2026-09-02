@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create account — KM.dev Academy</title>
+<meta name="description" content="Create your KM.dev account and start learning how to build real websites with Claude.">
+<meta name="theme-color" content="#f4f3ef">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/01-foundation.css">
+<link rel="stylesheet" href="assets/css/02-chrome.css">
+<link rel="stylesheet" href="assets/css/03-sections.css">
+<link rel="stylesheet" href="assets/css/04-app.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="handoff"><span class="handoff__line"></span><span class="handoff__line"></span><span class="handoff__track"><i></i></span></div>
+<div style="display:none" data-account></div>
+<main class="page-main" id="main" data-page="signup.html" data-space="app">
+<div class="auth">
+  <div class="auth__form">
+    <div class="auth__back"><a class="xlink" href="index.html"><i class="btn__arrow" style="transform:rotate(180deg)"></i><span>km.dev</span></a></div>
+    <div data-view="auth">
+      <span class="t-tag">Create account</span>
+      <h1 style="margin-top:16px">Start building with AI.</h1>
+      <p class="auth__sub">Create your KM.dev account and start learning how to build real websites with Claude.</p>
+      <form class="form" data-auth="signup" novalidate>
+        <div class="form__error"></div>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" autocomplete="name">
+          <span class="field__error"></span>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email">
+          <span class="field__error"></span>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="At least 8 characters" autocomplete="current-password">
+          <span class="pw" data-score="0"><i></i><i></i><i></i><i></i></span>
+          <span class="field__error"></span>
+        </div>
+        <div class="field">
+          <label for="confirm">Confirm password</label>
+          <input id="confirm" name="confirm" type="password" placeholder="Repeat it" autocomplete="current-password">
+          <span class="field__error"></span>
+        </div>
+        <button class="btn btn--block" type="submit" data-magnetic="0.25"><span class="btn__label">Create account</span><i class="btn__arrow"></i></button>
+      </form>
+      <p class="auth__foot">Already have an account? <a href="login.html">Log in</a></p>
+      <div class="demo-keys" data-demo-keys></div>
+    </div>
+  </div>
+  <aside class="auth__aside">
+      <div class="auth__quote">
+        <span class="t-tag">KM.dev Academy</span>
+        <h2>Eight levels. One project. A site that is actually online at the end.</h2>
+      </div>
+      <div class="auth__steps">
+        <div class="auth__step"><b>01</b><span>Think — decide what you are building</span></div>
+        <div class="auth__step"><b>02</b><span>Prompt — learn to direct a model</span></div>
+        <div class="auth__step"><b>03</b><span>Build — turn instructions into code</span></div>
+        <div class="auth__step"><b>04</b><span>Ship — put it online under your name</span></div>
+      </div>
+</aside>
+</div>
+</main>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/modules.js"></script>
+<script src="assets/js/km-config.js"></script>
+<script src="assets/js/seed-data.js"></script>
+<script src="assets/js/km-data.js"></script>
+<script src="assets/js/km-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project — KM.dev Academy</title>
+<meta name="description" content="Project brief and checklist.">
+<meta name="theme-color" content="#f4f3ef">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/01-foundation.css">
+<link rel="stylesheet" href="assets/css/02-chrome.css">
+<link rel="stylesheet" href="assets/css/03-sections.css">
+<link rel="stylesheet" href="assets/css/04-app.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="pt" aria-hidden="true"></div>
+
+<header class="nav is-stuck">
+  <div class="shell nav__inner">
+    <a class="brand" href="app-dashboard.html" aria-label="KM.dev Academy">
+      KM.dev<i class="brand__dot"></i><span class="brand__sub">Academy</span>
+    </a>
+    <nav class="nav__links" aria-label="Course" data-learning-nav></nav>
+    <div class="nav__right">
+      <button class="nav__link" type="button" data-open-palette aria-label="Search">
+        Search <kbd style="font-family:'Space Mono',monospace;font-size:10px;border:1px solid var(--line);border-radius:5px;padding:2px 5px;margin-left:6px">⌘K</kbd>
+      </button>
+      <div data-account style="display:flex;align-items:center;gap:10px"></div>
+    </div>
+  </div>
+</header>
+
+<main class="page-main" id="main" data-page="app-project.html" data-space="app">
+  <section class="app"><div class="shell">
+    <div data-view="project"></div>
+  </div></section>
+</main>
+
+<footer class="footer on-dark">
+  <div class="shell">
+    <div class="footer__bottom" style="border-top:0;padding-top:0">
+      <span class="mono">© 2026 KM.dev Academy</span>
+      <span class="mono">Learn · Build · Understand · Iterate · Ship</span>
+      <a class="mono" href="index.html">Back to km.dev</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/core.js"></script>
+<script src="assets/js/modules.js"></script>
+<script src="assets/js/km-config.js"></script>
+<script src="assets/js/seed-data.js"></script>
+<script src="assets/js/km-data.js"></script>
+<script src="assets/js/km-blocks.js"></script>
+<script src="assets/js/km-app.js"></script>
+</body>
+</html>

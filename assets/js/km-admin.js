@@ -21,6 +21,7 @@ window.KMAdmin = (function () {
     ['content', 'Course'],
     ['quizzes', 'Quizzes'],
     ['projects', 'Projects'],
+    ['purchases', 'Purchases'],
     ['settings', 'Settings']
   ];
 
@@ -706,11 +707,141 @@ window.KMAdmin = (function () {
 
   /* ------------------------------------------------------------- settings */
 
+
+  /* ------------------------------------------------------------- purchases */
+
+  /* Minor units everywhere, formatted once here. A price is never stored as a
+     float and never assembled out of a currency symbol and a string. */
+  function money(amount, currency) {
+    var v = (Number(amount) || 0) / 100;
+    try {
+      return new Intl.NumberFormat('nl-NL', {
+        style: 'currency', currency: currency || 'EUR',
+        minimumFractionDigits: v % 1 === 0 ? 0 : 2, maximumFractionDigits: 2
+      }).format(v);
+    } catch (e) { return '€' + v.toFixed(2); }
+  }
+
+  var STATUS = {
+    paid:             ['Paid', 'is-ok'],
+    refunded:         ['Refunded', 'is-error'],
+    cancelled:        ['Cancelled', 'is-error'],
+    payment_pending:  ['Pending', 'is-pending'],
+    checkout_started: ['Started', 'is-pending'],
+    not_purchased:    ['No purchase', '']
+  };
+
+  function chip(status) {
+    var s = STATUS[status] || [status, ''];
+    return '<span class="chip ' + s[1] + '"><i></i><span>' + esc(s[0]) + '</span></span>';
+  }
+
+  async function renderPurchases(host) {
+    host.innerHTML = '<div class="sk sk-block" style="height:220px"></div>';
+
+    var rows, o;
+    try {
+      rows = await KMDB.admin.purchases();
+      o = await KMDB.admin.overview();
+    } catch (e) {
+      host.innerHTML = '<div class="state"><span class="t-tag">Not available</span>' +
+        '<h3>' + esc(e.message) + '</h3></div>';
+      return;
+    }
+
+    var cur = o.currency || 'EUR';
+    var paid = rows.filter(function (r) { return r.status === 'paid'; });
+
+    host.innerHTML =
+      '<div class="app__head"><div><span class="t-tag">Purchases</span>' +
+      '<h2 class="app__title" style="margin-top:12px">' + rows.length + ' payment' +
+      (rows.length === 1 ? '' : 's') + '</h2></div></div>' +
+
+      '<div class="statgrid">' +
+        card(money(o.revenue || 0, cur), 'Revenue') +
+        card(paid.length, 'Paid') +
+        card(o.purchases_open || 0, 'Open checkouts') +
+        card(money(paid.length ? Math.round((o.revenue || 0) / paid.length) : 0, cur), 'Average') +
+      '</div>' +
+
+      (rows.length
+        ? '<div class="table__wrap" style="margin-top:var(--gutter)"><table class="table"><thead><tr>' +
+          '<th>User</th><th>Email</th><th>Course</th><th>Amount</th>' +
+          '<th>Status</th><th>Date</th><th>Access</th>' +
+          '</tr></thead><tbody>' +
+          rows.map(function (r) {
+            return '<tr><td>' + esc(r.name) + '</td>' +
+              '<td class="mono" style="text-transform:none;letter-spacing:0">' + esc(r.email) + '</td>' +
+              '<td>' + esc(r.course) + '</td>' +
+              '<td class="mono">' + esc(money(r.amount, r.currency)) + '</td>' +
+              '<td>' + chip(r.status) + '</td>' +
+              '<td class="t-small">' + esc(String(r.paid_at || r.created_at).slice(0, 10)) + '</td>' +
+              '<td>' + (r.status === 'paid' || r.role === 'admin' ? 'Active' : '—') + '</td>' +
+              '</tr>';
+          }).join('') + '</tbody></table></div>'
+        : '<div class="state" style="margin-top:var(--gutter)"><span class="t-tag">Nothing yet</span>' +
+          '<h3>No payments have been recorded.</h3>' +
+          '<p>' + (KMDB.live
+            ? 'A purchase appears here the moment Stripe confirms it to the server.'
+            : 'Preview mode never takes a payment, so there is nothing to list.') + '</p></div>') +
+
+      '<div class="panel" style="margin-top:var(--gutter)">' +
+        '<div class="panel__head"><h3>Grant or withdraw access by hand</h3></div>' +
+        '<p class="t-small">For a bank transfer, a refund handled elsewhere, or an account ' +
+        'that should not have kept its access. It writes an ordinary purchase row, so there ' +
+        'stays one definition of who owns the course — and the database still decides, not ' +
+        'this screen.</p>' +
+        '<div class="form" style="margin-top:16px">' +
+          '<div class="field"><label for="pa-user">Account</label>' +
+            '<select id="pa-user" class="input" data-pa-user></select></div>' +
+          '<div class="field"><label for="pa-status">Set to</label>' +
+            '<select id="pa-status" class="input" data-pa-status>' +
+              '<option value="paid">paid — access on</option>' +
+              '<option value="refunded">refunded — access off</option>' +
+              '<option value="cancelled">cancelled — access off</option>' +
+            '</select></div>' +
+          '<div class="field"><label for="pa-note">Note</label>' +
+            '<input id="pa-note" class="input" data-pa-note placeholder="why, for the record"></div>' +
+          '<button class="btn btn--sm" type="button" data-pa-save>' +
+            '<span class="btn__label">Apply</span><i class="btn__arrow"></i></button>' +
+        '</div>' +
+      '</div>';
+
+    var sel = $('[data-pa-user]', host);
+    KMDB.admin.users().then(function (us) {
+      sel.innerHTML = us.map(function (u) {
+        return '<option value="' + esc(u.id) + '">' + esc(u.name) + ' — ' + esc(u.email) +
+               ' (' + esc(u.purchase_status || 'not_purchased') + ')</option>';
+      }).join('');
+    });
+
+    $('[data-pa-save]', host).addEventListener('click', async function () {
+      try {
+        await KMDB.admin.setAccess(sel.value, $('[data-pa-status]', host).value,
+                                   $('[data-pa-note]', host).value);
+        toast('Access updated');
+        renderPurchases(host);
+      } catch (e) { toast(e.message); }
+    });
+  }
+
   async function renderSettings(host) {
     host.innerHTML =
       '<div class="app__head"><div><span class="t-tag">Settings</span>' +
       '<h2 class="app__title" style="margin-top:12px">How this instance is wired</h2></div></div>' +
       '<div class="dash">' +
+        '<div class="panel"><div class="panel__head"><h3>Course price</h3></div>' +
+          '<p class="t-small">The price the pricing page shows and the checkout charges. ' +
+          'It is read from the settings table on the server every time, so it lives in one ' +
+          'place and a change here is the change everywhere.</p>' +
+          '<div class="form" style="margin-top:16px">' +
+            '<div class="field"><label for="pr-amount">Amount</label>' +
+              '<input id="pr-amount" class="input" type="number" min="0" step="1" data-pr-amount>' +
+              '<span class="t-small">In euros. Stored in cents, so 1750 becomes 175000.</span></div>' +
+            '<button class="btn btn--sm" type="button" data-pr-save>' +
+              '<span class="btn__label">Save price</span><i class="btn__arrow"></i></button>' +
+          '</div>' +
+        '</div>' +
         '<div class="panel"><div class="panel__head"><h3>Data</h3></div>' +
           '<div class="minilist">' +
             row('Mode', KMDB.live ? 'Supabase' : 'Preview (this browser)') +
@@ -731,8 +862,29 @@ window.KMAdmin = (function () {
           '<p class="t-small">New admins are created by adding their email to ' +
           '<code>admin_bootstrap</code> before they sign up, or by an existing admin changing ' +
           'their role. No password ever appears in front-end code.</p>' +
+          '<p class="t-small">Course access is the same idea: <code>has_access()</code> reads ' +
+          'the purchase rows, the content policies read <code>has_access()</code>, and a ' +
+          'purchase row can only be written by the Stripe webhook or by an administrator. ' +
+          'A browser cannot write one at all.</p>' +
         '</div>' +
       '</div>';
+
+    /* Fill the field from the server rather than from a number typed here. */
+    var amount = $('[data-pr-amount]', host);
+    if (amount) {
+      KMDB.accessState().then(function (a) {
+        if (a && a.price) amount.value = String(Math.round(a.price.amount / 100));
+      }).catch(function () {});
+
+      $('[data-pr-save]', host).addEventListener('click', async function () {
+        var euros = Math.round(Number(amount.value));
+        if (!(euros >= 0)) { toast('That is not an amount'); return; }
+        try {
+          await KMDB.admin.setPrice(euros * 100, 'EUR', 'One-time payment');
+          toast('Price saved');
+        } catch (e) { toast(e.message); }
+      });
+    }
   }
 
   /* ----------------------------------------------------------------- boot */
@@ -743,6 +895,7 @@ window.KMAdmin = (function () {
     content: renderContent,
     quizzes: renderQuizzes,
     projects: renderProjects,
+    purchases: renderPurchases,
     settings: renderSettings
   };
 

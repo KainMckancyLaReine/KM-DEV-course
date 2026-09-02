@@ -5,11 +5,18 @@ existing KM.dev brand. Same palette, same typefaces, same radii, same editorial
 restraint — no second visual identity anywhere in it.
 
 ```
-Marketing          index · course · work · faq
+Public             index · course · work · faq · pricing
+Purchase           checkout · welcome
 Academy            signup · login · reset · dashboard · course · lesson
                    assessment · project · progress · prompts · certificate · settings
-Administration     admin (overview, users, content, quizzes, projects, settings)
+Administration     admin (overview, users, content, quizzes, projects,
+                   purchases, settings)
 ```
+
+The course costs **€1.750**, once, for the whole programme including the levels
+still being written. The price is a row in the `settings` table, not a number
+in five files, and it is what the checkout charges — the browser never sends an
+amount.
 
 ---
 
@@ -90,7 +97,12 @@ content/                 the course, version-controlled
 
 db/
   schema.sql             tables, row level security, server-side grading
+  phase15.sql            purchases, settings, and access that follows a payment
   seed.sql               generated — the whole course as SQL
+
+supabase/functions/
+  create-checkout/       opens a Stripe session; reads the price from the database
+  stripe-webhook/        the only thing in the system that may say "paid"
 
 assets/css/
   01-foundation.css      tokens, type, layout, reveal, buttons, cursor, loader
@@ -104,6 +116,8 @@ assets/js/
   modules.js             marketing interactions + the syntax highlighter
   km-config.js           the two Supabase values
   km-i18n.js             the academy interface in Dutch, and the engine
+  km-outline.js          generated — the programme's shape, for the pricing page
+  km-pricing.js          pricing page, checkout, confirmation
   seed-data.js           generated — the course for preview mode
   km-data.js             one data API, two adapters (Supabase / preview)
   km-blocks.js           lesson renderer: blocks, diagrams, demos, video, lightbox
@@ -117,6 +131,7 @@ build/
   qc.js  qc-app.js       console errors, horizontal overflow, 3 breakpoints
   it.js  academy.js      interaction suites, driven end to end
   i18n-scan.js           every rendered phrase, both languages, both roles
+  shots-pricing.js       captures the pricing page's frames from the real app
   final.js               reduced motion, layout shift, keyboard, bundle routing
   db-test.sh             applies the schema to a throwaway Postgres and checks
                          that the security properties actually hold
@@ -154,6 +169,49 @@ Five steps, roughly ten minutes:
    choose both passwords in the browser; neither exists anywhere in this repo.
 5. **Check that it refuses what it should.** Signed in as the student, call
    `KMDB.admin.users()` from the console. It throws.
+
+## Paying for it
+
+`db/phase15.sql` adds three things: a `settings` table holding the price, a
+`purchases` table holding the lifecycle of a payment, and `has_access()` — the
+function every content policy is now written in terms of.
+
+The order matters. A browser cannot write a purchase row: `authenticated` has
+no insert or update policy on that table at all. Rows are written by
+`open_checkout()` and `record_payment()`, which are revoked from every role a
+session can hold and are reachable only by the two Edge Functions running with
+the service key. `create-checkout` reads the amount from `settings` rather than
+accepting one, and `stripe-webhook` verifies Stripe's signature over the raw
+body — with a timestamp tolerance, and a constant-time comparison — before it
+believes a word of it.
+
+So the sequence that grants access is: Stripe charges the card → Stripe signs an
+event → the webhook verifies the signature → `record_payment` sets the row to
+`paid` → `has_access()` starts returning true → the content policies open. There
+is no step in that list a browser can reach.
+
+A refund runs the same path in reverse and the course closes again.
+
+```bash
+supabase functions deploy create-checkout
+supabase functions deploy stripe-webhook --no-verify-jwt
+supabase secrets set STRIPE_SECRET_KEY=sk_… STRIPE_WEBHOOK_SECRET=whsec_… \
+                     SITE_URL=https://your-site
+```
+
+An administrator can also set a purchase by hand — a bank transfer, a refund
+handled elsewhere — from **Admin → Purchases**. It writes an ordinary purchase
+row, so there stays one definition of who owns the course.
+
+### What a visitor sees before paying
+
+The pricing page is public and its numbers are real: the level titles, lesson
+titles, counts and timings all come from `course_outline()`, a function `anon`
+may call which returns the programme's *shape* and nothing else. A signed-in
+account that has not paid gets the same thing — the programme, its own account,
+and a price — because the lessons behind it return zero rows to it. That is not
+a hidden button; `bash build/db-test.sh` proves the account cannot read a
+lesson, a quiz question, an answer, a project brief or a prompt by any route.
 
 ### What the database enforces
 
@@ -232,8 +290,9 @@ bash  build/db-test.sh   # the schema and its security properties on real Postgr
 
 Current results: every page clean at desktop, tablet and mobile with no console
 errors and no horizontal overflow; CLS `0.0003`; 49 end-to-end acceptance checks
-passing; 28 database checks passing; nothing rendered in English once the
-language is Dutch.
+passing; 63 database checks passing, including that an account without a
+payment cannot read the course by any route; nothing rendered in English once
+the language is Dutch.
 
 ## Accessibility
 

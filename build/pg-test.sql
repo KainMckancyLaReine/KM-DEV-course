@@ -35,6 +35,22 @@ select case when (select count(*) from quiz_questions where question_nl = '') = 
 select case when (select count(*) from quiz_answers where answer_nl = '') = 0
        then 'PASS' else 'FAIL' end || ' — every assessment answer is translated';
 
+-- The course is paid for now (db/phase15.sql). These checks were written when
+-- it was free, and they are about progress, grading and roles rather than
+-- about entitlement — so give both accounts a real purchase and let them go on
+-- testing what they were written to test. Paid access has its own suite.
+do $$
+begin
+  if to_regclass('public.purchases') is not null then
+    insert into public.purchases (user_id, course_id, status, amount, currency, provider, paid_at)
+    select u.id, (select id from public.courses limit 1), 'paid', 175000, 'EUR', 'test', now()
+      from (values ('11111111-1111-4111-8111-111111111111'::uuid),
+                   ('22222222-2222-4222-8222-222222222222'::uuid),
+                   ('33333333-3333-4333-8333-333333333333'::uuid)) as u(id)
+     where not exists (select 1 from public.purchases p where p.user_id = u.id);
+  end if;
+end $$;
+
 -- some progress for each account, inserted as the owner (bypasses RLS by design)
 insert into lesson_progress (user_id, lesson_id, completed, completed_at)
 select '22222222-2222-4222-8222-222222222222', id, true, now()

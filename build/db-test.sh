@@ -32,11 +32,15 @@ $PSQL -q -c "drop database if exists kmtest;" -c "create database kmtest;"
 $PSQL -d kmtest -q -v ON_ERROR_STOP=1 -f "$HERE/build/pg-stub.sql" >/dev/null
 $PSQL -d kmtest -q -v ON_ERROR_STOP=1 -f "$HERE/db/schema.sql"     >/dev/null 2>&1
 $PSQL -d kmtest -q -v ON_ERROR_STOP=1 -f "$HERE/db/seed.sql"       >/dev/null 2>&1
-echo "schema and seed applied"
-$PSQL -d kmtest -f "$HERE/build/pg-test.sql" 2>&1 \
-  | grep -E "PASS|FAIL|ERROR" | sed 's/^psql:[^ ]* //;s/^NOTICE:  //'
+$PSQL -d kmtest -q -v ON_ERROR_STOP=1 -f "$HERE/db/phase15.sql"    >/dev/null 2>&1
+echo "schema, seed and paid access applied"
+for t in pg-test pg15-test; do
+  $PSQL -d kmtest -f "$HERE/build/$t.sql" 2>&1 \
+    | grep -E "PASS|FAIL|ERROR" | sed 's/^psql:[^ ]* //;s/^NOTICE:  //'
+done
 
-if $PSQL -d kmtest -f "$HERE/build/pg-test.sql" 2>&1 | grep -q FAIL; then
+if { $PSQL -d kmtest -f "$HERE/build/pg-test.sql";
+     $PSQL -d kmtest -f "$HERE/build/pg15-test.sql"; } 2>&1 | grep -q FAIL; then
   echo "FAILURES"; exit 1
 fi
 echo "all database checks passed"

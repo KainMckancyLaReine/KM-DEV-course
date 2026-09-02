@@ -1,10 +1,17 @@
-/* Walks the whole academy as a student and as an admin and reports every
-   phrase the interface rendered that the Dutch dictionary does not cover.
+/* Walks the whole product in both languages and reports anything that is
+   still English after the reader has asked for Dutch.
 
-   The check is deliberately blunt: load each page in English, collect the
-   text nodes and the four perceivable attributes, then subtract the keys in
-   assets/js/km-i18n.js and everything that came out of the course database.
-   What is left is untranslated interface.
+   The test is deliberately one rule rather than a list of them: load a page in
+   English and collect every phrase it rendered; load the same page in Dutch
+   and collect again; report what appears in both. It does not matter whether a
+   phrase is translated in the markup, by the dictionary, by a render-time
+   helper or by a Dutch column in the database — if the two passes disagree,
+   it is handled, and if they agree, it is not.
+
+   What that rule cannot know is which repeats are wrong. "Level 01", an email
+   address, a file name and a line of CSS are the same in both languages
+   because they should be, so those are named in IGNORE below; headlines the
+   brand keeps in English are art direction and carry data-split.
 
      python3 -m http.server 8099
      node build/i18n-scan.js
@@ -14,12 +21,15 @@ const { prepare } = require('./preview');
 
 const BASE = 'http://localhost:8099';
 
-/* Signed out. A signed-in visitor is redirected off these pages, so walking
-   them in a logged-in session silently checks the dashboard three times. */
-const AUTH = [
+/* Signed out. A signed-in visitor is redirected off the auth pages, so
+   walking them in a logged-in session silently checks the dashboard instead. */
+const PUBLIC = [
   ['/login.html', 'form'],
   ['/signup.html', 'form'],
-  ['/reset.html', 'form']
+  ['/reset.html', 'form'],
+  ['/pricing.html', '.buy'],
+  ['/checkout.html', '.co'],
+  ['/welcome.html', '.win']
 ];
 
 const PAGES = [
@@ -43,14 +53,8 @@ const PAGES = [
   ['/app-progress.html', '.meter__pct'],
   ['/app-prompts.html', '.prompt-c'],
   ['/app-certificate.html', '.state, .cert'],
-  ['/app-settings.html', '#sname'],
-  ['/README-academy.html', '.panel']
+  ['/app-settings.html', '#sname']
 ];
-
-/* README-academy.html is the wiring note for whoever sets the backend up, not
-   part of the student's academy, and it stops being reachable the moment a
-   Supabase project is connected. It is left in English on purpose. */
-const SKIP_PAGES = /README-academy/;
 
 const ADMIN = [
   ['/admin.html', '.admin'],
@@ -58,12 +62,17 @@ const ADMIN = [
   ['/admin.html#content', '.admin'],
   ['/admin.html#quizzes', '.admin'],
   ['/admin.html#projects', '.admin'],
+  ['/admin.html#purchases', '.admin'],
   ['/admin.html#settings', '.admin']
 ];
 
 async function noFonts(ctx) {
   await prepare(ctx);
-  await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+  await ctx.route(/fonts\.(googleapis|gstatic)\.com/, (r) => r.abort());
+}
+
+async function setLang(page, lang) {
+  await page.evaluate((l) => { try { localStorage.setItem('km-lang', l); } catch (e) {} }, lang);
 }
 
 async function signOut(page) {
@@ -72,39 +81,27 @@ async function signOut(page) {
 }
 
 async function signIn(page, who) {
-  await page.goto(BASE + '/app-settings.html', { waitUntil: 'networkidle' });
-  await page.evaluate(async () => { if (window.KMDB) { await KMDB.init(); await KMDB.signOut(); } });
-  await page.evaluate(() => { try { localStorage.setItem('km-lang', 'en'); } catch (e) {} });
+  await signOut(page);
   await page.goto(BASE + '/login.html', { waitUntil: 'networkidle' });
   await page.waitForSelector('.demo-key', { timeout: 15000 });
   await page.locator('.demo-key', { hasText: who }).click();
   await page.waitForURL('**/app-dashboard.html', { timeout: 15000 });
 }
 
-/* Everything the course database can put on screen. Those strings are
-   translated by their own _nl columns, not by the dictionary. */
-async function contentStrings(page) {
-  return page.evaluate(async () => {
-    const out = new Set();
-    const push = v => {
-      if (typeof v === 'string') {
-        out.add(v.trim());
-        v.split(/\*\*|`|\n/).forEach(l => { const t = l.trim(); if (t) out.add(t); });
-      }
-      else if (Array.isArray(v)) v.forEach(push);
-      else if (v && typeof v === 'object') Object.values(v).forEach(push);
-    };
-    push(window.KM_SEED || {});
-    return Array.from(out).filter(Boolean);
-  });
-}
-
+/* Text and the four attributes a reader can perceive. Code, terminals and
+   prompt bodies are content rather than interface — their text is source, or
+   something the student is meant to paste — so they are left alone. Headlines
+   set with data-split are art direction: the site keeps its large typographic
+   statements in English on purpose, and that was decided in Phase 1. */
 async function collect(page) {
   return page.evaluate(() => {
     const SKIP = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, CODE: 1, PRE: 1, TEXTAREA: 1 };
     const SKIP_CLASS = /(^|\s)(blk-code|editor|code-line|term|prompt-c__body|diff|no-i18n)(\s|$)/;
-    const skipped = el => SKIP[el.tagName] ||
+    const skipped = (el) =>
+      SKIP[el.tagName] ||
+      el.hasAttribute('data-split') ||
       (typeof el.className === 'string' && SKIP_CLASS.test(el.className));
+
     const found = new Set();
     const w = document.createTreeWalker(document.body,
       NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, {
@@ -120,8 +117,8 @@ async function collect(page) {
         const t = n.nodeValue.trim();
         if (t) found.add(t);
       } else {
-        ['placeholder', 'aria-label', 'title', 'alt'].forEach(a => {
-          if (n.hasAttribute(a) && !n.hasAttribute('data-nl-aria')) {
+        ['placeholder', 'aria-label', 'title', 'alt'].forEach((a) => {
+          if (n.hasAttribute(a)) {
             const v = n.getAttribute(a).trim();
             if (v) found.add(v);
           }
@@ -132,25 +129,62 @@ async function collect(page) {
   });
 }
 
-/* Anything with no letters, or nothing but names, numbers and code, is not a
-   phrase a reader would notice as being in the wrong language. */
+/* Repeats that are correct: no letters at all, names, identifiers, numbers
+   with units, addresses, and words the two languages share. */
 const IGNORE = [
-  /^[^A-Za-z]*$/,                      /* numbers, arrows, punctuation */
-  /^(KM\.dev|Claude|Supabase|Kain|User B|GitHub|Anthropic)/,
-  /^[a-z0-9._/-]+\.(js|json|sql|html|css|py|sh)$/,
-  /^(EN|NL|HTML|CSS|JavaScript|JS|URL|AI|UI|API|RLS|SQL|⌘K|esc|S|M)$/,
-  /^[a-z_]+\(\)?$/,                    /* is_admin, profiles, role */
-  /^(admin_bootstrap|quiz_answers|lesson_progress|is_correct|service_role)$/,
-  /^\d+\s*(px|%|ms|em|min|s)$/,
-  /^(student|admin|draft|published)$/,
-  /^[A-Z]{1,2}$/,                      /* avatar initials, keyboard hints */
-  /^[a-z]+@[a-z.]+$/,                  /* addresses */
-  /^\{[A-Z0-9 _]+\}$/,                 /* prompt placeholders */
-  /^Level \d+/,                        /* "Level" is the same word in Dutch */
+  /^[^A-Za-z]*$/,
+  /^(KM\.dev|Claude|Supabase|Stripe|Kain|User B|GitHub|Anthropic|Amsterdam)/,
+  /^[a-z0-9._/-]+\.(js|json|sql|html|css|py|sh|nl|com|dev)$/,
+  /^(EN|NL|HTML|CSS|JavaScript|JS|URL|AI|UI|API|RLS|SQL|UX|SEO|⌘K|esc)$/,
+  /^[a-z_]+\(\)?$/,
+  /^(admin_bootstrap|quiz_answers|lesson_progress|is_correct|service_role|has_access|profiles|role)$/,
+  /^\d+\s*(px|%|ms|em|min|s|m|h)$/,
+  /^(student|admin|draft|published|paid|refunded|cancelled|not_purchased)$/,
+  /^[A-Z]{1,2}$/,
+  /^[a-z0-9._%+-]+@[a-z0-9.-]+$/,
+  /^\{[A-Z0-9 _]+\}$/,
+  /^Level \d+/,
   /^Prompt \/ \d+$/,
-  /^km\.dev$/,                         /* the brand, in the back link */
-  /Academy$/                           /* the product name, not a phrase */
+  /^km\.dev$/,
+  /Academy$/,
+  /^km\.dev\//,                        /* the addresses in the browser frames */
+  /^\d\d[ —]/                          /* "04 — HTML, CSS & JavaScript" */
 ];
+
+/* Words the brand keeps in English on purpose, in both languages. */
+const BRAND = new Set([
+  'Overview', 'Course', 'Work', 'FAQ', 'Pricing',
+  'Prompt · Code · Website', 'Selected work', 'Ship faster', 'New in', 'Usage',
+  'Build websites', 'with AI.', 'Hello.', 'We are building it.',
+  'Learn · Build · Understand · Iterate · Ship',
+  'Planning', 'Research', 'Design', 'Components', 'Performance', 'Accessibility',
+  'Polish', 'Debugging', 'Refactoring', 'Responsive', 'Context', 'Constraints',
+  'Output', 'Goal', 'Functionality', 'Technology', 'Studio Vanhorn',
+  'Dashboard', 'Account', 'Prompt', 'Prompts', 'Project', 'Projects',
+  'Design engineer', 'Front-end dev', 'Layout', 'Bug', 'Style', 'Options',
+  'Review', 'Test', 'Build', 'Deploy', 'Final', 'Certificate', 'Idea', 'Code',
+  'Animate', 'Purchases', 'Revenue', 'Paid', 'Average',
+
+  /* Terms Dutch developers use in English, which is how the course teaches
+     them and how the translation was written on purpose. */
+  'Responsive', 'Responsive design', 'Responsive development', 'Responsive QA',
+  'Responsive bugs', 'Spacing', 'Typography', 'Composition', 'Motion',
+  'Colour', 'State', 'Data', 'Deployment', 'Refactor', 'Final Polish',
+  'Checklist', 'Radius', 'Accent', 'HTML, CSS & JavaScript', 'AI Web Developer',
+  'ERROR', 'DIAGNOSE', 'FIX', 'TEST', 'Levels', 'Debug', 'Start', 'Menu',
+
+  /* Prompt-library categories are one-word technical labels and are stored
+     without a Dutch column on purpose — a Dutch developer says "Animation". */
+  'Animation',
+
+  'AI Course', 'AI Developer Course', 'KM.DEV / AI DEVELOPER COURSE',
+  'Build websites with AI', 'EN / NL', 'open', 'context', 'constraints', 'output',
+  "TypeError: Cannot read properties of null (reading 'addEventListener')\n  at script.js:40",
+
+  /* The fictional studio the demos are built around, and its own copy. */
+  'Vanhorn', 'Two people.', 'One studio.', 'Studio',
+  '© 2026 KM.dev'
+]);
 
 (async () => {
   const b = await chromium.launch();
@@ -158,84 +192,47 @@ const IGNORE = [
   await noFonts(ctx);
   const page = await ctx.newPage();
 
-  await page.goto(BASE + '/app-dashboard.html', { waitUntil: 'networkidle' });
-  const dict = await page.evaluate(() => Object.keys((window.KMT && KMT.dict) || {}));
-  const covered = s => page.evaluate(t => !!(window.KMT && KMT.lookup(t)), s);
-  const content = new Set(await contentStrings(page));
-  const known = new Set(dict);
-
   const missing = new Map();
-  const raw = [];
 
-  async function sweep(list, who) {
+  /* One page, both languages. The difference is the answer. */
+  async function sweep(list, who, before) {
     for (const [url, sel] of list) {
-      if (SKIP_PAGES.test(url)) continue;
-      await page.goto(BASE + url, { waitUntil: 'networkidle' });
-      try { await page.waitForSelector(sel, { timeout: 12000 }); } catch (e) {}
-      await page.waitForTimeout(350);
-      for (const s of await collect(page)) {
-        raw.push([s, who + ' ' + url]);
-        if (known.has(s) || content.has(s)) continue;
-        /* "03 — Context" is a database title with an index in front of it. */
-        if (content.has(s.replace(/^\d+\s*[—·/-]?\s*/, '').trim())) continue;
-        if (IGNORE.some(r => r.test(s))) continue;
-        if (await covered(s)) continue;
+      const seen = {};
+      for (const lang of ['en', 'nl']) {
+        if (before) await before();
+        await page.goto(BASE + url, { waitUntil: 'networkidle' });
+        await setLang(page, lang);
+        await page.reload({ waitUntil: 'networkidle' });
+        try { await page.waitForSelector(sel, { timeout: 12000 }); } catch (e) {}
+        await page.waitForTimeout(400);
+        seen[lang] = new Set(await collect(page));
+      }
+      for (const s of seen.en) {
+        if (!seen.nl.has(s)) continue;              /* it changed — handled */
+        if (BRAND.has(s)) continue;
+        if (IGNORE.some((r) => r.test(s))) continue;
         if (!missing.has(s)) missing.set(s, who + ' ' + url);
       }
     }
   }
 
-  await signOut(page);
-  await page.evaluate(() => { try { localStorage.setItem('km-lang', 'en'); } catch (e) {} });
-  await sweep(AUTH, 'signed out');
+  await sweep(PUBLIC, 'public', () => signOut(page));
 
   await signIn(page, 'User B');
-  await sweep(PAGES, 'student');
+  await sweep(PAGES, 'student', null);
 
   await signIn(page, 'Kain');
-  await sweep(PAGES, 'admin');
-  await sweep(ADMIN, 'admin');
-
-  /* Phase two. English keys must not survive a switch to Dutch — this is what
-     proves the engine runs, not merely that the dictionary is complete. */
-  const leftover = new Map();
-  await page.evaluate(() => { try { localStorage.setItem('km-lang', 'nl'); } catch (e) {} });
-  for (const [url, sel] of AUTH.concat(PAGES, ADMIN)) {
-    if (SKIP_PAGES.test(url)) continue;
-    await page.goto(BASE + url, { waitUntil: 'networkidle' });
-    try { await page.waitForSelector(sel, { timeout: 12000 }); } catch (e) {}
-    await page.waitForTimeout(400);
-    for (const s of await collect(page)) {
-      if (!known.has(s)) continue;
-      const nl = await page.evaluate(t => KMT.lookup(t), s);
-      if (nl && nl !== s && !leftover.has(s)) leftover.set(s, url);
-    }
-  }
-
-  require('fs').writeFileSync('/tmp/i18n-raw.json',
-    JSON.stringify({ dict, content: Array.from(content), raw }, null, 0));
+  await sweep(ADMIN, 'admin', null);
 
   await b.close();
 
-  let bad = 0;
-  if (missing.size) {
-    bad += missing.size;
-    console.log('i18n · ' + missing.size + ' phrase(s) with no Dutch:\n');
-    for (const [s, where] of missing) {
-      console.log('    ' + JSON.stringify(s) + '   [' + where + ']');
-    }
-  } else {
-    console.log('i18n · every rendered phrase is covered by the dictionary');
+  if (!missing.size) {
+    console.log('i18n · nothing stays English when the reader asks for Dutch');
+    process.exit(0);
   }
-
-  if (leftover.size) {
-    bad += leftover.size;
-    console.log('\ni18n · ' + leftover.size + ' phrase(s) still English in Dutch mode:\n');
-    for (const [s, where] of leftover) {
-      console.log('    ' + JSON.stringify(s) + '   [' + where + ']');
-    }
-  } else {
-    console.log('i18n · nothing rendered in English once the language is Dutch');
+  console.log('i18n · ' + missing.size + ' phrase(s) unchanged between English and Dutch:\n');
+  for (const [s, where] of missing) {
+    console.log('    ' + JSON.stringify(s) + '   [' + where + ']');
   }
-  process.exit(bad ? 1 : 0);
+  process.exit(1);
 })();

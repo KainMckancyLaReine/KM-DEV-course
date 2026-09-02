@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout — KM.dev AI Developer Course</title>
+<meta name="description" content="One payment for the whole programme. Handled by Stripe.">
+<meta name="theme-color" content="#f4f3ef">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/01-foundation.css">
+<link rel="stylesheet" href="assets/css/02-chrome.css">
+<link rel="stylesheet" href="assets/css/03-sections.css">
+<link rel="stylesheet" href="assets/css/05-pricing.css">
+</head>
+<body>
+
+<a class="skip" href="#main" data-en="Skip to content" data-nl="Naar de inhoud">Skip to content</a>
+
+<!-- 30 · LOADING EXPERIENCE -->
+<div class="loader" aria-hidden="true">
+  <div class="loader__center">
+    <div class="loader__mark"><span>KM.DEV</span></div>
+    <div class="loader__status">Initializing experience</div>
+  </div>
+  <div class="loader__foot">
+    <span class="loader__count">01 / 04</span>
+    <span class="loader__track"><i class="loader__bar"></i></span>
+    <span class="loader__count">AI DEVELOPER COURSE</span>
+  </div>
+</div>
+
+<div class="pt" aria-hidden="true"></div>
+
+<!-- 32 · NAVIGATION -->
+<header class="nav">
+  <div class="shell nav__inner">
+    <a class="brand" href="index.html" aria-label="KM.dev — AI Developer Course">
+      KM.dev<i class="brand__dot"></i>
+      <span class="brand__sub">AI Course</span>
+    </a>
+
+    <nav class="nav__links" data-en-aria="Primary" data-nl-aria="Hoofdnavigatie" aria-label="Primary" data-learning-nav>
+      <a class="nav__link" href="index.html" data-en="Overview" data-nl="Overzicht">Overview</a>
+      <a class="nav__link" href="course.html" data-en="Course" data-nl="Cursus">Course</a>
+      <a class="nav__link" href="pricing.html" data-en="Pricing" data-nl="Prijs">Pricing</a>
+      <a class="nav__link" href="work.html" data-en="Work" data-nl="Werk">Work</a>
+      <a class="nav__link" href="faq.html" data-en="FAQ" data-nl="FAQ">FAQ</a>
+    </nav>
+
+    <div class="nav__right">
+      <div class="lang" role="group" data-en-aria="Language" data-nl-aria="Taal" aria-label="Language">
+        <button class="lang__btn is-active" data-lang="en" type="button">EN</button>
+        <button class="lang__btn" data-lang="nl" type="button">NL</button>
+      </div>
+      <div data-account style="display:flex;align-items:center;gap:10px"></div>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="menu"
+              data-en-aria="Open menu" data-nl-aria="Menu openen" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu">
+  <div class="shell menu__inner">
+    <nav class="menu__list" data-en-aria="Menu" data-nl-aria="Menu" aria-label="Menu">
+      <a class="menu__item" href="index.html"><span class="t-num menu__anim" style="--md:60ms">01</span><b class="menu__anim" style="--md:60ms">Overview</b><i class="menu__anim" style="--md:60ms" data-en="The experience" data-nl="De ervaring">The experience</i></a>
+      <a class="menu__item" href="course.html"><span class="t-num menu__anim" style="--md:120ms">02</span><b class="menu__anim" style="--md:120ms">Course</b><i class="menu__anim" style="--md:120ms" data-en="Eight chapters" data-nl="Acht hoofdstukken">Eight chapters</i></a>
+      <a class="menu__item" href="work.html"><span class="t-num menu__anim" style="--md:180ms">03</span><b class="menu__anim" style="--md:180ms">Work</b><i class="menu__anim" style="--md:180ms" data-en="What you build" data-nl="Wat je bouwt">What you build</i></a>
+      <a class="menu__item" href="faq.html"><span class="t-num menu__anim" style="--md:240ms">04</span><b class="menu__anim" style="--md:240ms">FAQ</b><i class="menu__anim" style="--md:240ms" data-en="Before you start" data-nl="Voor je begint">Before you start</i></a>
+    </nav>
+    <div class="menu__side">
+      <span class="t-tag">KM.dev / Amsterdam</span>
+      <p data-en="An AI development course from the studio behind KM.dev brand systems. Same standards, new medium."
+         data-nl="Een AI-ontwikkelcursus van de studio achter de KM.dev brand systems. Zelfde standaard, nieuw medium.">An AI development course from the studio behind KM.dev brand systems. Same standards, new medium.</p>
+      <a class="xlink" href="mailto:kkain25@gmail.com" data-no-route>kkain25@gmail.com<i class="btn__arrow"></i></a>
+    </div>
+  </div>
+  <div class="shell menu__foot">
+    <span class="mono">Build websites with AI</span>
+    <span class="mono">EN / NL</span>
+  </div>
+</div>
+
+<main class="page-main" id="main" data-page="checkout.html">
+<section class="section-tight" style="padding-top:0">
+  <div class="shell">
+    <div class="co">
+      <div class="co__main">
+        <span class="t-tag is-plain mono" data-en="Checkout" data-nl="Afrekenen">Checkout</span>
+        <h1 class="t-h2" style="margin-top:16px">KM.dev<br>AI Developer Course</h1>
+        <p class="t-lead" style="margin-top:20px;max-width:52ch"
+           data-en="One payment for the whole programme, including every level still being written."
+           data-nl="Eén betaling voor het hele programma, inclusief elk level dat nog geschreven wordt.">One payment for the whole programme, including every level still being written.</p>
+
+        <ol class="co__steps" data-co-steps>
+          <li class="is-on"><b>01</b><span data-en="Your account" data-nl="Je account">Your account</span></li>
+          <li><b>02</b><span data-en="Payment, on Stripe" data-nl="Betaling, bij Stripe">Payment, on Stripe</span></li>
+          <li><b>03</b><span data-en="Access, the moment it clears" data-nl="Toegang, zodra het rond is">Access, the moment it clears</span></li>
+        </ol>
+
+        <div class="co__account" data-co-account></div>
+
+        <h2 class="t-h4" style="margin:clamp(30px,4vw,50px) 0 0"
+            data-en="What the payment opens" data-nl="Wat de betaling opent">What the payment opens</h2>
+        <ul class="locked__grid" style="margin-top:18px">
+          <li data-en="Every written lesson" data-nl="Elke geschreven les">Every written lesson</li>
+          <li data-en="Interactive demonstrations" data-nl="Interactieve demonstraties">Interactive demonstrations</li>
+          <li data-en="The prompt library" data-nl="De promptbibliotheek">The prompt library</li>
+          <li data-en="Project briefs" data-nl="Projectbriefings">Project briefs</li>
+          <li data-en="Assessments" data-nl="Toetsen">Assessments</li>
+          <li data-en="Progress tracking" data-nl="Voortgang">Progress tracking</li>
+          <li data-en="Final project" data-nl="Eindproject">Final project</li>
+          <li data-en="Certificate" data-nl="Certificaat">Certificate</li>
+          <li data-en="All future levels" data-nl="Alle toekomstige levels">All future levels</li>
+        </ul>
+      </div>
+
+      <aside class="co__side">
+        <span class="mono buy__label" data-en="Your investment" data-nl="Jouw investering">Your investment</span>
+
+        <div class="co__row" style="margin-top:18px">
+          <span data-en="AI Developer Course" data-nl="AI Developer Course">AI Developer Course</span>
+          <b data-price>—</b>
+        </div>
+        <div class="co__row">
+          <span data-en="Access" data-nl="Toegang">Access</span>
+          <b data-en="Lifetime" data-nl="Levenslang">Lifetime</b>
+        </div>
+        <div class="co__row">
+          <span data-en="Billing" data-nl="Facturering">Billing</span>
+          <b data-en="Once" data-nl="Eenmalig">Once</b>
+        </div>
+
+        <div class="co__total">
+          <span class="mono" data-en="Total today" data-nl="Totaal vandaag">Total today</span>
+          <b data-price>—</b>
+        </div>
+
+        <div style="margin-top:clamp(22px,2.6vw,30px)">
+          <button class="btn btn--accent btn--block" type="button" data-co-pay data-magnetic="0.28" data-cursor="Pay">
+            <span class="btn__label" data-en="Complete purchase" data-nl="Aankoop afronden">Complete purchase</span><i class="btn__arrow"></i>
+          </button>
+        </div>
+
+        <div class="co__err" data-co-err></div>
+
+        <p class="co__note"
+           data-en="Payment is handled by Stripe on Stripe’s own pages — card details never reach this site. Your access is switched on by the message Stripe sends the server once the payment clears."
+           data-nl="De betaling loopt via Stripe, op de pagina’s van Stripe zelf — kaartgegevens komen nooit op deze site. Je toegang gaat aan door het bericht dat Stripe naar de server stuurt zodra de betaling rond is.">Payment is handled by Stripe on Stripe’s own pages — card details never reach this site. Your access is switched on by the message Stripe sends the server once the payment clears.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+</main>
+
+
+<footer class="footer on-dark">
+  <div class="shell">
+    <div class="footer__top">
+      <div>
+        <p class="footer__mark">Build websites<br>with AI.</p>
+        <p class="t-small" style="margin-top:22px;max-width:34ch" data-en="An AI developer course by KM.dev — Amsterdam."
+           data-nl="Een AI developer course van KM.dev — Amsterdam.">An AI developer course by KM.dev — Amsterdam.</p>
+      </div>
+      <div class="footer__col">
+        <h4 data-en="Course" data-nl="Cursus">Course</h4>
+        <ul>
+          <li><a href="index.html" data-en="Overview" data-nl="Overzicht">Overview</a></li>
+          <li><a href="course.html" data-en="Curriculum" data-nl="Programma">Curriculum</a></li>
+          <li><a href="work.html" data-en="What you build" data-nl="Wat je bouwt">What you build</a></li>
+          <li><a href="faq.html" data-en="FAQ" data-nl="FAQ">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4 data-en="Studio" data-nl="Studio">Studio</h4>
+        <ul>
+          <li><a href="https://kainmckancylareine.github.io/KM-DEV/index.html" target="_blank" rel="noopener" data-no-route>KM.dev</a></li>
+          <li><a href="mailto:kkain25@gmail.com" data-no-route>kkain25@gmail.com</a></li>
+          <li><a href="signup.html" data-en="Start learning" data-nl="Begin met leren">Start learning</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="mono">© 2026 KM.dev</span>
+      <span class="mono">Amsterdam, NL</span>
+      <span class="mono">Prompt · Code · Website</span>
+    </div>
+  </div>
+</footer>
+
+<!-- 18 · PROJECT PREVIEW FOLLOWER — designed compositions, drawn in CSS -->
+<div class="follower" aria-hidden="true">
+  <div class="follower__inner">
+    <div class="pv pv--portfolio" data-pv="portfolio">
+      <div class="pv__bar"><i></i><i></i><i></i></div>
+      <div class="pv__canvas"><span class="pv__h">Selected work</span><span class="pv__l"></span><span class="pv__l" style="width:58%"></span><div class="pv__row"><span class="pv__box"></span><span class="pv__box"></span></div></div>
+    </div>
+    <div class="pv pv--saas" data-pv="saas">
+      <div class="pv__bar"><i></i><i></i><i></i></div>
+      <div class="pv__canvas"><span class="pv__h">Ship faster</span><span class="pv__l"></span><div class="pv__row"><span class="pv__box"></span><span class="pv__box"></span><span class="pv__box"></span></div></div>
+    </div>
+    <div class="pv pv--shop" data-pv="shop">
+      <div class="pv__bar"><i></i><i></i><i></i></div>
+      <div class="pv__canvas"><span class="pv__h" style="font-size:15px">New in</span><div class="pv__row"><span class="pv__box"></span><span class="pv__box"></span><span class="pv__box"></span></div><div class="pv__row"><span class="pv__box"></span><span class="pv__box"></span><span class="pv__box"></span></div></div>
+    </div>
+    <div class="pv pv--dash" data-pv="dash">
+      <div class="pv__bar"><i></i><i></i><i></i></div>
+      <div class="pv__canvas"><span class="pv__h" style="font-size:14px;color:#f4f3ef">Usage</span><div class="bars"><i style="height:40%"></i><i style="height:70%"></i><i style="height:52%"></i><i style="height:88%"></i><i style="height:64%"></i></div><span class="pv__l"></span></div>
+    </div>
+    <div class="pv pv--brand" data-pv="brand">
+      <div class="pv__bar"><i></i><i></i><i></i></div>
+      <div class="pv__canvas"><span class="pv__h">Hello.</span><span class="pv__l"></span><span class="pv__l" style="width:50%"></span></div>
+    </div>
+    <div class="pv pv--startup" data-pv="startup">
+      <div class="pv__bar"><i></i><i></i><i></i></div>
+      <div class="pv__canvas"><span class="pv__h">We are building it.</span><span class="pv__l"></span><div class="pv__row"><span class="pv__box"></span><span class="pv__box"></span></div></div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/core.js"></script>
+<script src="assets/js/km-config.js"></script>
+<script src="assets/js/km-i18n.js"></script>
+<script src="assets/js/km-outline.js"></script>
+<script src="assets/js/km-data.js"></script>
+<script src="assets/js/km-app.js"></script>
+<script src="assets/js/modules.js"></script>
+<script src="assets/js/km-pricing.js"></script>
+</body>
+</html>

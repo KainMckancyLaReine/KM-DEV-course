@@ -55,24 +55,44 @@ def main():
         ('faq.html', 'FAQ — KM.dev AI Developer Course',
          'What you need, what you don’t, and what happens after you finish.',
          read(os.path.join(BUILD, 'faq.main.html'))),
+        ('pricing.html', 'Pricing — KM.dev AI Developer Course',
+         'One complete system. One serious skill. The full AI Developer Course, '
+         'one payment, lifetime access.',
+         read(os.path.join(BUILD, 'pricing.main.html'))),
+        ('checkout.html', 'Checkout — KM.dev AI Developer Course',
+         'One payment for the whole programme. Handled by Stripe.',
+         read(os.path.join(BUILD, 'checkout.main.html'))),
+        ('welcome.html', 'You’re in — KM.dev AI Developer Course',
+         'Your AI Developer journey starts now.',
+         read(os.path.join(BUILD, 'welcome.main.html'))),
     ]
+    # The pricing page is the only public page that reports the programme's
+    # numbers, so it is the only one that carries them.
+    OUTLINE_TAG = '<script src="assets/js/km-outline.js"></script>\n'
+
     for page, title, desc, body in pages:
-        write(os.path.join(ROOT, page), compose(index, page, title, desc, body))
+        html = compose(index, page, title, desc, body)
+        if page in ('pricing.html', 'checkout.html'):
+            html = html.replace('<script src="assets/js/km-data.js"></script>',
+                                OUTLINE_TAG + '<script src="assets/js/km-data.js"></script>', 1)
+        write(os.path.join(ROOT, page), html)
 
     # ---------------------------------------------------------------- bundle
     print('build · single-file bundle')
     css = '\n'.join(read(os.path.join(ROOT, 'assets/css', f))
-                    for f in ['01-foundation.css', '02-chrome.css', '03-sections.css', '04-app.css'])
+                    for f in ['01-foundation.css', '02-chrome.css', '03-sections.css',
+                              '04-app.css', '05-pricing.css'])
     js = '\n'.join(read(os.path.join(ROOT, 'assets/js', f))
                    for f in ['core.js', 'modules.js', 'km-config.js', 'km-i18n.js',
                              'seed-data.js', 'km-data.js', 'km-blocks.js',
-                             'km-app.js', 'km-admin.js'])
+                             'km-app.js', 'km-admin.js', 'km-pricing.js'])
 
     import re as _re
     if _re.search(r'</\s*script', js, _re.I):
         raise SystemExit('a source file contains </script>, which would end the inline block')
 
     bundled_pages = ['index.html', 'course.html', 'work.html', 'faq.html',
+                     'pricing.html', 'checkout.html', 'welcome.html',
                      'login.html', 'signup.html', 'reset.html', 'admin.html',
                      'README-academy.html'] + \
                     [f for f in sorted(os.listdir(ROOT)) if f.startswith('app-') and f.endswith('.html')]

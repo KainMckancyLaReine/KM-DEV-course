@@ -21,6 +21,58 @@ window.KMDB = (function () {
   var LIVE = !!(cfg.supabaseUrl && cfg.supabaseAnonKey);
   var COURSE_SLUG = cfg.courseSlug || 'ai-web-developer';
 
+  /* Preview mode has no settings table, so it carries the list price. If it
+     ever drifts from the real one, the real one wins the moment a Supabase
+     project is connected — this number is never charged to anybody. */
+  var PREVIEW_PRICE = { amount: 175000, currency: 'EUR', label: 'One-time payment' };
+
+  /* The shape course_outline() returns, built from a local content object.
+     Kept here so preview and live hand the pricing page the same thing. */
+  function KMOutline(c, price) {
+    if (!c || !c.course) return { found: false };
+    var levels = (c.levels || []).slice().sort(function (a, b) { return a.position - b.position; });
+    var lessons = c.lessons || [];
+    var of = function (id) {
+      return lessons.filter(function (l) { return l.level_id === id; })
+                    .sort(function (a, b) { return a.position - b.position; });
+    };
+    var sum = function (rows) {
+      return rows.reduce(function (n, l) { return n + (l.estimated_minutes || 0); }, 0);
+    };
+    return {
+      found: true,
+      course: c.course,
+      price: price,
+      totals: {
+        levels: levels.length,
+        lessons: lessons.length,
+        published: lessons.filter(function (l) { return l.published; }).length,
+        minutes: sum(lessons),
+        projects: (c.projects || []).length,
+        assessments: (c.quizzes || []).length,
+        questions: (c.questions || []).length,
+        prompts: (c.prompts || []).length
+      },
+      levels: levels.map(function (lv) {
+        var ls = of(lv.id);
+        return {
+          position: lv.position, slug: lv.slug,
+          title: lv.title, title_nl: lv.title_nl,
+          description: lv.description, description_nl: lv.description_nl,
+          lessons: ls.length,
+          published: ls.filter(function (l) { return l.published; }).length,
+          minutes: sum(ls),
+          projects: (c.projects || []).filter(function (p) { return p.level_id === lv.id; }).length,
+          assessments: (c.quizzes || []).filter(function (q) { return q.level_id === lv.id; }).length,
+          lesson_titles: ls.map(function (l) {
+            return { title: l.title, title_nl: l.title_nl,
+                     minutes: l.estimated_minutes, published: l.published };
+          })
+        };
+      })
+    };
+  }
+
   /* ------------------------------------------------------------ utilities */
 
   function clone(v) { return v == null ? v : JSON.parse(JSON.stringify(v)); }
@@ -298,6 +350,44 @@ window.KMDB = (function () {
       return true;
     },
 
+    /* ------------------------------------------------------------ access */
+    /* Preview mode has no payment provider and says so. It reports the state
+       an owner would be in, because the point of preview is to walk the
+       product — but it never pretends a payment happened. */
+    async accessState() {
+      var d = Store.get();
+      var u = d.session && byId(d.users, d.session.user_id);
+      if (!u) {
+        return { signed_in: false, state: 'anonymous', has_access: false, price: PREVIEW_PRICE };
+      }
+      return {
+        signed_in: true, role: u.role, has_access: true,
+        state: u.role === 'admin' ? 'admin' : 'active_student',
+        preview: true,
+        purchase: { status: 'paid', amount: PREVIEW_PRICE.amount,
+                    currency: PREVIEW_PRICE.currency, paid_at: u.created_at },
+        price: PREVIEW_PRICE
+      };
+    },
+
+    async outline() {
+      /* The public pages load km-outline.js and nothing else; the academy has
+         the whole seed. Either is enough to answer this. */
+      if (window.KM_OUTLINE) {
+        var o = {}, k;
+        for (k in KM_OUTLINE) if (Object.prototype.hasOwnProperty.call(KM_OUTLINE, k)) o[k] = KM_OUTLINE[k];
+        o.price = PREVIEW_PRICE;
+        return o;
+      }
+      return KMOutline(Store.get().content, PREVIEW_PRICE);
+    },
+
+    async purchases() { return []; },
+
+    async startCheckout() {
+      throw new Error('Payments need the Supabase backend. This is preview mode.');
+    },
+
     async quizWithQuestions(slug) {
       var d = Store.get(), c = d.content;
       var quiz = bySlug(c.quizzes, slug);
@@ -404,6 +494,21 @@ window.KMDB = (function () {
         var u = byId(d.users, d.session && d.session.user_id);
         if (!u || u.role !== 'admin') throw new Error('forbidden');
         return d;
+      },
+
+      async purchases() {
+        this._guard();
+        /* Preview mode never took a payment, so it has none to show. Saying
+           so is more useful than inventing a row. */
+        return [];
+      },
+      async setAccess() {
+        this._guard();
+        throw new Error('Access is granted by the database. This is preview mode.');
+      },
+      async setPrice() {
+        this._guard();
+        throw new Error('The price lives in the settings table. This is preview mode.');
       },
 
       async overview() {
@@ -729,6 +834,51 @@ window.KMDB = (function () {
       return true;
     },
 
+    /* ------------------------------------------------------------ access */
+    async accessState() {
+      var r = await sb.rpc('access_state');
+      fail(r.error);
+      return r.data;
+    },
+
+    async outline() {
+      var r = await sb.rpc('course_outline', { p_slug: COURSE_SLUG });
+      fail(r.error);
+      var o = r.data || { found: false };
+      var p = await sb.from('settings').select('value').eq('key', 'course_price').maybeSingle();
+      if (p.data && p.data.value) o.price = p.data.value;
+      return o;
+    },
+
+    async purchases() {
+      var r = await sb.from('purchases').select('*').order('created_at', { ascending: false });
+      fail(r.error);
+      return r.data || [];
+    },
+
+    /* Asks the server to open a Stripe Checkout Session. The only thing sent
+       is the session's own token: the amount, the course and the account all
+       come from the database on the other side. */
+    async startCheckout() {
+      var s = await sb.auth.getSession();
+      if (!s.data.session) throw new Error('Not signed in.');
+      var res = await fetch(cfg.supabaseUrl + '/functions/v1/create-checkout', {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + s.data.session.access_token,
+          apikey: cfg.supabaseAnonKey,
+          'content-type': 'application/json'
+        },
+        body: '{}'
+      });
+      var out = await res.json().catch(function () { return {}; });
+      if (!res.ok) {
+        if (out.error === 'already_owned') throw new Error('This account already owns the course.');
+        throw new Error(out.error || 'The checkout could not be opened.');
+      }
+      return out;
+    },
+
     async quizWithQuestions(slug) {
       var qz = await sb.from('quizzes').select('*').eq('slug', slug).maybeSingle();
       fail(qz.error);
@@ -796,6 +946,26 @@ window.KMDB = (function () {
     admin: {
       async overview() { var r = await sb.rpc('admin_overview'); fail(r.error); return r.data; },
       async users() { var r = await sb.rpc('admin_users'); fail(r.error); return r.data; },
+
+      async purchases() { var r = await sb.rpc('admin_purchases'); fail(r.error); return r.data; },
+
+      /* Granting access by hand — a bank transfer, a refund, a student who
+         paid another way. It writes an ordinary purchase row, so there stays
+         one definition of who owns the course. */
+      async setAccess(userId, status, note) {
+        var r = await sb.rpc('admin_set_access',
+          { p_user_id: userId, p_status: status, p_note: note || '' });
+        fail(r.error); return r.data;
+      },
+
+      async setPrice(amount, currency, label) {
+        var r = await sb.rpc('admin_set_setting', {
+          p_key: 'course_price',
+          p_value: { amount: amount, currency: currency || 'EUR',
+                     label: label || 'One-time payment' }
+        });
+        fail(r.error); return r.data;
+      },
 
       async user(id) {
         var q = await Promise.all([
@@ -976,6 +1146,12 @@ window.KMDB = (function () {
     resetPassword: function (e) { return A.resetPassword(e); },
     updateName: function (n) { return A.updateName(n); },
     touch: function () { return A.touch(); },
+
+    /* access + purchase */
+    accessState: function () { return A.accessState(); },
+    outline: function () { return A.outline(); },
+    purchases: function () { return A.purchases(); },
+    startCheckout: function () { return A.startCheckout(); },
 
     /* content + progress */
     content: function () { return A.content().then(localizeContent); },

@@ -22,7 +22,10 @@ const PAGES = [
   ['/app-prompts.html', '.prompt-c'],
   ['/app-certificate.html', '.state, .cert'],
   ['/app-settings.html', '#sname'],
-  ['/README-academy.html', '.panel']
+  ['/README-academy.html', '.panel'],
+  ['/pricing.html', '.buy'],
+  ['/checkout.html', '.co'],
+  ['/welcome.html', '.win']
 ];
 
 async function signIn(page, who) {
@@ -85,7 +88,7 @@ async function noFonts(ctx) {
     errs.length = 0;
     await page.goto(BASE + '/admin.html', { waitUntil: 'networkidle' });
     await page.waitForSelector('.admin__nav', { timeout: 15000 });
-    for (const sec of ['overview', 'users', 'content', 'quizzes', 'projects', 'settings']) {
+    for (const sec of ['overview', 'users', 'content', 'quizzes', 'projects', 'purchases', 'settings']) {
       await page.locator('[data-sec="' + sec + '"]').click();
       await page.waitForTimeout(700);
       const overflow = await page.evaluate(() =>

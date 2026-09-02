@@ -18,15 +18,16 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">')
 
 CSS = '\n'.join('<link rel="stylesheet" href="assets/css/%s">' % f for f in [
-    '01-foundation.css', '02-chrome.css', '03-sections.css', '04-app.css'])
+    '01-foundation.css', '02-chrome.css', '03-sections.css', '04-app.css',
+    '05-pricing.css'])
 
 APP_SCRIPTS = '\n'.join('<script src="assets/js/%s"></script>' % f for f in [
     'core.js', 'modules.js', 'km-config.js', 'km-i18n.js', 'seed-data.js',
-    'km-data.js', 'km-blocks.js', 'km-app.js'])
+    'km-data.js', 'km-blocks.js', 'km-app.js', 'km-pricing.js'])
 
 AUTH_SCRIPTS = '\n'.join('<script src="assets/js/%s"></script>' % f for f in [
     'core.js', 'modules.js', 'km-config.js', 'km-i18n.js', 'seed-data.js',
-    'km-data.js', 'km-app.js'])
+    'km-data.js', 'km-app.js', 'km-pricing.js'])
 
 ADMIN_SCRIPTS = APP_SCRIPTS + '\n<script src="assets/js/km-admin.js"></script>'
 
@@ -51,9 +52,9 @@ NAV = '''
     <a class="brand" href="app-dashboard.html" aria-label="KM.dev Academy">
       KM.dev<i class="brand__dot"></i><span class="brand__sub">Academy</span>
     </a>
-    <nav class="nav__links" aria-label="Course" data-learning-nav></nav>
+    <nav class="nav__links" data-en-aria="Course" data-nl-aria="Cursus" aria-label="Course" data-learning-nav></nav>
     <div class="nav__right">
-      <div class="lang" role="group" aria-label="Language">
+      <div class="lang" role="group" data-en-aria="Language" data-nl-aria="Taal" aria-label="Language">
         <button class="lang__btn is-active" data-lang="en" type="button">EN</button>
         <button class="lang__btn" data-lang="nl" type="button">NL</button>
       </div>
@@ -118,7 +119,7 @@ def auth_page(slug, title, kind, h1, sub, fields, submit, foot, aside):
             'justify-content:space-between;gap:16px">'
             '<a class="xlink" href="index.html">'
             '<i class="btn__arrow" style="transform:rotate(180deg)"></i><span>km.dev</span></a>'
-            '<div class="lang" role="group" aria-label="Language">'
+            '<div class="lang" role="group" data-en-aria="Language" data-nl-aria="Taal" aria-label="Language">'
             '<button class="lang__btn is-active" data-lang="en" type="button">EN</button>'
             '<button class="lang__btn" data-lang="nl" type="button">NL</button>'
             '</div></div>\n'

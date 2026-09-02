@@ -13,7 +13,8 @@ window.KMApp = (function () {
       .replace(/"/g, '&quot;');
   };
 
-  var state = { session: null, model: null, progress: null, attempts: null, bookmarks: [] };
+  var state = { session: null, access: null, model: null, progress: null,
+                attempts: null, bookmarks: [] };
 
   /* ------------------------------------------------------------------ util */
 
@@ -1449,6 +1450,116 @@ window.KMApp = (function () {
     KMApp.openPalette = open;
   }
 
+
+  /* ==================================================== page: not yet bought */
+
+  /* The account exists; the payment does not. The server has already made
+     this decision — every content query from here returns nothing — so this
+     is not a guard, it is what a guarded page looks like. It shows the
+     programme rather than an apology, because the visitor is one step from
+     owning it and the programme is the argument. */
+
+  function money(amount, currency) {
+    var v = (Number(amount) || 0) / 100;
+    var nl = KM.currentLang() === 'nl';
+    try {
+      return new Intl.NumberFormat(nl ? 'nl-NL' : 'en-IE', {
+        style: 'currency', currency: currency || 'EUR',
+        minimumFractionDigits: v % 1 === 0 ? 0 : 2, maximumFractionDigits: 2
+      }).format(v);
+    } catch (e) { return '€' + v.toFixed(0); }
+  }
+
+  var LOCKED_COPY = {
+    dashboard: ['Your course is waiting.',
+      'The account is ready. The programme opens the moment the payment clears.'],
+    lesson: ['This lesson is part of the full programme.',
+      'Its place in the course is fixed and its title is real. What a purchase opens is what is written behind it.'],
+    assessment: ['Assessments are part of the full programme.',
+      'They are graded on the server, which is also where they are kept until the course is yours.'],
+    project: ['Projects are part of the full programme.',
+      'Each one is a written client brief with requirements and a checklist, and something to show at the end of it.'],
+    prompts: ['The prompt library is part of the full programme.',
+      'Every prompt is published with the reasoning behind it, which is the half that keeps working when a model changes.'],
+    certificate: ['The certificate is part of the full programme.',
+      'It is issued once every published lesson is complete and the final assessment has been passed.'],
+    course: ['The course opens with the programme.',
+      'Every level and every lesson title below is real. The content behind them is what a purchase unlocks.']
+  };
+
+  async function mountLocked(view, kind) {
+    var copy = LOCKED_COPY[kind] || LOCKED_COPY.dashboard;
+    var price = (state.access && state.access.price) || { amount: 175000, currency: 'EUR' };
+    var outline = null;
+    try { outline = await KMDB.outline(); } catch (e) { /* the panel works without it */ }
+
+    var tot = (outline && outline.totals) || {};
+    var facts = kind === 'dashboard' || kind === 'course' ? [
+      [tot.levels, 'Levels'], [tot.lessons, 'Lessons'],
+      [tot.published, 'Published so far'], [tot.projects, 'Projects'],
+      [tot.prompts, 'Prompts'], [tot.questions, 'Test questions']
+    ].filter(function (f) { return f[0] != null; }) : [];
+
+    var levels = (kind === 'course' && outline) ? (outline.levels || []) : [];
+
+    view.innerHTML =
+      '<div class="locked">' +
+        '<span class="t-tag is-plain mono">' + esc(state.session ? 'Your account' : 'Access') + '</span>' +
+        '<h1 class="t-h2 locked__h">' + esc(copy[0]) + '</h1>' +
+        '<p class="t-lead locked__p">' + esc(copy[1]) + '</p>' +
+
+        (facts.length
+          ? '<div class="facts facts--program" style="margin-top:clamp(24px,3vw,34px)">' +
+            facts.map(function (f) {
+              return '<div class="fact"><b class="t-num-xl">' + f[0] + '</b><span>' + esc(f[1]) + '</span></div>';
+            }).join('') + '</div>'
+          : '') +
+
+        '<ul class="locked__grid">' +
+          ['Every written lesson', 'Interactive demonstrations', 'The prompt library',
+           'Project briefs', 'Assessments', 'Progress tracking',
+           'Final project', 'Certificate', 'All future levels']
+            .map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') +
+        '</ul>' +
+
+        '<div class="locked__buy">' +
+          '<span class="locked__price">' + money(price.amount, price.currency) + '</span>' +
+          '<a class="btn btn--accent" href="checkout.html" data-magnetic="0.3" data-cursor="Buy" data-buy>' +
+            '<span class="btn__label">Get full access</span><i class="btn__arrow"></i></a>' +
+          '<a class="xlink" href="pricing.html"><span>View the programme</span><i class="btn__arrow"></i></a>' +
+          '<span class="locked__terms">One-time payment · Lifetime access · Future levels included</span>' +
+        '</div>' +
+      '</div>' +
+
+      (levels.length
+        ? '<div class="curr" data-curriculum-locked style="margin-top:clamp(30px,4vw,56px)">' +
+          levels.map(function (lv) {
+            var titles = (lv.lesson_titles || []).map(function (l, j) {
+              return '<li class="' + (l.published ? '' : 'is-draft') + '">' +
+                '<b>' + String(j + 1).padStart(2, '0') + '</b>' +
+                '<span>' + esc(pickNL(l, 'title')) + '</span>' +
+                '<em>' + (l.published ? l.minutes + 'm' : 'in writing') + '</em></li>';
+            }).join('');
+            return '<div class="curr__lv"><div class="curr__btn" style="cursor:default">' +
+              '<span class="curr__n">Level ' + String(lv.position).padStart(2, '0') + '</span>' +
+              '<span><span class="curr__t">' + esc(pickNL(lv, 'title')) + '</span>' +
+              '<span class="curr__d">' + esc(pickNL(lv, 'description')) + '</span></span>' +
+              '<span class="curr__meta">' + lv.lessons + ' lessons · ' +
+              Math.round(lv.minutes / 60) + 'h<i class="curr__lock"></i></span></div>' +
+              '<div class="curr__body" style="height:auto"><div class="curr__inner">' +
+              '<ul class="curr__lessons">' + titles + '</ul></div></div></div>';
+          }).join('') + '</div>'
+        : '');
+
+    KM.boot(view);
+  }
+
+  function pickNL(row, field) {
+    if (!row) return '';
+    var v = KM.currentLang() === 'nl' ? row[field + '_nl'] : null;
+    return (v && String(v).trim()) ? v : (row[field] || '');
+  }
+
   /* ================================================================= boot */
 
   var VIEWS = {
@@ -1489,6 +1600,20 @@ window.KMApp = (function () {
       return;
     }
     if (kind === 'auth' && state.session) { go('app-dashboard.html'); return; }
+
+    /* One call, before anything is mounted: does this account own the course?
+       Everything below reads the answer rather than asking again. */
+    if (state.session) {
+      try { state.access = await KMDB.accessState(); }
+      catch (e) { state.access = { has_access: false, state: 'registered' }; }
+    }
+
+    var LOCKABLE = { dashboard: 1, course: 1, lesson: 1, assessment: 1,
+                     project: 1, projects: 1, prompts: 1, certificate: 1 };
+    if (state.session && state.access && !state.access.has_access && LOCKABLE[kind]) {
+      await mountLocked(view, kind === 'projects' ? 'project' : kind);
+      return;
+    }
 
     if (state.session) {
       KMDB.touch();

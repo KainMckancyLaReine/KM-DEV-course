@@ -20,14 +20,19 @@
 <a class="skip" href="#main">Skip to content</a>
 <div class="pt" aria-hidden="true"></div>
 
-<header class="nav is-stuck">
+<header class="nav nav--app is-stuck">
   <div class="shell nav__inner">
     <a class="brand" href="app-dashboard.html" aria-label="KM.dev Academy">
       KM.dev<i class="brand__dot"></i><span class="brand__sub">Academy</span>
     </a>
     <nav class="nav__links" aria-label="Course" data-learning-nav></nav>
     <div class="nav__right">
-      <button class="nav__link" type="button" data-open-palette aria-label="Search">
+      <div class="lang" role="group" aria-label="Language">
+        <button class="lang__btn is-active" data-lang="en" type="button">EN</button>
+        <button class="lang__btn" data-lang="nl" type="button">NL</button>
+      </div>
+      <button class="nav__link" type="button" data-open-palette
+              data-en-aria="Search" data-nl-aria="Zoeken" aria-label="Search">
         Search <kbd style="font-family:'Space Mono',monospace;font-size:10px;border:1px solid var(--line);border-radius:5px;padding:2px 5px;margin-left:6px">⌘K</kbd>
       </button>
       <div data-account style="display:flex;align-items:center;gap:10px"></div>
@@ -168,6 +173,7 @@
 <script src="assets/js/core.js"></script>
 <script src="assets/js/modules.js"></script>
 <script src="assets/js/km-config.js"></script>
+<script src="assets/js/km-i18n.js"></script>
 <script src="assets/js/seed-data.js"></script>
 <script src="assets/js/km-data.js"></script>
 <script src="assets/js/km-app.js"></script>

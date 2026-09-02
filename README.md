@@ -21,14 +21,19 @@ It is a static site. Open `index.html`, or serve the folder:
 python3 -m http.server 8099
 ```
 
-Out of the box the academy runs in **preview mode**: real screens, real course
-content, real interactions, against a store in this browser. It is labelled on
-every page, because a sign-in screen that only pretends to sign you in is worse
-than none. Two accounts exist from the first load — Kain (admin) and User B
-(student) — and the login page signs you in as either with one click.
+This instance is connected to a Supabase project, so the accounts, the
+sessions, the progress and the grading are real. Sign up at `/signup.html`;
+an address listed in the `admin_bootstrap` table becomes an administrator at
+the moment the account is created, and no password appears anywhere in this
+repository.
 
-To make it real, see **[Connecting the backend](#connecting-the-backend)** or
-open `/README-academy.html` in the running site.
+With `supabaseUrl` and `supabaseAnonKey` left empty in
+`assets/js/km-config.js`, the same code runs in **preview mode** instead: real
+screens, real course content, real interactions, against a store in this
+browser. It is labelled on every page, because a sign-in screen that only
+pretends to sign you in is worse than none. That is how the product can be
+walked through before any infrastructure exists — see
+**[Connecting the backend](#connecting-the-backend)**.
 
 ---
 
@@ -81,6 +86,7 @@ content/                 the course, version-controlled
   course.json            levels, projects, assessments, prompt library
   level-01.json          Think Like a Builder — six lessons, written
   level-02.json          Mastering Claude — eight lessons, written
+  nl/                    the Dutch twin of each file above
 
 db/
   schema.sql             tables, row level security, server-side grading
@@ -96,7 +102,8 @@ assets/js/
   core.js                rAF scheduler, scroll bus, reveal engine, custom cursor,
                          magnetic, loader, nav, i18n, soft page transitions
   modules.js             marketing interactions + the syntax highlighter
-  km-config.js           the two Supabase values (yours to fill in)
+  km-config.js           the two Supabase values
+  km-i18n.js             the academy interface in Dutch, and the engine
   seed-data.js           generated — the course for preview mode
   km-data.js             one data API, two adapters (Supabase / preview)
   km-blocks.js           lesson renderer: blocks, diagrams, demos, video, lightbox
@@ -109,6 +116,7 @@ build/
   build.py               work/faq from the index shell + the single-file bundle
   qc.js  qc-app.js       console errors, horizontal overflow, 3 breakpoints
   it.js  academy.js      interaction suites, driven end to end
+  i18n-scan.js           every rendered phrase, both languages, both roles
   final.js               reduced motion, layout shift, keyboard, bundle routing
   db-test.sh             applies the schema to a throwaway Postgres and checks
                          that the security properties actually hold
@@ -177,6 +185,7 @@ Hiding a control is manners. These are the actual permissions, and
 |---|---|
 | Levels | 8 |
 | Lessons | 69 planned, 14 written and published |
+| Languages | English and Dutch, throughout |
 | Assessments | 5 (2 written, 20 questions) |
 | Projects | 3 plus a final client brief |
 | Prompt library | 12 prompts, each with its reasoning |
@@ -223,7 +232,8 @@ bash  build/db-test.sh   # the schema and its security properties on real Postgr
 
 Current results: every page clean at desktop, tablet and mobile with no console
 errors and no horizontal overflow; CLS `0.0003`; 49 end-to-end acceptance checks
-passing; 20 database security checks passing.
+passing; 28 database checks passing; nothing rendered in English once the
+language is Dutch.
 
 ## Accessibility
 
@@ -236,11 +246,38 @@ and leaves everything usable.
 
 ## Languages
 
-The marketing site is EN / NL through `data-en` / `data-nl` (and the `-html`
-and `-aria` variants), the same pattern the main KM.dev site uses; the choice
-is remembered in `localStorage`. Large typographic statements stay in English
-by art direction. The academy is currently English only — the content system
-supports a translated field per block whenever that becomes worth doing.
+One switch, EN / NL, covers the whole product — the marketing pages and the
+academy behind the login. The choice is remembered in `localStorage`.
+
+The two halves get there differently, because they are built differently.
+
+**The marketing pages** carry their translations in the markup, through
+`data-en` / `data-nl` (and the `-html` and `-aria` variants) — the same pattern
+the main KM.dev site uses. Large typographic statements stay in English by art
+direction.
+
+**The course content** is translated in the database. Every table that holds
+something a student reads has a Dutch column beside the English one —
+`title_nl`, `content_nl`, `brief_nl`, `question_nl`, `answer_nl`,
+`explanation_nl` — filled from `content/nl/*.json` by the same generator that
+fills the English ones. `km-data.js` hands the interface the column that
+matches the chosen language and falls back to English where a translation is
+missing, so a gap is never a blank. The admin editors deliberately bypass this
+and always show the English record, so a translation can never be saved over
+its source.
+
+**The academy interface** — the several hundred phrases the application itself
+produces — lives in one dictionary, `assets/js/km-i18n.js`, applied to the
+rendered document. Scattering attribute pairs through eight thousand lines of
+rendering code would have been the worse thing to maintain. Code blocks,
+terminals and prompt bodies are excluded by class: their text is either source
+or something the student is meant to paste.
+
+`node build/i18n-scan.js` walks every page in both roles and fails on two
+things: a phrase the interface rendered that the dictionary does not cover, and
+an English phrase still on screen after the language is switched to Dutch. The
+first proves the dictionary is complete; the second proves it is actually being
+applied.
 
 ## Notes on content
 

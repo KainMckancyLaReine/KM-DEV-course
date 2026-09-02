@@ -3,5 +3,6 @@
 .DS_Store
 build/shot-*.png
 build/v-*.png
+build/a-*.png
 km-dev-phase2.bundle
 node_modules/

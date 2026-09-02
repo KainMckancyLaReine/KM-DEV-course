@@ -1,0 +1,714 @@
+{
+  "lessons": {
+    "what-is-ai-assisted-development": {
+      "title": "Wat is AI-ondersteund ontwikkelen?",
+      "description": "Het vak is niet verdwenen. Het is verschoven.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Het werk is verschoven. Het is niet verdwenen."
+        },
+        {
+          "t": "p",
+          "text": "Er gaat een verhaal rond dat AI de website nu schrijft en dat jij alleen nog netjes hoeft te vragen. Dat klopt niet, op een specifieke en bruikbare manier. Een model maakt een pagina sneller dan welke mens die ook kan typen. Wat het niet kan, is bepalen of dat de juiste pagina is — en die beslissing is het grootste deel van het werk."
+        },
+        {
+          "t": "p",
+          "text": "Dus verschuift het werk. Weg van syntaxis onthouden, richting **beslissen, sturen, lezen en beoordelen**. Je opent nog steeds een code-editor. Je typt er minder in en kijkt veel langer naar wat eruit komt, met de vraag of het het verdient om live te gaan."
+        },
+        {
+          "t": "figure",
+          "kind": "shift",
+          "caption": "Waar een developer zijn tijd aan besteedt, voor en na"
+        },
+        {
+          "t": "h",
+          "text": "Wat er echt verandert"
+        },
+        {
+          "t": "p",
+          "text": "Drie dingen worden dramatisch goedkoper: de eerste versie, de saaie stukken en de uitleg. Een layout die eerst een middag kostte, kost nu een minuut. Een reguliere expressie die je had moeten opzoeken, kost niets. Een stuk code dat je niet kent, wordt regel voor regel aan je uitgelegd."
+        },
+        {
+          "t": "p",
+          "text": "Drie dingen worden geen cent goedkoper: weten wat je moet bouwen, weten of het goed is, en verantwoordelijk zijn als het stukgaat. Dat is waar een klant in werkelijkheid voor betaalt, en daar gaat deze cursus over."
+        },
+        {
+          "t": "callout",
+          "kind": "note",
+          "title": "De ongemakkelijke versie",
+          "text": "Als je enige vaardigheid het produceren van werkende code is, dan is die vaardigheid nu een commodity. Kun je bepalen wat er moet bestaan, een model daarheen sturen en het verschil zien tussen goed en net-werkend — dan heb je meer hefboom dan je ooit hebt gehad."
+        },
+        {
+          "t": "h",
+          "text": "Genereren is niet het moeilijke deel"
+        },
+        {
+          "t": "p",
+          "text": "Kijk mee met iemand die hier nieuw in is en je ziet steeds hetzelfde patroon. Ze vragen om een website. Ze krijgen er een. Hij ziet er aannemelijk uit. Ze vragen om een wijziging. Ze krijgen een ander aannemelijk ding, en iets wat eerst werkte, stopt stilletjes met werken. Twintig minuten later hebben ze een map met code die niemand begrijpt, zijzelf incluis."
+        },
+        {
+          "t": "p",
+          "text": "Technisch ging er niets mis. Wat er misging, is dat niemand stuurde. Elke prompt was een nieuwe wens in plaats van een stap in een bouwproces."
+        },
+        {
+          "t": "demo",
+          "kind": "context-compare",
+          "title": "Dezelfde vraag, twee manieren"
+        },
+        {
+          "t": "h",
+          "text": "Het mentale model dat werkt"
+        },
+        {
+          "t": "p",
+          "text": "Behandel het model als een extreem snelle, extreem belezen collega die je project nooit heeft gezien, geen mening heeft over je klant, en precies doet wat je vraagt in plaats van wat je bedoelt. Die collega is oprecht waardevol. Hij vervangt niet dat jij weet wat je wilt."
+        },
+        {
+          "t": "list",
+          "items": [
+            "Jij bepaalt wat er gebouwd wordt. Het model stelt voor hoe.",
+            "Jij geeft context. Zonder context krijg je het gemiddelde van alles wat het ooit gelezen heeft.",
+            "Jij leest de output. Niet om hem te bewonderen — om hem te beoordelen.",
+            "Jij bent eigenaar van het resultaat. Het model staat niet op de factuur."
+          ]
+        },
+        {
+          "t": "prompt",
+          "n": "01",
+          "title": "Een eerste prompt die zijn plek verdient",
+          "body": "Ik leer AI-ondersteund webontwikkelen. Leg in gewone taal en in minder dan 200 woorden het verschil uit tussen wat een browser downloadt en wat een server doet. Ga ervan uit dat ik nooit code heb geschreven. Gebruik één concreet voorbeeld: iemand die de website van een bakker op zijn telefoon opent.",
+          "why": {
+            "context": "Het zegt wie je bent en wat je al weet, zodat het antwoord op jou is gericht en niet op niemand.",
+            "constraints": "Minder dan 200 woorden, gewone taal, één voorbeeld. Elke beperking sluit een soort antwoord uit dat je niet wilde.",
+            "output": "Een uitleg, geen code — precies de juiste output voor de vraag die gesteld wordt.",
+            "iteration": "Raakt een zin je kwijt, citeer hem dan terug en vraag om alleen die zin opnieuw uit te leggen. Begin niet opnieuw."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Probeer het voor de volgende les",
+          "steps": [
+            "Open Claude en voer de prompt hierboven ongewijzigd uit.",
+            "Lees het antwoord en zoek de ene zin waar je het minst zeker over bent.",
+            "Citeer die zin terug en vraag om een andere uitleg.",
+            "Merk op hoeveel beter het tweede antwoord is — en dat de verbetering van jou kwam, niet van het model."
+          ],
+          "done": "Je hebt een gesprek gevoerd in plaats van een verzoek gedaan. Dat onderscheid is de hele cursus."
+        },
+        {
+          "t": "quiz",
+          "q": "Wat wordt goedkoper met AI-hulp, en wat niet?",
+          "type": "single",
+          "options": [
+            "Alles wordt ongeveer even veel goedkoper",
+            "Code produceren wordt veel goedkoper; bepalen wat je bouwt en kwaliteit beoordelen niet",
+            "Alleen boilerplate wordt goedkoper; echte code verandert niet",
+            "Er verandert niets, de tools zijn gewoon snellere autocomplete"
+          ],
+          "correct": [
+            1
+          ],
+          "why": "Eerste versies en boilerplate storten in prijs in. Oordeel, smaak en verantwoordelijkheid bewegen geen millimeter — en precies daar zit je waarde nu."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "Het werk verschoof van typen naar beslissen, sturen, lezen en beoordelen.",
+            "Genereren is de goedkope helft. Sturen is de helft die geld waard is.",
+            "Behandel het model als een snelle collega zonder context, niet als een orakel.",
+            "Jij bent eigenaar van de output, dus je moet hem kunnen lezen."
+          ]
+        }
+      ]
+    },
+    "how-websites-actually-work": {
+      "title": "Hoe websites echt werken",
+      "description": "Eén request, drie bestanden en een machine die precies doet wat je zegt.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Een website is een gesprek tussen twee machines."
+        },
+        {
+          "t": "p",
+          "text": "Iemand typt een adres. Zijn browser stuurt een request over het netwerk. Ergens antwoordt een server met een bestand. De browser leest dat bestand, ontdekt dat hij er nog een paar nodig heeft, vraagt die ook op, en tekent daarna het resultaat op het scherm. Dat is het hele mechanisme. De rest is detail."
+        },
+        {
+          "t": "figure",
+          "kind": "request",
+          "caption": "Wat er gebeurt tussen het typen van een adres en het zien van een pagina"
+        },
+        {
+          "t": "h",
+          "text": "De browser is niet slim, en dat is goed nieuws"
+        },
+        {
+          "t": "p",
+          "text": "Een browser interpreteert je bedoelingen niet. Hij leest instructies en volgt ze exact op. Ziet je pagina er verkeerd uit, dan is de browser niet in de war — hij doet precies wat je code zegt. Dit is de nuttigste overtuiging die je kunt hebben tijdens het debuggen: **de machine doet niet moeilijk, jouw instructies doen dat.**"
+        },
+        {
+          "t": "p",
+          "text": "Let op de volgorde waarin hij werkt. Eerst leest hij de HTML en bouwt hij een boom van elementen. Daarna past hij de CSS toe om te bepalen hoe elk element eruitziet en waar het staat. Daarna draait hij de JavaScript, die beide kan veranderen. Daarna tekent hij. Als iets verschijnt en vervolgens verspringt, heb je die volgorde meestal door elkaar zien lopen."
+        },
+        {
+          "t": "code",
+          "lang": "html",
+          "filename": "index.html",
+          "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <title>Vlaam Bakery</title>\n    <link rel=\"stylesheet\" href=\"styles.css\">\n  </head>\n  <body>\n    <h1>Bread, daily, from six.</h1>\n    <script src=\"script.js\"></script>\n  </body>\n</html>"
+        },
+        {
+          "t": "p",
+          "text": "Dat bestand is een complete website. Geen goede, maar er ontbreekt niets. De `<link>` zegt de browser dat hij een tweede bestand moet ophalen. De `<script>` zegt hem een derde op te halen. Drie requests, één pagina."
+        },
+        {
+          "t": "callout",
+          "kind": "tip",
+          "title": "Open het Network-paneel één keer",
+          "text": "Klik met rechts op een willekeurige pagina, kies Inspect, open het tabblad Network en herlaad. Elke regel is één request. Dit is geen gevorderd gereedschap — het is het eerlijke beeld van wat een website is, en je kijkt er in tien seconden naar."
+        },
+        {
+          "t": "h",
+          "text": "Waarom dit uitmaakt voor prompten"
+        },
+        {
+          "t": "p",
+          "text": "Als je weet dat een pagina bestanden zijn die over een netwerk worden opgehaald, worden veel vage verzoeken opeens precies. 'Maak het sneller' wordt 'verlaag het aantal requests en de omvang van het grootste'. 'Het flikkert bij het laden' wordt 'de CSS komt aan na de eerste paint'. Je kunt niet vragen om wat je niet kunt benoemen."
+        },
+        {
+          "t": "figure",
+          "kind": "layers",
+          "caption": "De drie lagen, en waar elke laag verantwoordelijk voor is"
+        },
+        {
+          "t": "prompt",
+          "n": "02",
+          "title": "Lees je eigen pagina terug",
+          "body": "Dit is mijn index.html:\n\n{PASTE FILE}\n\nLoop precies met me door wat de browser met dit bestand doet, op volgorde, vanaf het moment dat het binnenkomt. Zeg welke extra bestanden hij opvraagt en wanneer. Wijs alles aan wat de eerste paint zou vertragen. Stel nog geen verbeteringen voor — ik wil eerst de volgorde begrijpen.",
+          "why": {
+            "context": "Jouw eigen bestand, geen algemeen voorbeeld, dus de uitleg gaat over jouw pagina.",
+            "constraints": "'Op volgorde' dwingt een reeks af in plaats van een samenvatting. 'Nog geen verbeteringen' houdt het antwoord uitleggend.",
+            "output": "Een doorloop die je kunt naleggen naast het Network-paneel.",
+            "iteration": "Zodra je de volgorde begrijpt, vraag je om de ene wijziging die de eerste paint het meest verbetert."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Bouw de kleinst mogelijke website",
+          "steps": [
+            "Maak een map met de naam `first-site`.",
+            "Maak `index.html` en plak het voorbeeld hierboven erin.",
+            "Dubbelklik op het bestand. Het opent in je browser. Dat is een website.",
+            "Open het Network-paneel en herlaad. Tel de mislukte requests — styles.css en script.js bestaan nog niet.",
+            "Maak beide bestanden aan, leeg, en herlaad. De fouten verdwijnen."
+          ],
+          "done": "Je hebt een pagina bestanden zien opvragen, ze niet zien vinden, en ze daarna wel zien vinden. De meeste verwarrende bugs zijn een variant hiervan."
+        },
+        {
+          "t": "quiz",
+          "q": "Een pagina verschijnt, en even later springen de fonts en kleuren op hun plek. Wat zegt dat je?",
+          "type": "single",
+          "options": [
+            "De server is traag",
+            "De browser heeft getekend voordat de stylesheet was aangekomen en toegepast",
+            "De JavaScript is mislukt",
+            "De afbeeldingen zijn te groot"
+          ],
+          "correct": [
+            1
+          ],
+          "why": "De browser tekent wat hij heeft. Komt de stylesheet aan na de eerste paint, dan zie je eerst de ongestyleerde versie. Als je de volgorde kent, verandert een mysterieuze flikkering in een specifieke, oplosbare oorzaak."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "Een website is bestanden die over een netwerk worden opgevraagd en door een browser getekend.",
+            "De browser leest HTML, past CSS toe, draait JavaScript en tekent dan — in die volgorde.",
+            "De machine volgt instructies exact; verkeerde output betekent verkeerde instructies.",
+            "Het mechanisme benoemen is wat je in staat stelt er een precieze vraag over te stellen."
+          ]
+        }
+      ]
+    },
+    "frontend-vs-backend": {
+      "title": "Front-end vs back-end",
+      "description": "Geen moeilijkheidsranglijst. Een kwestie van op wiens computer het draait.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Op wiens computer draait het?"
+        },
+        {
+          "t": "p",
+          "text": "Dat is het hele onderscheid. Front-end draait op het apparaat van de bezoeker, in zijn browser. Back-end draait op een machine die jij beheert. Mensen behandelen dit als een senioriteitsladder — dat is het niet. Het is een grens, en die grens heeft gevolgen die je in je botten moet voelen."
+        },
+        {
+          "t": "figure",
+          "kind": "split",
+          "caption": "De grens, en wat die betekent voor vertrouwen"
+        },
+        {
+          "t": "h",
+          "text": "Het gevolg dat ertoe doet"
+        },
+        {
+          "t": "p",
+          "text": "Alles wat op het apparaat van de bezoeker draait, staat onder controle van die bezoeker. Hij kan het lezen, pauzeren, aanpassen en ertegen liegen. Dit is geen fout die je dichttimmert — dit is wat een browser is. Iemand kan nu meteen de developer tools openen en elke pagina aanpassen waar hij naar kijkt."
+        },
+        {
+          "t": "p",
+          "text": "Dus: een controle die in de browser leeft, is een gemak, geen regel. Een adminknop verbergen houdt niemand tegen. Een formulier in de browser valideren maakt het prettig invullen; het maakt de data niet veilig. **Elke regel die er echt toe doet, moet op de server worden afgedwongen.**"
+        },
+        {
+          "t": "callout",
+          "kind": "warning",
+          "title": "De fout die carrières vroeg beëindigt",
+          "text": "Zet nooit een geheim in code die de browser downloadt. Geen API-sleutel, geen wachtwoord, geen databasegegevens. Als de browser het kan lezen, kan iedereen die je site bezoekt dat ook — inclusief degene die precies daarnaar op zoek is."
+        },
+        {
+          "t": "p",
+          "text": "Het platform van deze cursus is zelf een werkend voorbeeld. De interface verbergt het admingedeelte voor een cursist, omdat het tonen ervan verwarrend zou zijn. Maar de echte bescherming is een regel op de database die weigert om andermans data terug te geven aan de sessie van een cursist, wat de browser ook vraagt. De verborgen knop is beleefdheid. De databaseregel is beveiliging."
+        },
+        {
+          "t": "h",
+          "text": "Wat waar hoort"
+        },
+        {
+          "t": "list",
+          "items": [
+            "**Front-end** — layout, typografie, interacties, animatie, bruikbaarheid van formulieren, alles wat de bezoeker ziet of aanraakt.",
+            "**Back-end** — accounts en wachtwoorden, rechten, opgeslagen data, betalingen, alles wat waar moet zijn ongeacht wat de browser beweert.",
+            "**Allebei, bewust** — validatie. Controleer in de browser zodat het formulier prettig werkt. Controleer opnieuw op de server, want dat is de controle die telt."
+          ]
+        },
+        {
+          "t": "demo",
+          "kind": "trust-boundary",
+          "title": "Aan welke kant hoort dit?"
+        },
+        {
+          "t": "prompt",
+          "n": "03",
+          "title": "Vraag waar een regel hoort",
+          "body": "Ik bouw {FEATURE}. Noem elke regel die waar moet zijn om het correct te laten werken.\n\nZeg per regel of die op de server afgedwongen moet worden, of die ook in de browser gecontroleerd zou moeten worden voor de bruikbaarheid, en wat een aanvaller zou kunnen doen als de controle alleen in de browser zat.\n\nWees bot over de gevolgen. Ik voel me nu liever ongemakkelijk.",
+          "why": {
+            "context": "Door de functie te benoemen kan het model regels afleiden waar jij niet aan gedacht hebt.",
+            "constraints": "Per regel een antwoord server/browser afdwingen voorkomt een vaag 'valideer aan beide kanten'.",
+            "output": "Een tabel met beslissingen plus het gevolg van elke keer dat je er een verkeerd neemt.",
+            "iteration": "Neem de regel met de zwaarste gevolgen en vraag hoe je die op de server afdwingt in jouw stack."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Breek een pagina met opzet",
+          "steps": [
+            "Open een willekeurige site met een formulier waarvan de verzendknop uitgeschakeld is.",
+            "Klik met rechts op de knop en kies Inspect.",
+            "Verwijder het `disabled`-attribuut in het elements-paneel.",
+            "De knop is nu klikbaar. Je hebt hun pagina veranderd — alleen op jouw machine.",
+            "Laat even bezinken wat dat betekent voor elke controle die in de browser staat."
+          ],
+          "done": "Je hebt de vertrouwensgrens gevoeld in plaats van erover gelezen. Dat gevoel is wat je er later van weerhoudt om een onveilige functie te bouwen."
+        },
+        {
+          "t": "quiz",
+          "q": "Je app verbergt de knop 'Gebruiker verwijderen' tenzij het ingelogde account een admin is. Is dat genoeg?",
+          "type": "single",
+          "options": [
+            "Ja — een cursist ziet de knop niet, dus kan hij hem niet gebruiken",
+            "Nee — de browser is aan te passen, dus de server moet het verzoek ook weigeren",
+            "Ja, mits de knop verwijderd wordt in plaats van verborgen met CSS",
+            "Het hangt ervan af of de site HTTPS gebruikt"
+          ],
+          "correct": [
+            1
+          ],
+          "why": "Een knop verbergen is gebruikerservaring. Het verwijder-endpoint moet zelf controleren wie het vraagt en iedereen weigeren die geen admin is — die controle is de beveiliging. HTTPS beschermt het bericht onderweg; het zegt niets over wie het mag versturen."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "Front-end draait op hun computer, back-end op die van jou. Dat is de hele definitie.",
+            "Alles wat de browser binnenkrijgt, kan de bezoeker lezen en veranderen.",
+            "Controles in de browser zijn voor bruikbaarheid. Controles op de server zijn voor correctheid en veiligheid.",
+            "Zet nooit een geheim in front-end code."
+          ]
+        }
+      ]
+    },
+    "html-css-javascript": {
+      "title": "HTML, CSS & JavaScript",
+      "description": "Structuur, uiterlijk en gedrag — en waarom je AI-output veel makkelijker repareert als je ze gescheiden houdt.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Drie talen, drie taken."
+        },
+        {
+          "t": "p",
+          "text": "HTML zegt wat dingen *zijn*. CSS zegt hoe ze *eruitzien*. JavaScript zegt hoe ze zich *gedragen*. Die scheiding is geen academische netheid — ze zorgt dat je het ene kunt veranderen zonder de andere twee te breken, en ze is het eerste wat je controleert als gegenereerde code lastig werkbaar wordt."
+        },
+        {
+          "t": "figure",
+          "kind": "layers",
+          "caption": "Dezelfde inhoud, drie lagen verantwoordelijkheid"
+        },
+        {
+          "t": "h",
+          "text": "HTML: betekenis, geen uiterlijk"
+        },
+        {
+          "t": "p",
+          "text": "Kiezen voor `<button>` in plaats van `<div>` is geen muggenzifterij. Een echte knop krijgt focus met het toetsenbord, meldt zichzelf aan een schermlezer en reageert op de spatiebalk — gratis, omdat je het juiste element gebruikte. Een `<div>` die is opgemaakt als knop heeft daar niets van, totdat je het met de hand nabouwt, slecht."
+        },
+        {
+          "t": "code",
+          "lang": "html",
+          "filename": "index.html",
+          "code": "<!-- meaning is visible in the markup -->\n<article class=\"card\">\n  <h2>Sourdough</h2>\n  <p>Twenty-four hour ferment. Out at six.</p>\n  <button type=\"button\">Reserve a loaf</button>\n</article>"
+        },
+        {
+          "t": "p",
+          "text": "Lees dat zonder CSS en je weet nog steeds wat het is. Dat is de toets. Moet je de stylesheet erbij pakken om te snappen wat een stuk markup betekent, dan klopt de markup niet."
+        },
+        {
+          "t": "h",
+          "text": "CSS: een systeem, geen stapel regels"
+        },
+        {
+          "t": "p",
+          "text": "De meeste gegenereerde CSS werkt en is toch slecht, om één reden: ze herhaalt zichzelf. Een kleur die op elf plekken staat, is elf plekken om aan te passen. Custom properties lossen dat op, en erom vragen verandert de kwaliteit van alles wat het model je daarna geeft."
+        },
+        {
+          "t": "code",
+          "lang": "css",
+          "filename": "styles.css",
+          "code": ":root{\n  --ink: #0d0d0d;\n  --paper: #ffffff;\n  --accent: #c6ff4a;\n  --space: 8px;\n  --radius: 24px;\n}\n\n.card{\n  background: var(--paper);\n  border-radius: var(--radius);\n  padding: calc(var(--space) * 3);\n  color: var(--ink);\n}"
+        },
+        {
+          "t": "demo",
+          "kind": "code-explainer",
+          "title": "Verander één waarde, zie het ontwerp meebewegen"
+        },
+        {
+          "t": "h",
+          "text": "JavaScript: gedrag, als laatste toegevoegd"
+        },
+        {
+          "t": "p",
+          "text": "De nuttige discipline is de pagina zo bouwen dat ze klopt zonder JavaScript, en het gedrag er daarna bovenop leggen. Niet omdat bezoekers het uitzetten, maar omdat een pagina die voor haar basisbetekenis van script afhangt, volledig stukgaat zodra één regel faalt."
+        },
+        {
+          "t": "code",
+          "lang": "js",
+          "filename": "script.js",
+          "code": "const button = document.querySelector('.card button');\n\nbutton?.addEventListener('click', () => {\n  button.textContent = 'Reserved';\n  button.disabled = true;\n});"
+        },
+        {
+          "t": "callout",
+          "kind": "tip",
+          "title": "De `?.` is geen versiering",
+          "text": "Vindt `querySelector` niets, dan geeft hij `null` terug, en een methode aanroepen op `null` gooit een fout die elke regel script daarna stopzet. De `?.` zegt 'alleen als dit bestaat'. Eén teken, en de rest van je pagina blijft werken."
+        },
+        {
+          "t": "prompt",
+          "n": "04",
+          "title": "Vraag om drie lagen die gescheiden blijven",
+          "body": "Bouw een {COMPONENT} met gewone HTML, CSS en JavaScript in drie aparte bestanden.\n\nRegels:\n- HTML draagt alleen betekenis. Gebruik semantische elementen. Geen opmaakattributen, geen presentatieve klassenamen zoals `red-text`.\n- Alle kleuren, ruimtes en radii komen uit CSS custom properties die één keer op :root zijn gedefinieerd.\n- JavaScript voegt alleen gedrag toe. Het component moet ook kloppen met JavaScript uitgeschakeld.\n\nNoem na de code welke beslissingen je hebt genomen waar ik het redelijkerwijs niet mee eens zou kunnen zijn.",
+          "why": {
+            "context": "Drie bestanden, benoemde lagen — het model heeft nu een architectuur om binnen te werken.",
+            "constraints": "Elke regel haalt een specifieke slechte gewoonte weg: inline styles, magische waarden, betekenis die van script afhangt.",
+            "output": "Code plus een lijst met betwistbare keuzes, waarmee een oplevering een gesprek wordt.",
+            "iteration": "Ga met één punt op die lijst in discussie. In die uitwisseling leer je het meest."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Haal de lagen uit elkaar",
+          "steps": [
+            "Vraag Claude om een prijskaart met de prompt hierboven.",
+            "Sla de drie bestanden op en open de pagina.",
+            "Zet de `<link>` naar de stylesheet in commentaar en herlaad. Kun je nog steeds zien wat alles is?",
+            "Zet hem terug en zet daarna de `<script>` in commentaar. Is de kaart nog leesbaar?",
+            "Is een van beide antwoorden nee, zeg Claude welke en vraag om precies dat probleem op te lossen."
+          ],
+          "done": "Je hebt de scheiding getest in plaats van erop vertrouwd. Dit is de snelste manier om erachter te komen of gegenereerde code echt goed in elkaar zit."
+        },
+        {
+          "t": "quiz",
+          "q": "Waarom `<button>` verkiezen boven een `<div>` met een click handler?",
+          "type": "multi",
+          "options": [
+            "Hij is bereikbaar en bedienbaar met het toetsenbord zonder extra code",
+            "Schermlezers kondigen hem aan als knop",
+            "Hij reageert standaard op Enter en spatie",
+            "Hij rendert sneller"
+          ],
+          "correct": [
+            0,
+            1,
+            2
+          ],
+          "why": "Focus krijgen, de aangekondigde rol en bediening met het toetsenbord komen allemaal gratis met het juiste element. Rendersnelheid is niet de reden — toegankelijkheid en minder code die je moet schrijven en onderhouden wel."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "HTML is betekenis, CSS is uiterlijk, JavaScript is gedrag.",
+            "Markup hoort leesbaar te zijn zonder stylesheet.",
+            "Definieer kleuren en ruimtes één keer als custom properties en hergebruik ze.",
+            "Voeg gedrag als laatste toe, en zorg dat de pagina het zonder overleeft."
+          ]
+        }
+      ]
+    },
+    "what-claude-can-and-cannot-do": {
+      "title": "Wat Claude wel en niet kan",
+      "description": "Een eerlijke kaart van het gereedschap, zodat het je niet meer verrast.",
+      "content": [
+        {
+          "t": "h",
+          "text": "De randen kennen is wat het bruikbaar maakt."
+        },
+        {
+          "t": "p",
+          "text": "De meeste frustratie met AI en code komt voort uit het verkeerde verwachten. Niet omdat het gereedschap slecht is, maar omdat niemand de kaart tekende. Dus hier is de kaart, eerlijk, inclusief de onhandige delen."
+        },
+        {
+          "t": "h",
+          "text": "Wat het echt goed doet"
+        },
+        {
+          "t": "list",
+          "items": [
+            "**Eerste versies van alles wat structuur heeft.** Layouts, componenten, formulieren, configuratiebestanden. Minuten in plaats van uren.",
+            "**Code uitleggen die je niet zelf schreef.** Regel voor regel, op het niveau dat je vraagt.",
+            "**Vertalen tussen talen en frameworks.** Hetzelfde idee, andere syntaxis.",
+            "**De oorzaak vinden van een fout die je kunt beschrijven.** Geef de melding en de code en het zit meestal goed.",
+            "**Saaie correctheid.** Toegankelijkheidsattributen, responsive breakpoints, randgevallen — mits je erom vraagt."
+          ]
+        },
+        {
+          "t": "h",
+          "text": "Wat het niet kan, en niet zal zeggen dat het niet kan"
+        },
+        {
+          "t": "list",
+          "items": [
+            "**Jouw context kennen.** Het heeft je klant nooit ontmoet en ziet je bestanden niet tenzij je ze laat zien.",
+            "**Zich gisteren herinneren.** Een nieuw gesprek begint leeg. Elke keer.",
+            "**Smaak hebben namens jou.** Het levert iets verdedigbaars. Of het *juist* is, bepaal jij.",
+            "**Je scherm zien.** 'Het ziet er verkeerd uit' is geen beschrijving waar het iets mee kan.",
+            "**Zeker zijn.** Het kan tegelijk vloeiend en fout zijn, zonder dat de toon verandert."
+          ]
+        },
+        {
+          "t": "callout",
+          "kind": "warning",
+          "title": "Vloeiend en fout zien er identiek uit",
+          "text": "Dit is de faalmodus die je je eigen moet maken. Foute antwoorden komen met precies hetzelfde zelfvertrouwen als goede. Er is geen signaal. De enige verdediging is controleren — draai het, lees het, test het randgeval."
+        },
+        {
+          "t": "figure",
+          "kind": "context",
+          "caption": "Wat het model kan zien als je het iets vraagt"
+        },
+        {
+          "t": "h",
+          "text": "Context is het hele spel"
+        },
+        {
+          "t": "p",
+          "text": "De wereld van het model is wat er in het huidige gesprek staat. Niet je repository, niet vorige week, niet wat je bedoelde. Wat je niet gezegd hebt, bestaat niet. Dat klinkt beperkend tot je beseft dat het volledig onder jouw controle staat — waarmee het een vaardigheid wordt in plaats van een obstakel."
+        },
+        {
+          "t": "demo",
+          "kind": "context-compare",
+          "title": "Dezelfde vraag, verschillende hoeveelheden context"
+        },
+        {
+          "t": "h",
+          "text": "Hoe je met de onzekerheid omgaat"
+        },
+        {
+          "t": "p",
+          "text": "Je hoeft niet elke regel te verifiëren. Je hebt een gewoonte nodig die de dure fouten vangt: draai het voordat je het gelooft, lees alles wat data of rechten raakt, en vraag 'wat zou dit fout maken?' zodra een antwoord verdacht netjes binnenkomt."
+        },
+        {
+          "t": "prompt",
+          "n": "05",
+          "title": "Laat het model met zichzelf in discussie gaan",
+          "body": "Dit is een oplossing die je me net gaf:\n\n{PASTE}\n\nBeargumenteer nu waarom hij niet deugt. Wat zijn de zwakke plekken? Waar gaat hij stuk — ongewone invoer, kleine schermen, trage verbindingen, iemand die alleen een toetsenbord gebruikt? Wat heb je aangenomen wat ik je nooit verteld heb?\n\nWees specifiek en verzacht het niet.",
+          "why": {
+            "context": "Zijn eigen output, dus de kritiek is concreet in plaats van algemeen advies.",
+            "constraints": "Benoemde faalcategorieën voorkomen dat het antwoord een schouderophalen over randgevallen wordt.",
+            "output": "Een lijst met zwakke plekken en — het waardevolst — de aannames die het stilzwijgend deed.",
+            "iteration": "Elke aanname die het noemt, is een beslissing die jij nooit nam. Neem hem nu, expliciet."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Betrap een zelfverzekerde fout",
+          "steps": [
+            "Vraag Claude om een functie die een e-mailadres valideert met een reguliere expressie.",
+            "Vraag voordat je hem draait: 'Welke geldige adressen wijst dit af, en welke ongeldige laat het door?'",
+            "Lees het antwoord. Het vindt echte problemen in zijn eigen code.",
+            "Vraag waarom het eerst de imperfecte versie schreef."
+          ],
+          "done": "Je hebt vloeiende output gezien die niet compleet was, en je vond het door te vragen, niet door geluk."
+        },
+        {
+          "t": "quiz",
+          "q": "Wat hiervan is een echte beperking en geen promptprobleem?",
+          "type": "single",
+          "options": [
+            "Het leverde generieke output",
+            "Het vergat een beperking van eerder in het gesprek",
+            "Het kan niet weten of je klant het ontwerp mooi vindt",
+            "Het gebruikte een library die je niet wilde"
+          ],
+          "correct": [
+            2
+          ],
+          "why": "De andere drie los je op met beter prompten: voeg beperkingen toe, herhaal ze, sluit de library uit. Of een specifiek persoon een specifiek ontwerp mooi vindt, is informatie die het model niet heeft en niet kan krijgen."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "Uitstekend in eerste versies, uitleg, vertaling en diagnosticeerbare fouten.",
+            "Kan jouw context niet kennen, eerdere sessies niet onthouden en geen smaak voor je hebben.",
+            "Vloeiend en fout zijn niet te onderscheiden — controleer, vertrouw niet.",
+            "Context is het hele spel, en die heb jij volledig in de hand."
+          ]
+        }
+      ]
+    },
+    "your-ai-development-workflow": {
+      "title": "Jouw AI-ontwikkelworkflow",
+      "description": "Dertien stappen die je in elk project gebruikt, de rest van de cursus lang.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Een workflow verslaat een goede prompt."
+        },
+        {
+          "t": "p",
+          "text": "Mensen jagen op de perfecte prompt. De mensen die daadwerkelijk opleveren, hebben iets saaiers en veel effectievers: een volgorde waarin ze altijd werken. Die voorkomt de twee fouten die AI-ondersteunde builds verpesten — beginnen met coderen voordat je weet wat je bouwt, en output accepteren voordat je hem gecontroleerd hebt."
+        },
+        {
+          "t": "figure",
+          "kind": "workflow",
+          "caption": "De dertien stappen, en waar elk soort prompt thuishoort"
+        },
+        {
+          "t": "h",
+          "text": "De dertien stappen"
+        },
+        {
+          "t": "list",
+          "ordered": true,
+          "items": [
+            "**Beschrijf het doel.** Eén zin. Wat moet dit ding doen?",
+            "**Geef context.** Voor wie is het, wat bestaat er al, waar is het onderdeel van?",
+            "**Bepaal de beperkingen.** Wat valt af. Hier wordt de kwaliteit beslist.",
+            "**Geef visuele richting.** Specifiek genoeg om te controleren, niet 'modern en clean'.",
+            "**Bepaal de technische eisen.** Bestanden, dependencies, browserondersteuning, performance.",
+            "**Vraag om implementatie.** Pas nu. Afgebakend tot één onderdeel.",
+            "**Bekijk de output.** Lees hem. Begrijp hem. Scan hem niet.",
+            "**Test.** Draai het. Verander de breedte. Gebruik het toetsenbord. Open de console.",
+            "**Meld problemen.** Precies: verwacht, werkelijk, wanneer het begon.",
+            "**Itereer.** Kleine, benoemde wijzigingen. Houd wat werkt.",
+            "**Refactor.** Haal herhaling weg zodra de vorm is uitgekristalliseerd.",
+            "**Polijst.** Ruimte, beweging, states, de laatste tien procent.",
+            "**Lever op.** Deploy, en controleer het daarna nog eens in het openbaar."
+          ]
+        },
+        {
+          "t": "callout",
+          "kind": "note",
+          "title": "In stap 1–5 zit het geld",
+          "text": "Beginners starten bij stap 6 en vragen zich af waarom het resultaat generiek is. De eerste vijf stappen kosten tien minuten en bepalen alles wat het model daarna produceert. Ze overslaan bespaart geen tijd; het verplaatst de tijd naar stap 10, waar hij duurder is."
+        },
+        {
+          "t": "h",
+          "text": "Hoe een echte sessie eruitziet"
+        },
+        {
+          "t": "p",
+          "text": "Niet één prompt en een afgeronde site. Een gesprek dat vernauwt."
+        },
+        {
+          "t": "demo",
+          "kind": "session",
+          "title": "Een echte sessie, opnieuw afgespeeld"
+        },
+        {
+          "t": "p",
+          "text": "Let op wat daar gebeurt. De eerste uitwisseling levert geen enkele regel code op — ze levert overeenstemming op over wat er gebouwd wordt. De build komt daarna in stukken die klein genoeg zijn om te beoordelen. Als er iets mis is, is de melding specifiek, dus is de oplossing specifiek. Niets wordt vanaf nul herschreven, dus niets wat werkte stopt stilletjes met werken."
+        },
+        {
+          "t": "h",
+          "text": "Waar het misgaat"
+        },
+        {
+          "t": "list",
+          "items": [
+            "**Alles in één keer vragen.** Je kunt een hele site niet in één keer nalezen, dus doe je het niet.",
+            "**Vage probleemmeldingen.** 'Het is stuk' levert een gok op. 'De nav overlapt de hero onder 480px' levert een oplossing op.",
+            "**Herschrijven in plaats van bijstellen.** Elke herschrijving brengt problemen terug die je al had opgelost.",
+            "**Het geloven omdat het compileert.** Werkend en correct zijn verschillende woorden."
+          ]
+        },
+        {
+          "t": "prompt",
+          "n": "06",
+          "title": "Open een sessie zoals het hoort",
+          "body": "We gaan {PROJECT} samen bouwen over meerdere berichten. Bevestig voordat er code komt dat je het volgende begrepen hebt, en vraag me naar alles wat onduidelijk is of ontbreekt.\n\nDoel: {ONE SENTENCE}\nDoelgroep: {WHO}\nEén actie die ze moeten ondernemen: {ACTION}\nHarde beperkingen: {LIST}\nVisuele richting: {LIST}\nTechnisch: gewone HTML, CSS en JavaScript in drie bestanden, geen libraries, moet werken vanaf 360px.\n\nStel daarna een bouwvolgorde voor — welk onderdeel we eerst maken, en waarom.",
+          "why": {
+            "context": "Alles wat het model nodig heeft, op één plek, aan het begin van de sessie.",
+            "constraints": "Hier één keer genoemd in plaats van herhaald in elk volgend bericht.",
+            "output": "Bevestiging, vragen en een bouwvolgorde — geen code tot het plan rond is.",
+            "iteration": "Zijn vragen zijn de gaten in je eigen denken. Beantwoord ze goed; dat is de echte waarde van deze stap."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Draai de workflow één keer, van begin tot eind",
+          "steps": [
+            "Kies iets echt kleins: één contactsectie.",
+            "Schrijf stap 1 tot en met 5 uit in een tekstbestand voordat je Claude opent.",
+            "Stuur de openingsprompt hierboven en beantwoord wat het vraagt.",
+            "Vraag om de implementatie. Lees elke regel voordat je hem draait.",
+            "Test op 360px en alleen met het toetsenbord. Meld één probleem precies.",
+            "Itereer tot het klopt. Noteer hoeveel berichten het kostte."
+          ],
+          "done": "Je hebt één volledige ronde afgerond. Elk project in deze cursus is deze ronde, herhaald op grotere schaal."
+        },
+        {
+          "t": "quiz",
+          "q": "Waar gaan de meeste AI-ondersteunde builds echt mis?",
+          "type": "single",
+          "options": [
+            "Het model produceert slechte code",
+            "De developer begint bij stap 6 en slaat doel, context en beperkingen over",
+            "De technologie is nog niet volwassen genoeg",
+            "Er zijn niet genoeg goede prompttemplates beschikbaar"
+          ],
+          "correct": [
+            1
+          ],
+          "why": "De code is meestal prima voor wat er gevraagd is. Wat ontbreekt, zijn de vijf stappen vóór het vragen — daarom levert hetzelfde model bij de een middelmatig werk en bij de ander uitstekend werk."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "Een herhaalbare volgorde verslaat een slimme prompt.",
+            "Stap 1 tot en met 5 gebeuren voordat er code bestaat, en bepalen de uitkomst.",
+            "Bouw in stukken die klein genoeg zijn om echt na te lezen.",
+            "Meld problemen precies; stel bij in plaats van te herschrijven."
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -64,8 +64,9 @@ def main():
     css = '\n'.join(read(os.path.join(ROOT, 'assets/css', f))
                     for f in ['01-foundation.css', '02-chrome.css', '03-sections.css', '04-app.css'])
     js = '\n'.join(read(os.path.join(ROOT, 'assets/js', f))
-                   for f in ['core.js', 'modules.js', 'km-config.js', 'seed-data.js',
-                             'km-data.js', 'km-blocks.js', 'km-app.js', 'km-admin.js'])
+                   for f in ['core.js', 'modules.js', 'km-config.js', 'km-i18n.js',
+                             'seed-data.js', 'km-data.js', 'km-blocks.js',
+                             'km-app.js', 'km-admin.js'])
 
     import re as _re
     if _re.search(r'</\s*script', js, _re.I):

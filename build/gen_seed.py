@@ -17,7 +17,7 @@ import io, json, os, uuid
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NS = uuid.UUID("6f9619ff-8b86-d011-b42d-00c04fc964ff")
 
-ADMIN_EMAILS = ["kain@km.dev"]
+ADMIN_EMAILS = ["kain@km.dev", "kkain25@gmail.com"]
 
 
 def uid(kind, key):
@@ -41,8 +41,21 @@ def read(name):
     return json.load(io.open(os.path.join(ROOT, "content", name), encoding="utf-8"))
 
 
+def read_nl(name):
+    """The Dutch twin of a content file. Missing means untranslated, not broken."""
+    path = os.path.join(ROOT, "content", "nl", name)
+    if not os.path.exists(path):
+        return {}
+    return json.load(io.open(path, encoding="utf-8"))
+
+
 def build():
     course = read("course.json")
+    nl = read_nl("course.json")
+    nl_levels = nl.get("levels", {})
+    nl_projects = nl.get("projects", {})
+    nl_quizzes = nl.get("assessments", {})
+    nl_prompts = nl.get("prompts", {})
     c = course["course"]
     course_id = uid("course", c["slug"])
 
@@ -51,40 +64,53 @@ def build():
     # ---------------------------------------------------------------- levels
     for li, lv in enumerate(course["levels"], start=1):
         level_id = uid("level", lv["slug"])
+        tl = nl_levels.get(lv["slug"], {})
         levels.append({
             "id": level_id, "course_id": course_id, "slug": lv["slug"],
             "title": lv["title"], "description": lv["description"],
+            "title_nl": tl.get("title", ""), "description_nl": tl.get("description", ""),
             "position": li, "published": True,
         })
 
         if "lessons_file" in lv:
+            tles = read_nl(lv["lessons_file"]).get("lessons", {})
             for pi, les in enumerate(read(lv["lessons_file"])["lessons"], start=1):
+                t = tles.get(les["slug"], {})
                 lessons.append({
                     "id": uid("lesson", les["slug"]), "level_id": level_id,
                     "slug": les["slug"], "title": les["title"],
                     "description": les.get("description", ""),
                     "content": les["content"], "position": pi, "published": True,
+                    "title_nl": t.get("title", ""),
+                    "description_nl": t.get("description", ""),
+                    "content_nl": t.get("content", []),
                     "estimated_minutes": les.get("minutes", 10),
                     "video_url": les.get("video_url"),
                     "video_duration": les.get("video_duration"),
                 })
         else:
+            tles = tl.get("lessons", {})
             for pi, (slug, title, minutes) in enumerate(lv["lessons"], start=1):
                 lessons.append({
                     "id": uid("lesson", slug), "level_id": level_id,
                     "slug": slug, "title": title, "description": "",
                     "content": [], "position": pi, "published": False,
+                    "title_nl": tles.get(slug, ""), "description_nl": "",
+                    "content_nl": [],
                     "estimated_minutes": minutes,
                     "video_url": None, "video_duration": None,
                 })
 
     # -------------------------------------------------------------- projects
     for pi, pr in enumerate(course["projects"], start=1):
+        t = nl_projects.get(pr["slug"], {})
         projects.append({
             "id": uid("project", pr["slug"]),
             "level_id": uid("level", pr["level"]),
             "slug": pr["slug"], "title": pr["title"],
             "description": pr["description"], "brief": pr["brief"],
+            "title_nl": t.get("title", ""), "description_nl": t.get("description", ""),
+            "brief_nl": t.get("brief", {}),
             "is_final": bool(pr.get("final")), "position": pi, "published": True,
         })
 
@@ -92,38 +118,53 @@ def build():
     for ai, az in enumerate(course["assessments"], start=1):
         quiz_id = uid("quiz", az["slug"])
         published = not az.get("draft") and len(az["questions"]) > 0
+        t = nl_quizzes.get(az["slug"], {})
+        tq = t.get("questions", [])
         quizzes.append({
             "id": quiz_id, "level_id": uid("level", az["level"]), "lesson_id": None,
             "slug": az["slug"], "title": az["title"], "subtitle": az.get("subtitle", ""),
+            "title_nl": t.get("title", ""), "subtitle_nl": t.get("subtitle", ""),
             "passing_score": az.get("passing_score", 70),
             "published": published, "position": ai,
         })
         for qi, qq in enumerate(az["questions"], start=1):
             qid = uid("question", "%s/%d" % (az["slug"], qi))
+            tqq = tq[qi - 1] if qi - 1 < len(tq) else {}
             questions.append({
                 "id": qid, "quiz_id": quiz_id, "question": qq["question"],
                 "type": qq["type"], "explanation": qq.get("why", ""),
+                "question_nl": tqq.get("question", ""),
+                "explanation_nl": tqq.get("why", ""),
                 "points": qq.get("points", 1), "position": qi,
             })
+            topts = tqq.get("options", [])
             for oi, opt in enumerate(qq["options"]):
                 answers.append({
                     "id": uid("answer", "%s/%d/%d" % (az["slug"], qi, oi)),
                     "question_id": qid, "answer": opt,
+                    "answer_nl": topts[oi] if oi < len(topts) else "",
                     "is_correct": oi in qq["correct"], "position": oi + 1,
                 })
 
     # --------------------------------------------------------------- prompts
     prompts = []
     for pi, pr in enumerate(course["prompts"], start=1):
+        t = nl_prompts.get(pr["slug"], {})
         prompts.append({
             "id": uid("prompt", pr["slug"]), "slug": pr["slug"],
             "category": pr["category"], "title": pr["title"],
             "purpose": pr.get("purpose", ""), "body": pr["body"],
-            "explanation": pr.get("explanation", {}), "position": pi,
+            "explanation": pr.get("explanation", {}),
+            "title_nl": t.get("title", ""), "purpose_nl": t.get("purpose", ""),
+            "body_nl": t.get("body", ""), "explanation_nl": t.get("explanation", {}),
+            "position": pi,
         })
 
+    tc = nl.get("course", {})
     return {
-        "course": dict(c, id=course_id),
+        "course": dict(c, id=course_id,
+                       title_nl=tc.get("title", ""),
+                       description_nl=tc.get("description", "")),
         "levels": levels, "lessons": lessons, "projects": projects,
         "quizzes": quizzes, "questions": questions, "answers": answers,
         "prompts": prompts,
@@ -154,29 +195,37 @@ def to_sql(d):
     p.append("on conflict (email) do nothing;\n")
 
     c = d["course"]
-    p.append("insert into public.courses (id, slug, title, description, published) values")
-    p.append("  (%s, %s, %s, %s, %s)" % (q(c["id"]), q(c["slug"]), q(c["title"]),
-                                         q(c["description"]), q(c["published"])))
+    p.append("insert into public.courses "
+             "(id, slug, title, description, title_nl, description_nl, published) values")
+    p.append("  (%s, %s, %s, %s, %s, %s, %s)"
+             % (q(c["id"]), q(c["slug"]), q(c["title"]), q(c["description"]),
+                q(c["title_nl"]), q(c["description_nl"]), q(c["published"])))
     p.append("on conflict (id) do update set title = excluded.title, "
-             "description = excluded.description, published = excluded.published;\n")
+             "description = excluded.description, title_nl = excluded.title_nl, "
+             "description_nl = excluded.description_nl, published = excluded.published;\n")
 
     p.append(insert("levels", d["levels"],
-                    ["id", "course_id", "slug", "title", "description", "position", "published"]))
+                    ["id", "course_id", "slug", "title", "description",
+                     "title_nl", "description_nl", "position", "published"]))
     p.append(insert("lessons", d["lessons"],
                     ["id", "level_id", "slug", "title", "description", "content",
+                     "title_nl", "description_nl", "content_nl",
                      "position", "published", "estimated_minutes", "video_url", "video_duration"]))
     p.append(insert("projects", d["projects"],
                     ["id", "level_id", "slug", "title", "description", "brief",
+                     "title_nl", "description_nl", "brief_nl",
                      "is_final", "position", "published"]))
     p.append(insert("prompts", d["prompts"],
-                    ["id", "slug", "category", "title", "purpose", "body", "explanation", "position"]))
+                    ["id", "slug", "category", "title", "purpose", "body", "explanation",
+                     "title_nl", "purpose_nl", "body_nl", "explanation_nl", "position"]))
     p.append(insert("quizzes", d["quizzes"],
                     ["id", "level_id", "lesson_id", "slug", "title", "subtitle",
-                     "passing_score", "published", "position"]))
+                     "title_nl", "subtitle_nl", "passing_score", "published", "position"]))
     p.append(insert("quiz_questions", d["questions"],
-                    ["id", "quiz_id", "question", "type", "explanation", "points", "position"]))
+                    ["id", "quiz_id", "question", "type", "explanation",
+                     "question_nl", "explanation_nl", "points", "position"]))
     p.append(insert("quiz_answers", d["answers"],
-                    ["id", "question_id", "answer", "is_correct", "position"]))
+                    ["id", "question_id", "answer", "answer_nl", "is_correct", "position"]))
 
     p.append("commit;")
     return "\n".join(p) + "\n"

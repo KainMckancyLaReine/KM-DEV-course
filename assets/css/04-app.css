@@ -1187,3 +1187,17 @@ body.has-preview-bar .nav{position:sticky}
 .idemo__note{font-size:14.5px;color:var(--gray)}
 
 .pillrow{display:flex;flex-wrap:wrap;gap:8px}
+
+
+/* --------------------------------------------------------------------------
+   Academy navigation on small screens
+   --------------------------------------------------------------------------
+   The academy header carries one item more than the marketing one: the
+   language toggle sits beside the command palette and the account. On a phone
+   that is a row too wide, and the palette is a keyboard affordance to begin
+   with — there is no ⌘K on a phone — so it stands down and the language
+   choice, which a reader does need, keeps its place.                        */
+@media (max-width:700px){
+  .nav--app [data-open-palette]{display:none}
+  .nav--app .lang__btn{padding:6px 9px}
+}

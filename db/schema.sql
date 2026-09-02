@@ -44,6 +44,8 @@ create table if not exists public.courses (
   slug        text unique not null,
   title       text not null,
   description text not null default '',
+  title_nl       text not null default '',
+  description_nl text not null default '',
   published   boolean not null default false,
   created_at  timestamptz not null default now()
 );
@@ -54,6 +56,8 @@ create table if not exists public.levels (
   slug        text unique not null,
   title       text not null,
   description text not null default '',
+  title_nl       text not null default '',
+  description_nl text not null default '',
   position    integer not null,
   published   boolean not null default true,
   created_at  timestamptz not null default now()
@@ -66,6 +70,9 @@ create table if not exists public.lessons (
   title             text not null,
   description       text not null default '',
   content           jsonb not null default '[]'::jsonb,
+  title_nl          text  not null default '',
+  description_nl    text  not null default '',
+  content_nl        jsonb not null default '[]'::jsonb,
   position          integer not null,
   published         boolean not null default false,
   estimated_minutes integer not null default 10,
@@ -82,6 +89,9 @@ create table if not exists public.projects (
   title       text not null,
   description text not null default '',
   brief       jsonb not null default '{}'::jsonb,
+  title_nl       text  not null default '',
+  description_nl text  not null default '',
+  brief_nl       jsonb not null default '{}'::jsonb,
   is_final    boolean not null default false,
   position    integer not null default 1,
   published   boolean not null default true
@@ -95,6 +105,10 @@ create table if not exists public.prompts (
   purpose     text not null default '',
   body        text not null,
   explanation jsonb not null default '{}'::jsonb,
+  title_nl       text  not null default '',
+  purpose_nl     text  not null default '',
+  body_nl        text  not null default '',
+  explanation_nl jsonb not null default '{}'::jsonb,
   position    integer not null default 1
 );
 
@@ -107,6 +121,8 @@ create table if not exists public.quizzes (
   slug          text unique not null,
   title         text not null,
   subtitle      text not null default '',
+  title_nl      text not null default '',
+  subtitle_nl   text not null default '',
   passing_score integer not null default 70,
   published     boolean not null default false,
   position      integer not null default 1
@@ -119,6 +135,8 @@ create table if not exists public.quiz_questions (
   type        text not null default 'single'
               check (type in ('single', 'multi', 'tf', 'scenario', 'prompt', 'debug')),
   explanation text not null default '',
+  question_nl    text not null default '',
+  explanation_nl text not null default '',
   points      integer not null default 1,
   position    integer not null
 );
@@ -127,6 +145,7 @@ create table if not exists public.quiz_answers (
   id          uuid primary key default gen_random_uuid(),
   question_id uuid not null references public.quiz_questions on delete cascade,
   answer      text not null,
+  answer_nl   text not null default '',
   is_correct  boolean not null default false,
   position    integer not null
 );
@@ -193,6 +212,36 @@ create table if not exists public.certificates (
   issued_at      timestamptz not null default now(),
   unique (user_id, course_id)
 );
+
+-- --------------------------------------------------------------------------
+-- Dutch translations
+-- --------------------------------------------------------------------------
+-- Every piece of course content carries an optional Dutch column beside the
+-- English one. The interface picks the column that matches the language the
+-- reader chose; an empty translation falls back to English rather than showing
+-- a gap. These run separately from the create table statements above so that
+-- an existing project gains the columns when the schema is applied again.
+
+alter table public.courses        add column if not exists title_nl       text  not null default '';
+alter table public.courses        add column if not exists description_nl text  not null default '';
+alter table public.levels         add column if not exists title_nl       text  not null default '';
+alter table public.levels         add column if not exists description_nl text  not null default '';
+alter table public.lessons        add column if not exists title_nl       text  not null default '';
+alter table public.lessons        add column if not exists description_nl text  not null default '';
+alter table public.lessons        add column if not exists content_nl     jsonb not null default '[]'::jsonb;
+alter table public.projects       add column if not exists title_nl       text  not null default '';
+alter table public.projects       add column if not exists description_nl text  not null default '';
+alter table public.projects       add column if not exists brief_nl       jsonb not null default '{}'::jsonb;
+alter table public.prompts        add column if not exists title_nl       text  not null default '';
+alter table public.prompts        add column if not exists purpose_nl     text  not null default '';
+alter table public.prompts        add column if not exists body_nl        text  not null default '';
+alter table public.prompts        add column if not exists explanation_nl jsonb not null default '{}'::jsonb;
+alter table public.quizzes        add column if not exists title_nl       text  not null default '';
+alter table public.quizzes        add column if not exists subtitle_nl    text  not null default '';
+alter table public.quiz_questions add column if not exists question_nl    text  not null default '';
+alter table public.quiz_questions add column if not exists explanation_nl text  not null default '';
+alter table public.quiz_answers   add column if not exists answer_nl      text  not null default '';
+
 
 create index if not exists lessons_level_idx        on public.lessons (level_id, position);
 create index if not exists levels_course_idx        on public.levels (course_id, position);
@@ -381,7 +430,7 @@ create policy answers_write on public.quiz_answers for all to authenticated
 -- one is correct. This is what stops the right answers being fetched before
 -- the quiz is submitted, and it holds no matter what the browser asks for.
 revoke all on public.quiz_answers from authenticated, anon;
-grant select (id, question_id, answer, position) on public.quiz_answers to authenticated;
+grant select (id, question_id, answer, answer_nl, position) on public.quiz_answers to authenticated;
 grant insert, update, delete on public.quiz_answers to authenticated; -- still gated by RLS above
 
 -- per-user rows: yours, or an admin's read ------------------------------
@@ -444,7 +493,7 @@ begin
   end if;
 
   for v_question in
-    select id, question, explanation, points, position
+    select id, question, explanation, explanation_nl, points, position
     from public.quiz_questions
     where quiz_id = p_quiz_id
     order by position
@@ -472,7 +521,8 @@ begin
       'correct',     v_ok,
       'chosen',      to_jsonb(v_chosen),
       'answer',      to_jsonb(v_correct),
-      'explanation', v_question.explanation
+      'explanation',    v_question.explanation,
+      'explanation_nl', v_question.explanation_nl
     );
   end loop;
 
@@ -508,8 +558,9 @@ begin
 
   select jsonb_agg(q order by q.position) into v_out from (
     select qq.id, qq.question, qq.type, qq.explanation, qq.points, qq.position,
+           qq.question_nl, qq.explanation_nl,
            (select jsonb_agg(jsonb_build_object(
-                     'id', a.id, 'answer', a.answer,
+                     'id', a.id, 'answer', a.answer, 'answer_nl', a.answer_nl,
                      'is_correct', a.is_correct, 'position', a.position)
                    order by a.position)
               from public.quiz_answers a where a.question_id = qq.id) as answers

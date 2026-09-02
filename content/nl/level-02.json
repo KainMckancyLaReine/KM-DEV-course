@@ -1,0 +1,901 @@
+{
+  "lessons": {
+    "understanding-claude": {
+      "title": "Claude begrijpen",
+      "description": "Wat er werkelijk gebeurt als je een bericht verstuurt — en waarom dat verandert hoe je er een schrijft.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Het vult je document aan."
+        },
+        {
+          "t": "p",
+          "text": "Onder het gesprek doet het model één ding: alles lezen wat voor hem ligt en produceren wat daar het meest plausibel op volgt. Niets opzoeken. Je code niet uitvoeren. Het hele gesprek lezen als één document en het voortzetten."
+        },
+        {
+          "t": "p",
+          "text": "Dat klinkt simplistisch tot je ziet wat eruit volgt. **Alles in het gesprek bepaalt het antwoord** — je eerste bericht, zijn eigen eerdere antwoorden, de code die je plakte, de toon die je aansloeg. Wil je een ander antwoord, verander dan het document."
+        },
+        {
+          "t": "figure",
+          "kind": "context",
+          "caption": "Alles wat het model ziet op het moment dat het antwoordt"
+        },
+        {
+          "t": "h",
+          "text": "Drie gevolgen waar je iets mee kunt"
+        },
+        {
+          "t": "p",
+          "text": "**Het heeft geen geheugen tussen gesprekken.** De sessie van gisteren is weg. Niet verborgen — weg. Aan het begin van een sessie opnieuw context opbouwen hoort bij het werk; het is geen omweg."
+        },
+        {
+          "t": "p",
+          "text": "**Zijn eigen antwoorden worden onderdeel van de input.** Maakt het in bericht twee een verkeerde aanname en corrigeer je die niet, dan is die aanname context voor bericht drie tot en met twintig. Corrigeer fouten meteen, zolang ze goedkoop zijn."
+        },
+        {
+          "t": "p",
+          "text": "**Vaagheid lost op in het gemiddelde.** Vraag om ‘een moderne website’ en je krijgt het midden van alles wat ooit modern is genoemd. Dat is geen falen van het model; dat is het enige eerlijke antwoord op een niet-specifieke vraag."
+        },
+        {
+          "t": "callout",
+          "kind": "note",
+          "title": "Waarom generieke output jouw schuld is, op een nuttige manier",
+          "text": "Dat is goed nieuws. Als de output gemiddeld is omdat de input niet specifiek was, dan is specificiteit een knop die jij bedient. Er hoeft niets aan het gereedschap te veranderen om je resultaten drastisch beter te maken."
+        },
+        {
+          "t": "h",
+          "text": "Stelligheid is geen signaal"
+        },
+        {
+          "t": "p",
+          "text": "Het model heeft geen apart kanaal voor onzekerheid. Een gok wordt in dezelfde stem geschreven als een feit. Je kunt zekerheid niet aan het proza aflezen — controleren is dus geen paranoia, het is de enige methode die je hebt."
+        },
+        {
+          "t": "demo",
+          "kind": "context-compare",
+          "title": "Zie specificiteit het antwoord veranderen"
+        },
+        {
+          "t": "prompt",
+          "n": "01",
+          "title": "Laat het zijn redenering tonen",
+          "body": "Voordat je antwoordt, vertel me:\n1. Wat je denkt dat mijn doel is\n2. Wat je aanneemt omdat ik het niet heb gezegd\n3. Wat je zou moeten weten om een beter antwoord te geven\n\nGeef daarna pas antwoord.\n\nMijn vraag: {QUESTION}",
+          "why": {
+            "context": "Dwingt de interpretatie van het model naar buiten voordat het zich aan een antwoord vastlegt.",
+            "constraints": "Drie genummerde punten, op volgorde, zodat het het ongemakkelijke tweede punt niet kan overslaan.",
+            "output": "Zijn lezing van jou, zijn aannames, zijn hiaten — en pas dan het antwoord.",
+            "iteration": "Punt 2 is het goud. Elke aanname die er staat is een beslissing die jij nog niet hebt genomen."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Vind je eigen vaagheid",
+          "steps": [
+            "Schrijf een verzoek voor iets dat je echt wilt bouwen.",
+            "Haal het door de prompt hierboven in plaats van het direct te versturen.",
+            "Lees de aannames die het opsomt.",
+            "Herschrijf je oorspronkelijke verzoek zo dat minstens drie van die aannames niet langer nodig zijn."
+          ],
+          "done": "Je hebt een vaag verzoek zien veranderen in een specifiek verzoek, en je voelt nu het verschil in de antwoorden."
+        },
+        {
+          "t": "quiz",
+          "q": "Je begint een nieuw gesprek en zegt ‘ga verder waar we gisteren gebleven waren’. Wat gebeurt er?",
+          "type": "single",
+          "options": [
+            "Het haalt het vorige gesprek op",
+            "Het heeft er geen toegang toe en zal dat zeggen of een plausibele voortzetting verzinnen",
+            "Het doorzoekt je projectbestanden",
+            "Het vraagt je om in te loggen"
+          ],
+          "correct": [
+            1
+          ],
+          "why": "Een nieuw gesprek is leeg. De tweede helft van dat antwoord is het gevaarlijke deel: gevraagd om iets voort te zetten wat het niet kan zien, produceert een model soms een vloeiende voortzetting van een gesprek dat nooit heeft plaatsgevonden."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "Het model zet het document voort dat voor hem ligt. Dat document is je hele gesprek.",
+            "Geen geheugen tussen sessies; binnen één sessie worden zijn eigen antwoorden context.",
+            "Vage input lost op in gemiddelde output — en dat maakt specificiteit jouw knop.",
+            "Stelligheid zegt niets over correctheid."
+          ]
+        }
+      ]
+    },
+    "how-claude-interprets-instructions": {
+      "title": "Hoe Claude instructies interpreteert",
+      "description": "Het gat tussen wat je zei en wat je bedoelde, en hoe je het dicht.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Het doet wat je zei."
+        },
+        {
+          "t": "p",
+          "text": "Bijna elk ‘de AI deed het verkeerd’-moment is in werkelijkheid een gat tussen de instructie en de bedoeling. Het model loste een dubbelzinnigheid op waarvan je niet wist dat je die had opengelaten. Die dubbelzinnigheden leren zien vóór je verstuurt is het grootste deel van prompten."
+        },
+        {
+          "t": "h",
+          "text": "Waar de gaten zich verstoppen"
+        },
+        {
+          "t": "p",
+          "text": "**Woorden die als specificatie klinken maar het niet zijn.** Modern, clean, professioneel, mooi, strak, minimaal. Stuk voor stuk een compliment over een resultaat, geen instructie over hoe je daar komt. Twee mensen die ‘minimaal’ zeggen kunnen tegenovergestelde layouts bedoelen."
+        },
+        {
+          "t": "p",
+          "text": "**Scope waarvan je aannam dat die duidelijk was.** ‘Fix de header’ — alleen de header, of ook de navigatie erin? ‘Maak het responsive’ — tot welke breedte? Op welk apparaat?"
+        },
+        {
+          "t": "p",
+          "text": "**Stilte over wat niet mag veranderen.** Je vraagt om een kleurwijziging. Je krijgt een kleurwijziging en een herbouwde layout, omdat nergens stond dat de layout vaststond."
+        },
+        {
+          "t": "figure",
+          "kind": "anatomy",
+          "caption": "De vier onderdelen van een instructie die aankomt"
+        },
+        {
+          "t": "h",
+          "text": "De oplossing: zeg wat je met het woord bedoelt"
+        },
+        {
+          "t": "p",
+          "text": "Schrap ‘minimaal’ niet uit je vocabulaire. Definieer het ter plekke. ‘Minimaal — dus één accentkleur, geen randen, geen schaduwen, whitespace in plaats van scheidingslijnen.’ Nu is het controleerbaar, en je hebt het meteen ook voor jezelf helder gemaakt."
+        },
+        {
+          "t": "code",
+          "lang": "js",
+          "filename": "before-and-after.txt",
+          "code": "// vague\n\"Make the card look better and more modern.\"\n\n// specific\n\"Increase the card's internal padding to 32px, remove the drop\n shadow, replace the 1px border with a 1px hairline in --line,\n and set the title to the h3 size from the type scale.\n Do not change the layout or the copy.\""
+        },
+        {
+          "t": "callout",
+          "kind": "tip",
+          "title": "Zet er een hek omheen",
+          "text": "Bijna elke wijzigingsinstructie hoort te eindigen met een zin die zegt wat hetzelfde moet blijven. ‘Verander de layout, de teksten en de class-namen niet.’ Eén regel, en je krijgt geen behulpzame verrassingen meer."
+        },
+        {
+          "t": "h",
+          "text": "Standaard letterlijk"
+        },
+        {
+          "t": "p",
+          "text": "Vraag om ‘een paar voorbeelden’ en je krijgt er drie, of zeven. Vraag om drie en je krijgt er drie. Getallen, bestandsnamen, elementnamen en exacte waarden ruimen dubbelzinnigheid gratis op — gebruik ze overal waar je echt een voorkeur hebt."
+        },
+        {
+          "t": "demo",
+          "kind": "instruction-gap",
+          "title": "Zie de dubbelzinnigheid"
+        },
+        {
+          "t": "prompt",
+          "n": "02",
+          "title": "Laat het eerst je dubbelzinnigheden vinden",
+          "body": "Hier is een instructie die ik je zo wil sturen:\n\n\"{YOUR INSTRUCTION}\"\n\nVoer hem niet uit. Som in plaats daarvan elke manier op waarop hij redelijkerwijs anders geïnterpreteerd kan worden dan ik waarschijnlijk bedoelde. Zeg bij elk geval welke extra zin de dubbelzinnigheid zou wegnemen.",
+          "why": {
+            "context": "Je echte instructie, onderzocht voordat hij je een verkeerde build kost.",
+            "constraints": "‘Voer hem niet uit’ is essentieel, anders krijg je het werk in plaats van de review.",
+            "output": "Een lijst met dubbelzinnigheden, en bij elke de exacte zin die haar sluit.",
+            "iteration": "Plak de verbeterde instructie terug en vergelijk het resultaat met wat je anders had gekregen."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Herschrijf drie instructies",
+          "steps": [
+            "Neem deze: ‘maak het professioneel’, ‘fix de mobiele versie’, ‘ruim deze code op’.",
+            "Herschrijf ze allemaal zo dat een vreemde kan vaststellen of het correct is uitgevoerd.",
+            "Stuur van één ervan beide versies in aparte gesprekken.",
+            "Vergelijk de twee resultaten naast elkaar."
+          ],
+          "done": "Je hebt de prijs van een vage instructie gemeten in outputkwaliteit, op je eigen werk."
+        },
+        {
+          "t": "quiz",
+          "q": "Je vraagt om een kleurwijziging en krijgt er een herontworpen layout bij. Wat ontbrak er?",
+          "type": "single",
+          "options": [
+            "Een krachtiger model",
+            "Een zin die zegt wat niet mag veranderen",
+            "Meer detail over de kleur",
+            "Een kortere prompt"
+          ],
+          "correct": [
+            1
+          ],
+          "why": "Zonder hek is alles wat je niet noemt vrij spel. Benoemen wat vaststaat is net zo belangrijk als benoemen wat moet veranderen — en het kost één zin."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "Verkeerde output is meestal een dubbelzinnigheid die jij hebt opengelaten.",
+            "Woorden als ‘modern’ en ‘clean’ specificeren niets tot je ze ter plekke definieert.",
+            "Benoem de scope: wat verandert, en expliciet wat niet.",
+            "Exacte getallen en namen halen dubbelzinnigheid weg zonder dat het iets kost."
+          ]
+        }
+      ]
+    },
+    "context": {
+      "title": "Context",
+      "description": "Het krachtigste dat je zelf in handen hebt.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Context is alles."
+        },
+        {
+          "t": "p",
+          "text": "Claude kan alleen werken met de informatie die je geeft. Niet met je repository, niet met je klantgesprek, niet met wat je onder de douche bedacht. Wat niet in het gesprek staat, bestaat niet — en het model vult het gat met het meest gemiddelde plausibele antwoord."
+        },
+        {
+          "t": "figure",
+          "kind": "context",
+          "caption": "De vier soorten context, en wat elke soort je oplevert"
+        },
+        {
+          "t": "h",
+          "text": "De vier soorten die het waard zijn"
+        },
+        {
+          "t": "p",
+          "text": "**Projectcontext** — wat je bouwt en voor wie. Verandert structuur en toon.\n**Technische context** — stack, bestanden, versies, conventies. Verandert de vorm van de code.\n**Designcontext** — tokens, referenties, regels. Verandert hoe het eruitziet.\n**Gesprekscontext** — wat je al hebt afgesproken. Verandert hoeveel je moet herhalen."
+        },
+        {
+          "t": "h",
+          "text": "Meer is niet vanzelf beter"
+        },
+        {
+          "t": "p",
+          "text": "Je hele codebase plakken is geen context, dat is ruis. De bruikbare test voor elk stuk informatie: **zou het antwoord anders zijn zonder dit?** Zo nee, laat het weg. Tweehonderd gerichte woorden verslaan tweeduizend ongerichte."
+        },
+        {
+          "t": "demo",
+          "kind": "context-compare",
+          "title": "Hetzelfde verzoek op drie niveaus van context"
+        },
+        {
+          "t": "callout",
+          "kind": "tip",
+          "title": "Houd een projectbrief bij",
+          "text": "Schrijf je doel, doelgroep, stack, conventies en design tokens één keer op, in een tekstbestand. Plak het bovenaan elke nieuwe sessie. Tien seconden kopiëren vervangt tien minuten opnieuw uitleggen, en het model hoeft je project niet elke dag opnieuw te ontdekken."
+        },
+        {
+          "t": "h",
+          "text": "Context slijt naarmate een sessie groeit"
+        },
+        {
+          "t": "p",
+          "text": "In een lang gesprek kan iets dat vroeg is gezegd het verliezen van veertig berichten recenter materiaal. Als een regel die je aan het begin stelde begint weg te glijden, herhaal hem. Niet als klacht — als regel: ‘Ter herinnering: drie bestanden, geen libraries, alleen tokens.’ Het werkt, en het kost niets."
+        },
+        {
+          "t": "code",
+          "lang": "js",
+          "filename": "project-brief.txt",
+          "code": "PROJECT — Vlaam Bakery, one page\nAUDIENCE — locals, mostly on phones, mostly before 9am\nONE ACTION — see today's bread and the opening hours\nSTACK — plain HTML/CSS/JS, three files, no libraries\nCONVENTIONS — BEM class names, tokens on :root, no inline styles\nTOKENS — --ink #0d0d0d  --paper #fff  --accent #c6ff4a\n          --space 8px  --radius 24px\nCONSTRAINTS — works from 360px, no stock photography,\n              readable in bright daylight on a phone"
+        },
+        {
+          "t": "prompt",
+          "n": "03",
+          "title": "Open met een brief",
+          "body": "{PASTE YOUR PROJECT BRIEF}\n\nDat is het hele project. Lees het in drie zinnen aan me terug zodat ik kan controleren of je het begrepen hebt, en noem me de belangrijkste beslissing die de brief nog niet beantwoordt.\n\nSchrijf nog geen code.",
+          "why": {
+            "context": "De hele brief in één bericht, zodat er niets afgeleid hoeft te worden.",
+            "constraints": "Terugkoppelen in drie zinnen dwingt tot compressie, en compressie legt misverstanden bloot.",
+            "output": "Bevestiging plus de belangrijkste ontbrekende beslissing.",
+            "iteration": "Beantwoord die vraag, zet het antwoord in het briefbestand en hergebruik de verbeterde brief volgende sessie."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Schrijf je brief",
+          "steps": [
+            "Maak `brief.txt` en vul de zes regels uit het voorbeeld in voor een project dat je wilt bouwen.",
+            "Open een sessie met de prompt hierboven.",
+            "Beantwoord de ontbrekende beslissing die het aanwijst en zet het antwoord in het bestand.",
+            "Bewaar het bestand. Vanaf nu plak je het aan het begin van elke sessie."
+          ],
+          "done": "Je hebt een herbruikbaar contextblok. Dit ene bestand bespaart je meer tijd dan welke prompttemplate ook."
+        },
+        {
+          "t": "quiz",
+          "q": "Welk stuk context verandert het antwoord op ‘bouw een hero section voor me’ het meest?",
+          "type": "single",
+          "options": [
+            "Dat je tabs boven spaties verkiest",
+            "Dat de bezoekers zenuwachtige nieuwe patiënten zijn en de ene actie het maken van een afspraak is",
+            "Dat je VS Code gebruikt",
+            "Dat je het er graag mooi uit wilt laten zien"
+          ],
+          "correct": [
+            1
+          ],
+          "why": "Doelgroep en de ene actie veranderen de boodschap, de hiërarchie, de toon en de layout. Editor en inspringing veranderen niets aan het ontwerp, en ‘mooi’ specificeert helemaal niets."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "Wat niet in het gesprek staat, bestaat niet.",
+            "Vier soorten: project, technisch, design, gesprek.",
+            "Beoordeel elke toevoeging op de vraag of ze het antwoord zou veranderen.",
+            "Houd een briefbestand bij en hergebruik het; herhaal kernregels in lange sessies."
+          ]
+        }
+      ]
+    },
+    "writing-your-first-development-prompt": {
+      "title": "Je eerste ontwikkelprompt schrijven",
+      "description": "De structuur van zes onderdelen, toegepast op iets echts.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Zes onderdelen, in deze volgorde."
+        },
+        {
+          "t": "p",
+          "text": "Een ontwikkelprompt die werkt heeft elke keer dezelfde vorm. Geen template om te plakken — een checklist om langs te lopen, zodat niets belangrijks aan gissen wordt overgelaten."
+        },
+        {
+          "t": "figure",
+          "kind": "anatomy",
+          "caption": "De zes onderdelen van een ontwikkelprompt"
+        },
+        {
+          "t": "list",
+          "ordered": true,
+          "items": [
+            "**Doel** — wat dit ding moet doen, in één zin.",
+            "**Context** — voor wie het is, waar het deel van uitmaakt, wat er al bestaat.",
+            "**Beperkingen** — wat is uitgesloten. Technisch en creatief.",
+            "**Richting** — de concrete visuele of structurele beslissingen die je al hebt genomen.",
+            "**Scope** — precies wat je terug wilt, en wat niet.",
+            "**Outputformaat** — bestanden, taal, en of je er uitleg bij wilt."
+          ]
+        },
+        {
+          "t": "h",
+          "text": "Zie hem opgebouwd worden"
+        },
+        {
+          "t": "p",
+          "text": "Begin met het verzoek dat iedereen schrijft, voeg dan één onderdeel per keer toe en let op wat elke toevoeging weghaalt uit de ruimte van mogelijke antwoorden."
+        },
+        {
+          "t": "code",
+          "lang": "js",
+          "filename": "assembling.txt",
+          "code": "1  Build a hero section.\n\n2  + goal\n   Build a hero section whose job is to get a visitor to book a table.\n\n3  + context\n   ...for a twelve-seat restaurant. Visitors are mostly on phones,\n   deciding between three places, in a hurry.\n\n4  + constraints\n   ...Plain HTML and CSS, no libraries, no stock photography,\n   readable at 360px, supporting line under 20 words.\n\n5  + direction\n   ...Oversized headline set tight, one accent colour, generous\n   whitespace, asymmetric, no card, no gradient.\n\n6  + scope and output\n   Return only the HTML and CSS for this section, using the tokens\n   below. Then list three decisions I might disagree with."
+        },
+        {
+          "t": "p",
+          "text": "Regel 1 kun je op tienduizend manieren beantwoorden. Regel 6 op misschien een stuk of twaalf — en alle twaalf zijn dingen die je zou overwegen te publiceren. Die vernauwing is de hele vaardigheid."
+        },
+        {
+          "t": "demo",
+          "kind": "prompt-builder",
+          "title": "Bouw er een, onderdeel voor onderdeel"
+        },
+        {
+          "t": "callout",
+          "kind": "note",
+          "title": "Je schrijft dit ook voor jezelf",
+          "text": "De helft van de waarde komt binnen voordat je op versturen drukt. Je kunt het doel, de doelgroep en de ene actie niet benoemen zonder ze te beslissen — en de meeste zwakke websites zijn zwak omdat niemand dat ooit deed."
+        },
+        {
+          "t": "prompt",
+          "n": "04",
+          "title": "Je eerste echte ontwikkelprompt",
+          "body": "DOEL — Bouw een hero section die een bezoeker aanzet tot {ACTION}.\n\nCONTEXT — Dit is het eerste scherm van een one-page site voor {WHO}. Bezoekers zijn {AUDIENCE}, meestal op een telefoon, meestal kiezend tussen opties.\n\nBEPERKINGEN — Alleen HTML en CSS. Geen libraries. Geen stockfotografie. Moet leesbaar zijn op 360px. Ondersteunende regel onder de 20 woorden.\n\nRICHTING — Overmaatse kop, strak gezet. Eén accentkleur. Royale whitespace. Asymmetrische compositie. Geen card, geen gradient, geen schaduw.\n\nTOKENS —\n{PASTE TOKENS}\n\nSCOPE — Alleen deze sectie. Bouw de rest van de pagina niet.\n\nOUTPUT — De HTML en de CSS, in twee blokken. Noem daarna drie beslissingen waar ik het redelijkerwijs niet mee eens zou kunnen zijn.",
+          "why": {
+            "context": "Doelgroep en situatie staan er, dus hiërarchie en toon volgen uit iets echts.",
+            "constraints": "Zes uitsluitingen, elk goed voor één standaardkeuze die het model anders zou pakken.",
+            "output": "Eén sectie, twee blokken, plus een lijst met discutabele keuzes — in één keer te beoordelen.",
+            "iteration": "Ga in tegen een van de drie beslissingen. Dat gesprek leert je meer dan de code deed."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Verstuur hem echt",
+          "steps": [
+            "Vul elke placeholder in voor een eigen project.",
+            "Verstuur hem. Sla het resultaat op als `index.html` en `styles.css`.",
+            "Open het op 360px breed en lees het alsof je de bezoeker bent.",
+            "Kies een van de drie genoemde beslissingen en ga ertegenin.",
+            "Bewaar de verbeterde versie."
+          ],
+          "done": "Je hebt een volledige ontwikkelprompt geschreven en een echt gesprek gevoerd over het resultaat. Elke build hierna is dit, op grotere schaal."
+        },
+        {
+          "t": "quiz",
+          "q": "Welk van de zes onderdelen ontbreekt het vaakst, en kost dan het meest?",
+          "type": "single",
+          "options": [
+            "Outputformaat",
+            "Beperkingen",
+            "Doel",
+            "Scope"
+          ],
+          "correct": [
+            1
+          ],
+          "why": "Beperkingen zijn wat de verkeerde antwoorden weghaalt. Zonder beperkingen is de output verdedigbaar maar generiek, en besteed je het volgende uur aan één voor één ontdekken wat je niet wilde."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "Doel, context, beperkingen, richting, scope, output — in die volgorde.",
+            "Elk onderdeel vernauwt de ruimte van mogelijke antwoorden.",
+            "Beperk de scope tot één stuk, zodat je het echt kunt beoordelen.",
+            "Vraag om discutabele beslissingen en ga tegen één ervan in."
+          ]
+        }
+      ]
+    },
+    "good-prompts-vs-bad-prompts": {
+      "title": "Goede prompts versus slechte prompts",
+      "description": "Zes echte paren, en wat ze van elkaar onderscheidt.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Het verschil is nooit de lengte."
+        },
+        {
+          "t": "p",
+          "text": "Het gaat erom of een vreemde kan vaststellen of het resultaat klopt. Dat is de test. Haal er elke prompt doorheen en je weet meteen of hij iets doet."
+        },
+        {
+          "t": "demo",
+          "kind": "versus",
+          "title": "Zes paren, naast elkaar"
+        },
+        {
+          "t": "h",
+          "text": "Paar één — de layout"
+        },
+        {
+          "t": "p",
+          "text": "**Zwak:** Maak de layout van de pagina beter.\n**Sterk:** De drie secties stapelen nu op elke breedte in één kolom. Zet boven 900px de afbeelding en de tekst naast elkaar in verhouding 5:7, met 48px ertussen. Houd op mobiel de gestapelde volgorde aan."
+        },
+        {
+          "t": "p",
+          "text": "‘Beter’ valt niet te controleren. Breedtes, verhoudingen en tussenruimtes kun je met een liniaal nameten."
+        },
+        {
+          "t": "h",
+          "text": "Paar twee — de bug"
+        },
+        {
+          "t": "p",
+          "text": "**Zwak:** Het menu is kapot.\n**Sterk:** Onder 768px opent het paneel als je op de menuknop tikt, maar een tweede tik sluit hem niet. De console toont geen fouten. Het werkte nog voordat ik de scroll listener toevoegde op regel 40 van script.js."
+        },
+        {
+          "t": "p",
+          "text": "De tweede geeft verwacht, werkelijk, grens en moment — vier feiten, en daaruit alleen al is de oorzaak meestal duidelijk."
+        },
+        {
+          "t": "h",
+          "text": "Paar drie — de stijl"
+        },
+        {
+          "t": "p",
+          "text": "**Zwak:** Laat het premium aanvoelen.\n**Sterk:** Premium betekent hier: één accentkleur die niet vaker dan twee keer per scherm voorkomt, koppen met -0.03em tracking, geen schaduwen, haarlijnranden in --line, en minstens 96px verticale ruimte tussen secties."
+        },
+        {
+          "t": "p",
+          "text": "Hetzelfde woord, ter plekke gedefinieerd. Nu zijn het vijf controleerbare regels in plaats van een hoop."
+        },
+        {
+          "t": "h",
+          "text": "Paar vier — de refactor"
+        },
+        {
+          "t": "p",
+          "text": "**Zwak:** Ruim deze code op.\n**Sterk:** Dit bestand herhaalt dezelfde card-markup vier keer met andere tekst. Haal die naar één functie die title, body en href aanneemt. Verander de gerenderde HTML en de class-namen niet."
+        },
+        {
+          "t": "h",
+          "text": "Paar vijf — de verkenning"
+        },
+        {
+          "t": "p",
+          "text": "**Zwak:** Geef me wat opties voor de hero.\n**Sterk:** Geef me drie hero-varianten die alleen in compositie verschillen: één gecentreerd, één links uitgelijnd met de afbeelding rechts, één full-bleed met de kop eroverheen. Dezelfde tekst en tokens in alle drie."
+        },
+        {
+          "t": "h",
+          "text": "Paar zes — de review"
+        },
+        {
+          "t": "p",
+          "text": "**Zwak:** Is dit goed?\n**Sterk:** Beoordeel deze sectie op consistente spacing tegen de 8px-schaal, naleving van de typeschaal, contrastverhoudingen en bedienbaarheid met het toetsenbord. Som de bevindingen op, de ergste eerst, met de reden erbij. Repareer nog niets."
+        },
+        {
+          "t": "callout",
+          "kind": "tip",
+          "title": "De vreemdentest",
+          "text": "Zou iemand die je nooit heeft ontmoet kunnen vaststellen of het resultaat aan de prompt voldoet? Zo niet, dan is de prompt een wens. Herschrijf hem tot het antwoord ja is."
+        },
+        {
+          "t": "prompt",
+          "n": "05",
+          "title": "Beoordeel je eigen prompt",
+          "body": "Geef deze prompt een cijfer van 1 tot 10 op: helderheid van het doel, toereikendheid van de context, kwaliteit van de beperkingen, controleerbaarheid van het resultaat.\n\n\"{YOUR PROMPT}\"\n\nZeg per categorie wat er ontbreekt en geef de exacte zin die het zou oplossen. Laat me daarna de herschreven prompt zien.",
+          "why": {
+            "context": "Vier benoemde categorieën in plaats van een algemene mening.",
+            "constraints": "Om de exacte herstelzin vragen voorkomt ‘wees specifieker’ als feedback.",
+            "output": "Cijfers, hiaten, oplossingen en een herschrijving die je meteen kunt gebruiken.",
+            "iteration": "Stuur beide versies en vergelijk. Een paar keer doen is genoeg voordat het erin zit."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Beoordeel drie van je eigen prompts",
+          "steps": [
+            "Zoek drie prompts die je deze week echt hebt verstuurd.",
+            "Haal ze allemaal door de beoordelingsprompt.",
+            "Kijk welke categorie over alle drie het laagst scoort — dat is jouw persoonlijke zwakke plek.",
+            "Schrijf één zin die je vanaf nu aan elke prompt toevoegt om dat af te dekken."
+          ],
+          "done": "Je kent je eigen faalpatroon, en dat is bruikbaarder dan welke template ook."
+        },
+        {
+          "t": "quiz",
+          "q": "Welke prompt geeft Claude de nuttigste context?",
+          "type": "prompt",
+          "options": [
+            "Maak een website.",
+            "Maak een moderne website voor mijn bedrijf.",
+            "Bouw een responsive landingspagina voor een premium architectenbureau: 12-koloms grid, overmaatse koppen, drie projectrijen, één call to action, geen stockbeeld.",
+            "Bouw een website met een hero, een over-ons-sectie, een dienstensectie en een contactsectie."
+          ],
+          "correct": [
+            2
+          ],
+          "why": "Alleen de derde benoemt het onderwerp, de structuur, de visuele richting en een uitsluiting. De vierde benoemt secties maar laat elk oordeel open — netjes geordend, en zegt nog steeds niets."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "De test is controleerbaarheid, niet lengte.",
+            "Definieer je bijvoeglijke naamwoorden ter plekke, anders specificeren ze niets.",
+            "Bij bugs: verwacht, werkelijk, grens, moment.",
+            "Bij varianten: benoem de as waarop ze moeten verschillen."
+          ]
+        }
+      ]
+    },
+    "giving-claude-constraints": {
+      "title": "Claude beperkingen geven",
+      "description": "Elke beperking haalt een verkeerd antwoord weg. Dat is het hele mechanisme.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Beperkingen zijn geen belemmering. Ze zijn richting."
+        },
+        {
+          "t": "p",
+          "text": "Zonder beperkingen kiest het model uit alles wat het ooit heeft gezien en landt het in het midden. Elke beperking die je toevoegt wist een deel van die ruimte. Genoeg beperkingen en wat overblijft is jouw werk in plaats van het gemiddelde van iedereen."
+        },
+        {
+          "t": "figure",
+          "kind": "narrowing",
+          "caption": "Wat elke beperking weghaalt"
+        },
+        {
+          "t": "h",
+          "text": "Vijf soorten"
+        },
+        {
+          "t": "p",
+          "text": "**Technisch** — alleen HTML/CSS/JS, drie bestanden, geen libraries, moet werken in Safari 16.\n**Structureel** — één h1, semantische landmarks, geen geneste grids dieper dan twee.\n**Visueel** — één accentkleur, geen schaduwen, geen gradients, alleen haarlijnranden.\n**Gedrag** — werkt zonder JavaScript, bedienbaar met het toetsenbord, respecteert reduced motion.\n**Negatief** — geen cards, geen carousels, geen stockfotografie, geen emoji."
+        },
+        {
+          "t": "callout",
+          "kind": "note",
+          "title": "Negatieve beperkingen worden onderschat",
+          "text": "Zeggen wat je niet wilt is vaak sneller en preciezer dan beschrijven wat je wel wilt. ‘Geen cards’ sluit in twee woorden een hele familie layouts uit, en dwingt tot iets doordachters op die plek."
+        },
+        {
+          "t": "h",
+          "text": "Maak ze controleerbaar"
+        },
+        {
+          "t": "p",
+          "text": "Een beperking die je niet kunt verifiëren is een voorkeur. ‘Snel’ is een voorkeur. ‘Geen enkele asset groter dan 200KB, geen layout shift bij het laden’ is een beperking — je opent het Network-paneel en de kwestie is beslecht."
+        },
+        {
+          "t": "code",
+          "lang": "js",
+          "filename": "constraints.txt",
+          "code": "preference          →  constraint\n\nfast                →  no asset over 200KB, no layout shift\naccessible          →  keyboard operable, contrast 4.5:1, visible focus\nresponsive          →  no horizontal scroll from 360px to 1920px\nclean code          →  no repeated values, tokens only, no file over 300 lines\nsubtle animation    →  transform and opacity only, nothing over 600ms"
+        },
+        {
+          "t": "demo",
+          "kind": "constraint-lab",
+          "title": "Voeg beperkingen toe en zie de ruimte krimpen"
+        },
+        {
+          "t": "h",
+          "text": "Hoeveel is te veel"
+        },
+        {
+          "t": "p",
+          "text": "Beperkingen die botsen leveren verwarde output op. Vraag je om maximale whitespace en maximale informatiedichtheid, dan moet er iets wijken en kiest het model voor jou. Als resultaten gecompromitteerd beginnen te voelen, zoek dan de twee regels die tegengesteld trekken en beslis welke je echt belangrijk vindt."
+        },
+        {
+          "t": "prompt",
+          "n": "06",
+          "title": "Een beperkingenblok dat je kunt hergebruiken",
+          "body": "Voor alles in deze sessie gelden deze beperkingen. Bevestig ze één keer en houd je er daarna aan zonder dat ik het herhaal.\n\nTECHNISCH — alleen HTML, CSS en JavaScript in drie bestanden. Geen libraries, geen build step, geen externe requests behalve Google Fonts.\n\nSTRUCTUREEL — semantische HTML, één h1 per pagina, geen overgeslagen kopniveaus, alle interactieve elementen zijn echte buttons of links.\n\nVISUEEL — alleen de tokens die ik je heb gegeven. Geen schaduwen, geen gradients, geen afgeronde hoeken buiten --radius. Eén accentkleur, spaarzaam gebruikt.\n\nGEDRAG — bedienbaar met het toetsenbord, met zichtbare focus. Contrast minstens 4.5:1. Volledig pad voor prefers-reduced-motion. De pagina is betekenisvol met JavaScript uitgeschakeld.\n\nNEGATIEF — geen card-layouts, geen carousels, geen stockfotografie, geen emoji, geen lorem ipsum.\n\nAls een verzoek van mij een van deze regels zou breken, zeg dat dan in plaats van het stilzwijgend te negeren.",
+          "why": {
+            "context": "Geldt voor de hele sessie, zodat latere prompts kort kunnen zijn.",
+            "constraints": "Alle vijf soorten, elk punt controleerbaar.",
+            "output": "Nu een bevestiging; naleving voor de rest van de sessie.",
+            "iteration": "De laatste regel is de belangrijkste — die maakt van stilzwijgende compromissen een gesprek."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Schrijf je eigen blok",
+          "steps": [
+            "Kopieer het beperkingenblok en pas elke regel aan op hoe jij echt wilt werken.",
+            "Sla het op als `constraints.txt` naast je projectbrief.",
+            "Open je volgende sessie ermee.",
+            "Elke keer dat je hetzelfde voor de tweede keer corrigeert, voeg je een regel toe."
+          ],
+          "done": "Je hebt een herbruikbare standaard. Je prompts worden korter en je output wordt tegelijk beter."
+        },
+        {
+          "t": "quiz",
+          "q": "Welke hiervan zijn beperkingen in de bruikbare zin?",
+          "type": "multi",
+          "options": [
+            "Geen externe libraries",
+            "Laat het er premium uitzien",
+            "Geen horizontale scroll vanaf 360px",
+            "Animeer alleen transform en opacity"
+          ],
+          "correct": [
+            0,
+            2,
+            3
+          ],
+          "why": "Drie ervan kan iemand die je nooit heeft ontmoet verifiëren. ‘Premium’ valt niet te controleren tot je definieert wat je ermee bedoelt — en op dat moment worden het meerdere echte beperkingen."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "Elke beperking wist een deel van de mogelijke antwoorden.",
+            "Vijf soorten: technisch, structureel, visueel, gedrag, negatief.",
+            "Kun je het niet verifiëren, dan is het een voorkeur — herschrijf het.",
+            "Houd een herbruikbaar beperkingenblok bij en vraag om een melding zodra een verzoek ermee botst."
+          ]
+        }
+      ]
+    },
+    "giving-claude-design-direction": {
+      "title": "Claude designrichting geven",
+      "description": "Hoe je een look precies genoeg beschrijft om hem te kunnen bouwen.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Beschrijf beslissingen, geen indrukken."
+        },
+        {
+          "t": "p",
+          "text": "‘Modern’, ‘clean’, ‘premium’ en ‘bold’ zijn reacties op iets dat af is. Ze zijn niet uit te voeren. Designrichting die werkt benoemt de beslissingen die de reactie veroorzaken — en die kun je uitspreken, controleren en bediscussiëren."
+        },
+        {
+          "t": "h",
+          "text": "De vijf assen"
+        },
+        {
+          "t": "p",
+          "text": "**Typografie** — families, schaal, gewichten, tracking, regelhoogte, hoe groot het grootste ding is.\n**Ruimte** — de basiseenheid, het ritme van de secties, hoeveel lucht er om de tekst staat.\n**Kleur** — hoeveel, in welke rollen, hoe vaak het accent verschijnt.\n**Compositie** — grid, symmetrie, uitlijning, waar het oog het eerst landt.\n**Beweging** — wat beweegt, hoe ver, hoe snel, en wat stil blijft staan."
+        },
+        {
+          "t": "figure",
+          "kind": "axes",
+          "caption": "Vijf assen — een look is een positie op elk daarvan"
+        },
+        {
+          "t": "p",
+          "text": "Elke stijl die je bewondert laat zich beschrijven als een positie op die vijf. Doe dat en je hebt een brief. Zeg ‘modern’ en je hebt een stemming."
+        },
+        {
+          "t": "h",
+          "text": "Een referentie eerlijk vertalen"
+        },
+        {
+          "t": "p",
+          "text": "Een site noemen die je mooi vindt is een sluiproute die meestal mislukt — het model heeft er hooguit een gemiddelde indruk van, en jullie zijn het misschien niet eens over wat hem goed maakt. Kijk in plaats daarvan naar wat je mooi vindt en schrijf op wat het doet."
+        },
+        {
+          "t": "code",
+          "lang": "js",
+          "filename": "translating.txt",
+          "code": "\"like a Swiss design annual\"\n\n→ TYPE   one grotesque, three sizes only, headline at 8vw,\n         tracking -0.04em, body at 17px / 1.6\n→ SPACE  8px base, 128px between sections, 64px gutters\n→ COLOUR paper, ink, one accent used twice per page\n→ COMP   12-column grid, hard left alignment, asymmetric,\n         generous margins, no centred text\n→ MOTION reveals under 600ms, transform and opacity only,\n         nothing loops, nothing bounces"
+        },
+        {
+          "t": "demo",
+          "kind": "direction-lab",
+          "title": "Verschuif één as per keer"
+        },
+        {
+          "t": "callout",
+          "kind": "tip",
+          "title": "Verander één as per iteratie",
+          "text": "Als een resultaat niet klopt, herschrijf dan niet de hele richting. Verschuif één as — maak de kop groter, of verdubbel de ruimte tussen de secties — en kijk opnieuw. Je leert wat elke as waard is, en je raakt de delen die al goed waren niet meer kwijt."
+        },
+        {
+          "t": "h",
+          "text": "Geef tokens, geen bijvoeglijke naamwoorden"
+        },
+        {
+          "t": "p",
+          "text": "De sterkste vorm van designrichting is helemaal geen proza. Het is een blok custom properties plus drie zinnen compositieregels. Het model heeft dan jouw systeem in plaats van een interpretatie van je stemming."
+        },
+        {
+          "t": "prompt",
+          "n": "07",
+          "title": "Designrichting die uitvoerbaar is",
+          "body": "Dit is de designrichting. Gebruik hem exact; introduceer geen waarden die er niet in staan.\n\nTYPOGRAFIE — Display: {FAMILY}, gewicht 500, tracking -0.03em, line-height 0.98. Body: {FAMILY}, 17px, line-height 1.6. Labels: monospace, 11px, hoofdletters, tracking 0.16em. Vijf groottes in totaal, geen andere.\n\nRUIMTE — basiseenheid 8px. Sectiepadding 120px boven en onder. Container 1280px met 24px gutters.\n\nKLEUR — {TOKENS}. Het accent verschijnt hoogstens twee keer per scherm. Geen schaduwen. Randen zijn 1px en uitsluitend in --line.\n\nCOMPOSITIE — 12-koloms grid, links uitgelijnd, asymmetrisch. Niets gecentreerd, behalve een bewust statement over het volle scherm. Whitespace in plaats van scheidingslijnen.\n\nBEWEGING — reveals 560ms, UI-transities 280ms, één easing-curve. Alleen transform en opacity.\n\nBouw {SECTION} volgens deze richting. Vertel me daarna welke van deze regels je het lastigst vond om te volgen, en waarom.",
+          "why": {
+            "context": "Een compleet systeem in plaats van een stemming, zodat er niets te raden valt.",
+            "constraints": "‘Geen waarden hierbuiten’ is wat voorkomt dat er in sectie drie een veertiende grijs opduikt.",
+            "output": "De sectie, plus de wrijvingspunten — en dat is precies waar je systeem zwak is.",
+            "iteration": "Repareer het systeem, niet de sectie. Bouw daarna opnieuw en alles stroomafwaarts wordt beter."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Vertaal iets dat je mooi vindt",
+          "steps": [
+            "Zoek een site waarvan je het ontwerp bewondert.",
+            "Schrijf zijn positie op alle vijf assen op. Meet waar je kunt — gebruik de inspector.",
+            "Maak daar een richtingsblok van zoals hierboven.",
+            "Bouw er één sectie mee en vergelijk die met het origineel."
+          ],
+          "done": "Je hebt smaak omgezet in instructies. Dit is de vaardigheid die een model aansturen onderscheidt van hopen."
+        },
+        {
+          "t": "quiz",
+          "q": "Welke hiervan geeft echte designrichting?",
+          "type": "single",
+          "options": [
+            "Maak het modern en clean",
+            "Gebruik een mooi font en goede spacing",
+            "Eén grotesque, drie groottes, kop op 8vw met -0.04em tracking, 128px tussen secties, één accent dat twee keer per pagina terugkomt",
+            "Laat het lijken op de site van een high-end bureau"
+          ],
+          "correct": [
+            2
+          ],
+          "why": "Alleen de derde benoemt beslissingen die uitgevoerd en gecontroleerd kunnen worden. De andere beschrijven een gevoel en laten elke echte keuze aan het model — dat ze oplost in de meest gemiddelde versie van dat gevoel."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "Benoem beslissingen, geen indrukken.",
+            "Vijf assen: typografie, ruimte, kleur, compositie, beweging.",
+            "Vertaal referenties door ze te meten, niet door ze te noemen.",
+            "Tokens plus drie compositieregels verslaan elke hoeveelheid bijvoeglijke naamwoorden."
+          ]
+        }
+      ]
+    },
+    "working-with-existing-code": {
+      "title": "Werken met bestaande code",
+      "description": "De vaardigheid die telt zodra je project groter is dan één bestand.",
+      "content": [
+        {
+          "t": "h",
+          "text": "Een hek om de wijziging."
+        },
+        {
+          "t": "p",
+          "text": "Vanaf nul bouwen is het makkelijke geval. Het echte werk is iets veranderen dat al bestaat zonder de delen te breken die in orde waren. Doe je dat slecht, dan kost elke fix je twee regressies."
+        },
+        {
+          "t": "h",
+          "text": "Geef het minimum dat het antwoord juist maakt"
+        },
+        {
+          "t": "p",
+          "text": "Niet de hele repository. Ook niet één losse regel. Het relevante stuk, plus waar het van afhangt — de tokens die het gebruikt, de markup die het opmaakt, de functie die het aanroept. Kun je niet kiezen, vraag dan wat het nog meer moet zien voordat het antwoordt."
+        },
+        {
+          "t": "code",
+          "lang": "js",
+          "filename": "how-to-ask.txt",
+          "code": "Here is the component I want to change:\n{THE COMPONENT}\n\nHere are the tokens it uses:\n{TOKENS}\n\nHere is the markup it styles:\n{MARKUP}\n\nCHANGE — the card padding from 24px to 32px and the title\n         from the h4 size to the h3 size.\n\nDO NOT CHANGE — the layout, the class names, the markup\n         structure, or anything outside this component.\n\nReturn only the lines that changed, with two lines of\ncontext either side."
+        },
+        {
+          "t": "callout",
+          "kind": "tip",
+          "title": "Vraag om een diff, niet om een bestand",
+          "text": "‘Geef alleen de regels die veranderd zijn’ is de nuttigste gewoonte uit deze les. Zes regels kun je fatsoenlijk beoordelen. Een opnieuw gegenereerd bestand van 400 regels niet, dus scan je het, en glipt er iets doorheen."
+        },
+        {
+          "t": "h",
+          "text": "Benoem je conventies één keer"
+        },
+        {
+          "t": "p",
+          "text": "Naamgeving, bestandsstructuur, of je classes of utilities gebruikt, hoe je state afhandelt. Zeg het één keer aan het begin van een sessie en het geldt voor alles daarna. Zeg het nooit en je besteedt de sessie aan het met de hand hernoemen van dingen."
+        },
+        {
+          "t": "demo",
+          "kind": "diff-review",
+          "title": "Beoordeel een wijziging fatsoenlijk"
+        },
+        {
+          "t": "h",
+          "text": "Als het meer herschrijft dan je vroeg"
+        },
+        {
+          "t": "p",
+          "text": "Dit gaat gebeuren. Het antwoord is niet om het te accepteren en achteraf op te ruimen — het is om het gewoon te zeggen: ‘Dat veranderde ook de layout. Geef me alleen de wijziging in padding en font-size, met de layout onaangetast.’ Specifiek zijn over wat er te veel is gedaan levert je een gecorrigeerde diff op in plaats van weer een volledige herschrijving."
+        },
+        {
+          "t": "h",
+          "text": "Begrijp het voordat je het verandert"
+        },
+        {
+          "t": "p",
+          "text": "Sta je op het punt code aan te passen die je niet begrijpt — gegenereerd of geërfd — besteed dan eerst één bericht aan begrip. Dat gaat sneller dan de debugsessie die je anders voor jezelf inplant."
+        },
+        {
+          "t": "prompt",
+          "n": "08",
+          "title": "Eerst begrijpen, dan veranderen",
+          "body": "Hier is een bestand dat ik niet zelf heb geschreven:\n\n{PASTE}\n\nLeg het me uit voordat je iets verandert:\n1. Wat het doet, in twee zinnen\n2. Waar elke functie verantwoordelijk voor is\n3. Wat het aanneemt over de rest van het project\n4. Alles hierin dat me later zou kunnen verrassen\n\nStel geen verbeteringen voor en verander nog niets.",
+          "why": {
+            "context": "Het echte bestand, zodat de uitleg over jouw code gaat en niet over een algemeen patroon.",
+            "constraints": "Genummerd, en expliciet geen wijzigingen — begrip is het hele resultaat.",
+            "output": "Begrip, plus de aannames en valkuilen die je anders op het slechtst denkbare moment vindt.",
+            "iteration": "Maak nu je wijziging, en je kunt zelf beoordelen of het antwoord klopt."
+          }
+        },
+        {
+          "t": "task",
+          "title": "Verander één ding, veilig",
+          "steps": [
+            "Pak een bestand uit een eerdere les dat je je niet meer in detail herinnert.",
+            "Haal het door de begripsprompt hierboven en lees het antwoord.",
+            "Vraag om één kleine wijziging, met een expliciete lijst van wat niet mag veranderen, en vraag alleen om de gewijzigde regels.",
+            "Pas de diff met de hand toe. Herlaad en controleer dat er verder niets is verschoven."
+          ],
+          "done": "Je hebt een chirurgische wijziging gemaakt in code die je niet zelf hebt geschreven. Dat is de dagelijkse werkelijkheid van werken aan iets echts."
+        },
+        {
+          "t": "quiz",
+          "q": "Wat is de betrouwbaarste manier om te voorkomen dat een kleine wijziging een herschrijving wordt?",
+          "type": "single",
+          "options": [
+            "Minder code plakken",
+            "Benoem wat niet mag veranderen, en vraag alleen om de gewijzigde regels",
+            "Om een korter antwoord vragen",
+            "Een capabeler model gebruiken"
+          ],
+          "correct": [
+            1
+          ],
+          "why": "Het hek plus het verzoek om een diff doet het werk. Minder plakken haalt context weg die het model nodig heeft; om beknoptheid vragen weerhoudt het er niet van de layout aan te raken."
+        },
+        {
+          "t": "summary",
+          "points": [
+            "Geef de relevante code plus waar die van afhangt — niet alles, niet één regel.",
+            "Benoem altijd wat niet mag veranderen.",
+            "Vraag alleen om de gewijzigde regels, zodat je ze echt kunt beoordelen.",
+            "Begrijp onbekende code voordat je hem aanpast."
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -21,11 +21,12 @@ CSS = '\n'.join('<link rel="stylesheet" href="assets/css/%s">' % f for f in [
     '01-foundation.css', '02-chrome.css', '03-sections.css', '04-app.css'])
 
 APP_SCRIPTS = '\n'.join('<script src="assets/js/%s"></script>' % f for f in [
-    'core.js', 'modules.js', 'km-config.js', 'seed-data.js',
+    'core.js', 'modules.js', 'km-config.js', 'km-i18n.js', 'seed-data.js',
     'km-data.js', 'km-blocks.js', 'km-app.js'])
 
 AUTH_SCRIPTS = '\n'.join('<script src="assets/js/%s"></script>' % f for f in [
-    'core.js', 'modules.js', 'km-config.js', 'seed-data.js', 'km-data.js', 'km-app.js'])
+    'core.js', 'modules.js', 'km-config.js', 'km-i18n.js', 'seed-data.js',
+    'km-data.js', 'km-app.js'])
 
 ADMIN_SCRIPTS = APP_SCRIPTS + '\n<script src="assets/js/km-admin.js"></script>'
 
@@ -45,14 +46,19 @@ NAV = '''
 <a class="skip" href="#main">Skip to content</a>
 <div class="pt" aria-hidden="true"></div>
 
-<header class="nav is-stuck">
+<header class="nav nav--app is-stuck">
   <div class="shell nav__inner">
     <a class="brand" href="app-dashboard.html" aria-label="KM.dev Academy">
       KM.dev<i class="brand__dot"></i><span class="brand__sub">Academy</span>
     </a>
     <nav class="nav__links" aria-label="Course" data-learning-nav></nav>
     <div class="nav__right">
-      <button class="nav__link" type="button" data-open-palette aria-label="Search">
+      <div class="lang" role="group" aria-label="Language">
+        <button class="lang__btn is-active" data-lang="en" type="button">EN</button>
+        <button class="lang__btn" data-lang="nl" type="button">NL</button>
+      </div>
+      <button class="nav__link" type="button" data-open-palette
+              data-en-aria="Search" data-nl-aria="Zoeken" aria-label="Search">
         Search <kbd style="font-family:'Space Mono',monospace;font-size:10px;border:1px solid var(--line);border-radius:5px;padding:2px 5px;margin-left:6px">⌘K</kbd>
       </button>
       <div data-account style="display:flex;align-items:center;gap:10px"></div>
@@ -108,8 +114,14 @@ def auth_page(slug, title, kind, h1, sub, fields, submit, foot, aside):
             '<main class="page-main" id="main" data-page="%s" data-space="app">\n'
             '<div class="auth">\n'
             '  <div class="auth__form">\n'
-            '    <div class="auth__back"><a class="xlink" href="index.html">'
-            '<i class="btn__arrow" style="transform:rotate(180deg)"></i><span>km.dev</span></a></div>\n'
+            '    <div class="auth__back" style="display:flex;align-items:center;'
+            'justify-content:space-between;gap:16px">'
+            '<a class="xlink" href="index.html">'
+            '<i class="btn__arrow" style="transform:rotate(180deg)"></i><span>km.dev</span></a>'
+            '<div class="lang" role="group" aria-label="Language">'
+            '<button class="lang__btn is-active" data-lang="en" type="button">EN</button>'
+            '<button class="lang__btn" data-lang="nl" type="button">NL</button>'
+            '</div></div>\n'
             '    <div data-view="auth">\n'
             '      <span class="t-tag">%s</span>\n'
             '      <h1 style="margin-top:16px">%s</h1>\n'

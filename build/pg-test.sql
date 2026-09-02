@@ -7,13 +7,33 @@
 -- two accounts, created the way Supabase creates them
 insert into auth.users (id, email, raw_user_meta_data) values
   ('11111111-1111-4111-8111-111111111111', 'kain@km.dev',  '{"name":"Kain"}'),
-  ('22222222-2222-4222-8222-222222222222', 'userb@km.dev', '{"name":"User B"}')
+  ('22222222-2222-4222-8222-222222222222', 'userb@km.dev', '{"name":"User B"}'),
+  ('33333333-3333-4333-8333-333333333333', 'kkain25@gmail.com', '{"name":"Kain"}')
 on conflict do nothing;
 
 select case when (select role from profiles where email = 'kain@km.dev') = 'admin'
        then 'PASS' else 'FAIL' end || ' — the bootstrap table makes kain@km.dev an admin on sign-up';
+select case when (select role from profiles where email = 'kkain25@gmail.com') = 'admin'
+       then 'PASS' else 'FAIL' end || ' — the second bootstrap address is an admin on sign-up too';
 select case when (select role from profiles where email = 'userb@km.dev') = 'student'
        then 'PASS' else 'FAIL' end || ' — everyone else is created as a student';
+
+-- The Dutch columns must actually carry the translation, or the interface
+-- silently falls back to English and nobody notices until a reader does.
+select case when (select count(*) from lessons where published and content_nl <> '[]'::jsonb) = 14
+       then 'PASS' else 'FAIL' end || ' — every published lesson has Dutch content';
+select case when (select count(*) from lessons where published and title_nl = '') = 0
+       then 'PASS' else 'FAIL' end || ' — every published lesson has a Dutch title';
+select case when (select count(*) from levels where title_nl = '') = 0
+       then 'PASS' else 'FAIL' end || ' — every level has a Dutch title';
+select case when (select count(*) from prompts where body_nl = '' or title_nl = '') = 0
+       then 'PASS' else 'FAIL' end || ' — every prompt is translated';
+select case when (select count(*) from projects where brief_nl = '{}'::jsonb) = 0
+       then 'PASS' else 'FAIL' end || ' — every project brief is translated';
+select case when (select count(*) from quiz_questions where question_nl = '') = 0
+       then 'PASS' else 'FAIL' end || ' — every assessment question is translated';
+select case when (select count(*) from quiz_answers where answer_nl = '') = 0
+       then 'PASS' else 'FAIL' end || ' — every assessment answer is translated';
 
 -- some progress for each account, inserted as the owner (bypasses RLS by design)
 insert into lesson_progress (user_id, lesson_id, completed, completed_at)
@@ -125,9 +145,9 @@ reset role;
 set role authenticated;
 set test.uid = '11111111-1111-4111-8111-111111111111';
 
-select case when (select count(*) from profiles) = 2
+select case when (select count(*) from profiles) = 3
        then 'PASS' else 'FAIL' end || ' — an admin sees every profile';
-select case when jsonb_array_length(admin_users()) = 2
+select case when jsonb_array_length(admin_users()) = 3
        then 'PASS' else 'FAIL' end || ' — admin_users() works for an admin';
 select case when (admin_overview() ->> 'total_students')::int = 1
        then 'PASS' else 'FAIL' end || ' — admin_overview() counts students only';

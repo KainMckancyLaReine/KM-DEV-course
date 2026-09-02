@@ -1,0 +1,585 @@
+{
+  "course": {
+    "title": "AI Web Developer",
+    "description": "Van je eerste Claude-prompt tot een complete website die klaar is voor productie."
+  },
+  "levels": {
+    "think-like-a-builder": {
+      "title": "Denk als een bouwer",
+      "description": "Begrijp hoe websites echt in elkaar zitten, en wat er verandert als een AI de code schrijft."
+    },
+    "mastering-claude": {
+      "title": "Claude beheersen",
+      "description": "Leer een model aansturen in plaats van te hopen op een goed antwoord: context, beperkingen, ontwerprichting, bestaande code."
+    },
+    "your-first-website": {
+      "title": "Je eerste website",
+      "description": "Breng één idee van een lege map naar een responsive pagina die werkt op een telefoon.",
+      "lessons": {
+        "create-the-project": "Het project aanmaken",
+        "plan-the-website": "De website plannen",
+        "generate-the-first-structure": "De eerste structuur genereren",
+        "build-the-navigation": "De navigatie bouwen",
+        "build-the-hero": "De hero bouwen",
+        "create-sections": "Secties maken",
+        "responsive-design": "Responsive design",
+        "mobile-optimization": "Optimalisatie voor mobiel",
+        "connect-interactions": "Interacties koppelen"
+      }
+    },
+    "prompt-engineering-for-developers": {
+      "title": "Prompt engineering voor developers",
+      "description": "De negen promptvormen die het werk doen, en hoe je ze aan elkaar rijgt tot een sessie die ergens komt.",
+      "lessons": {
+        "context-prompts": "Contextprompts",
+        "role-prompts": "Rolprompts",
+        "constraint-prompts": "Beperkingsprompts",
+        "design-prompts": "Ontwerpprompts",
+        "code-prompts": "Codeprompts",
+        "debugging-prompts": "Debugprompts",
+        "refactoring-prompts": "Refactorprompts",
+        "iteration-prompts": "Iteratieprompts",
+        "multi-step-prompts": "Meerstapsprompts",
+        "prompt-chains": "Promptketens"
+      }
+    },
+    "build-like-a-professional": {
+      "title": "Bouw als een professional",
+      "description": "Het verschil tussen een pagina die werkt en een pagina die een studio zou opleveren.",
+      "lessons": {
+        "design-systems": "Designsystemen",
+        "spacing": "Spacing",
+        "typography": "Typografie",
+        "color-systems": "Kleursystemen",
+        "components": "Componenten",
+        "reusable-code": "Herbruikbare code",
+        "animations": "Animaties",
+        "micro-interactions": "Micro-interacties",
+        "accessibility": "Toegankelijkheid",
+        "performance": "Performance"
+      }
+    },
+    "debugging-with-claude": {
+      "title": "Debuggen met Claude",
+      "description": "Lees de fout, beschrijf hem precies, en controleer de oplossing in plaats van erop te vertrouwen.",
+      "lessons": {
+        "understanding-errors": "Foutmeldingen begrijpen",
+        "console-errors": "Fouten in de console",
+        "broken-layouts": "Kapotte layouts",
+        "javascript-errors": "JavaScript-fouten",
+        "responsive-bugs": "Responsive bugs",
+        "ai-debugging-prompts": "AI-debugprompts",
+        "finding-the-root-cause": "De hoofdoorzaak vinden",
+        "testing-fixes": "Oplossingen testen",
+        "refactoring-bad-code": "Slechte code refactoren"
+      }
+    },
+    "advanced-web-building": {
+      "title": "Gevorderd webbouwen",
+      "description": "Layout, state, data en architectuur — de onderdelen waar een gegenereerde pagina meestal de mist in gaat.",
+      "lessons": {
+        "complex-layouts": "Complexe layouts",
+        "advanced-interactions": "Geavanceerde interacties",
+        "animations-advanced": "Animaties",
+        "state": "State",
+        "forms": "Formulieren",
+        "data": "Data",
+        "api-concepts": "API-concepten",
+        "reusable-components": "Herbruikbare componenten",
+        "architecture": "Architectuur"
+      }
+    },
+    "ship-it": {
+      "title": "Zet hem live",
+      "description": "Test hem, scherp hem aan, zet hem online en controleer de dingen die alleen in het openbaar stukgaan.",
+      "lessons": {
+        "testing": "Testen",
+        "responsive-qa": "Responsive QA",
+        "performance-final": "Performance",
+        "seo-basics": "SEO-basis",
+        "accessibility-final": "Toegankelijkheid",
+        "deployment": "Deployment",
+        "domains": "Domeinen",
+        "final-polish": "Laatste afwerking"
+      }
+    }
+  },
+  "projects": {
+    "first-landing-page": {
+      "title": "Bouw je eerste landingspagina",
+      "description": "Eén pagina, één boodschap, één call to action — gebouwd vanuit een briefing die je zelf schrijft.",
+      "brief": {
+        "client": "Een fotostudio van twee personen die van Instagram naar een eigen site verhuist.",
+        "goal": "Eén pagina die iemand aanzet om ze te mailen.",
+        "requirements": [
+          "Een hero met één duidelijke boodschap en één call to action",
+          "Een korte over-ons-sectie, geschreven in de stem van de studio",
+          "Een grid met zes werkvlakken, getekend in CSS — geen stockfotografie",
+          "Werkende navigatie, ook op een telefoon",
+          "Leesbaar op 360px breed en op 1920px"
+        ],
+        "prompts": [
+          "project-scaffold",
+          "hero-section",
+          "responsive-pass"
+        ],
+        "checklist": [
+          "Projectmap aangemaakt met index.html, styles.css, script.js",
+          "Hero geschreven en gebouwd",
+          "Navigatie werkt op desktop en op mobiel",
+          "Zes werkvlakken in een grid geplaatst",
+          "Contact-call-to-action komt uit bij een echte mailto of een formulier",
+          "Gecontroleerd op 360px, 768px en 1440px",
+          "Geen fouten in de console"
+        ]
+      }
+    },
+    "premium-brand-website": {
+      "title": "Bouw een premium merkwebsite",
+      "description": "Neem dezelfde content en til hem naar studioniveau: een echte typeschaal, een echt spacingsysteem, beweging die iets betekent.",
+      "brief": {
+        "client": "Een kleine meubelmaker die via galeries verkoopt en online serieus genomen wil worden.",
+        "goal": "Een site die eruitziet alsof hij geld heeft gekost, zonder fotobudget.",
+        "requirements": [
+          "Een gedocumenteerd designsysteem: kleurtokens, typeschaal, spacingschaal",
+          "Minstens vier herbruikbare componenten, gebouwd uit die tokens",
+          "Eén doordacht bewegingssysteem met consistente easings en tijdsduren",
+          "Van begin tot eind bedienbaar met het toetsenbord, met zichtbare focus-states",
+          "Geen layout shift bij het laden"
+        ],
+        "prompts": [
+          "design-system",
+          "component-spec",
+          "motion-system"
+        ],
+        "checklist": [
+          "Tokens op één plek gedefinieerd en overal gebruikt",
+          "Typeschaal consistent toegepast",
+          "Vier of meer componenten hergebruikt in verschillende secties",
+          "Bewegingsniveaus gedefinieerd en toegepast",
+          "Focus-states zichtbaar op elk interactief element",
+          "Variant voor prefers-reduced-motion geïmplementeerd",
+          "Toegankelijkheidsrapport van Lighthouse doorgenomen"
+        ]
+      }
+    },
+    "interactive-web-application": {
+      "title": "Bouw een interactieve webapplicatie",
+      "description": "Voorbij de pagina: state, data, formulieren en componenten die standhouden als iemand ze echt gebruikt.",
+      "brief": {
+        "client": "Een hardloopclub die wil dat leden routes bijhouden en ze op een gedeeld bord terugzien.",
+        "goal": "Een applicatie, geen pagina — state die een refresh overleeft.",
+        "requirements": [
+          "Een datamodel dat is uitgeschreven voordat er code is",
+          "Aanmaken, lezen, bijwerken en verwijderen voor één entiteit",
+          "Formuliervalidatie met bruikbare foutmeldingen",
+          "Loading-, lege en foutstates voor elke view",
+          "State die een refresh van de pagina overleeft"
+        ],
+        "prompts": [
+          "data-model",
+          "state-management",
+          "empty-states"
+        ],
+        "checklist": [
+          "Datamodel gedocumenteerd",
+          "Alle vier de operaties werken",
+          "Validatiemeldingen leggen uit hoe je het probleem oplost",
+          "Loading-, lege en foutstates ontworpen",
+          "State hersteld na een refresh",
+          "Geen onafgehandelde promise rejections in de console"
+        ]
+      }
+    },
+    "final-project": {
+      "title": "Eindproject — bouw je eigen complete website",
+      "description": "Een echte klantbriefing. Alles uit de cursus, in één build, online onder je eigen naam.",
+      "brief": {
+        "client": "Een fictief creatief bedrijf naar keuze. Geef het een naam, geef het een standpunt, en schrijf de teksten zelf.",
+        "goal": "Een complete website die je aan een betalende klant durft voor te leggen.",
+        "requirements": [
+          "Responsive van 360px tot 1920px",
+          "Een bewust typesysteem, geen standaardwaarden",
+          "Werkende navigatie op mobiel",
+          "Beweging die de content dient en reduced motion respecteert",
+          "Interacties die echt werken — geen versiering die zich voordoet als bedieningselement",
+          "Toegankelijk met het toetsenbord, met zichtbare focus",
+          "Snel: geen te zware bestanden, geen layout shift",
+          "Gedeployed naar een live URL"
+        ],
+        "prompts": [
+          "project-scaffold",
+          "design-system",
+          "responsive-pass",
+          "final-qa"
+        ],
+        "checklist": [
+          "Briefing geschreven: klant, publiek, de ene taak die de site moet doen",
+          "Structuur gepland vóór de eerste prompt",
+          "Designsysteem gedefinieerd",
+          "Alle secties gebouwd",
+          "Responsive QA op drie breedtes",
+          "Toegankelijkheidsronde: toetsenbord, contrast, labels",
+          "Performanceronde: afbeeldingen, fonts, layout shift",
+          "Gedeployed en bereikbaar op een openbare URL",
+          "Elke regel tekst nog één keer doorgelezen"
+        ]
+      }
+    }
+  },
+  "assessments": {
+    "foundation-assessment": {
+      "title": "Basistoets",
+      "subtitle": "Weet je wat je bouwt?",
+      "questions": [
+        {
+          "question": "Een browser heeft index.html, styles.css en script.js gedownload. Welke daarvan bepaalt wat de pagina *betekent*?",
+          "options": [
+            "index.html",
+            "styles.css",
+            "script.js",
+            "Alle drie evenveel"
+          ],
+          "why": "HTML draagt de structuur en de betekenis — koppen, alinea's, links, knoppen. CSS bepaalt hoe die betekenis eruitziet, JavaScript bepaalt hoe die zich gedraagt. Een schermlezer, een zoekmachine en een browser met CSS uitgeschakeld halen de betekenis alle drie nog steeds uit de HTML alleen."
+        },
+        {
+          "question": "Welke hiervan draaien op het apparaat van de bezoeker zelf en niet op een server? Selecteer alles wat van toepassing is.",
+          "options": [
+            "Je CSS renderen",
+            "Een wachtwoord versturen om te laten controleren",
+            "Je JavaScript uitvoeren",
+            "Rijen opslaan in een database"
+          ],
+          "why": "CSS en JavaScript draaien in de browser van de bezoeker. Daarom kan de bezoeker alles zien wat de browser kan zien. Een wachtwoord controleren en data opslaan gebeuren op een server, juist omdat ze niet in handen van de bezoeker mogen liggen."
+        },
+        {
+          "question": "Als code in het Sources-paneel van de browser verschijnt, kan een bezoeker hem lezen.",
+          "options": [
+            "Waar",
+            "Niet waar"
+          ],
+          "why": "Alles wat de browser downloadt, is leesbaar voor wie die browser gebruikt. Dit is het nuttigste beveiligingsfeit voor een front-end developer: zet nooit een geheim in code die de browser ontvangt."
+        },
+        {
+          "question": "Claude levert een pagina die er goed uitziet, maar gebruikt één foto van 4MB als achtergrond van de hero. Wat is de eerlijke beschrijving van wat er is gebeurd?",
+          "options": [
+            "Claude heeft een fout gemaakt",
+            "Claude deed wat je vroeg, want je noemde performance nergens",
+            "Het model is niet in staat afbeeldingen te optimaliseren",
+            "Dit is onvermijdelijk bij door AI gegenereerde code"
+          ],
+          "why": "Het model optimaliseert voor wat jij hebt opgegeven. Performance stond niet in de briefing, dus stond het niet in het resultaat. Bijna elke klacht over door AI gegenereerde code is in werkelijkheid een ontbrekende beperking."
+        },
+        {
+          "question": "Je gaat een pagina bouwen voor een bakkerij. Je hebt één uur. Wat doe je als eerste?",
+          "options": [
+            "Claude vragen een bakkerijwebsite te bouwen",
+            "Opschrijven wie de pagina bezoekt en het ene ding dat diegene moet kunnen doen",
+            "Fonts en kleuren kiezen",
+            "Een projectmap en een build-tool opzetten"
+          ],
+          "why": "Elke latere beslissing — layout, hiërarchie, wat sneuvelt — wordt afgewogen tegen het antwoord op die vraag. Een uur besteed aan de verkeerde pagina is een uur weg. Vijf minuten bepalen waar de pagina voor is, maakt de andere vijfenvijftig bruikbaar."
+        },
+        {
+          "question": "Wat valt echt buiten wat Claude voor je kan doen?",
+          "options": [
+            "Een responsive navigatiecomponent schrijven",
+            "Uitleggen waarom je layout instort op 400px",
+            "Weten of je klant het resultaat mooi vindt",
+            "Een bestand van 200 regels opdelen in kleinere stukken"
+          ],
+          "why": "Smaak, kennis van een specifiek persoon en verantwoordelijkheid voor de beslissing blijven bij jou. Dat is geen beperking om omheen te werken — het is het deel van het werk dat van jou blijft."
+        },
+        {
+          "question": "Welke stappen horen in een AI-ontwikkelworkflow thuis *voordat* je om code vraagt? Selecteer alles wat van toepassing is.",
+          "options": [
+            "Het doel beschrijven",
+            "Context geven",
+            "Beperkingen vastleggen",
+            "Het resultaat bekijken"
+          ],
+          "why": "Doel, context en beperkingen komen allemaal vóór het eerste verzoek. Het resultaat bekijken is stap zeven — dat kan pas als er iets bestaat, en het is de stap die mensen het vaakst overslaan."
+        },
+        {
+          "question": "Front-end en back-end is een onderscheid over waar code draait, niet over hoe moeilijk het is.",
+          "options": [
+            "Waar",
+            "Niet waar"
+          ],
+          "why": "Front-end draait op het apparaat van de bezoeker, back-end op een machine die jij beheert. Moeilijkheid heeft er niets mee te maken — een front-end animatiesysteem kan veel lastiger zijn dan een CRUD-endpoint."
+        },
+        {
+          "question": "Je vraagt om een landingspagina en krijgt er een die technisch prima is, maar leest als elke andere landingspagina. Wat is de nuttigste volgende zet?",
+          "options": [
+            "Het nog een keer vragen en hopen op een beter resultaat",
+            "Hem zelf helemaal opnieuw schrijven",
+            "Benoemen wat eraan generiek is en beperkingen geven die die opties wegnemen",
+            "Overstappen op een ander model"
+          ],
+          "why": "Generiek werk is het gemiddelde van alles wat het model heeft gezien, en dat is precies wat je krijgt als niets iets uitsluit. Elke beperking die je toevoegt, haalt een verkeerd antwoord weg."
+        },
+        {
+          "question": "Wat is de praktische reden om gegenereerde code te lezen in plaats van hem alleen uit te voeren?",
+          "options": [
+            "Zodat je hem de volgende keer zelf kunt schrijven",
+            "Zodat je hem kunt aanpassen, kunt beoordelen en weet wat er stukgaat",
+            "Omdat code lezen sneller is dan code testen",
+            "Omdat gegenereerde code meestal fout is"
+          ],
+          "why": "Je hoeft hem niet uit je hoofd te kunnen schrijven. Je moet hem op verzoek kunnen aanpassen, kunnen beoordelen of hij deugt, en kunnen voorspellen wat een wijziging raakt. Dat is het hele verschil tussen een site die van jou is en een site die je alleen maar hebt."
+        }
+      ]
+    },
+    "claude-fundamentals": {
+      "title": "Claude-basis",
+      "subtitle": "Kun jij een model aansturen?",
+      "questions": [
+        {
+          "question": "Welke prompt geeft Claude de nuttigste context?",
+          "options": [
+            "Bouw een website voor een tandarts.",
+            "Bouw een moderne, professionele website voor een tandartspraktijk.",
+            "Bouw een pagina voor een tandartspraktijk met twee tandartsen in Utrecht, waarvan de bezoekers vooral zenuwachtige nieuwkomers zijn. De ene actie is een afspraak maken. Rustig, veel whitespace, grote leesbare typografie, geen stockfoto's met brede glimlach.",
+            "Bouw een tandartswebsite met een hero, diensten, over ons en een contactsectie."
+          ],
+          "why": "Alleen de derde noemt het publiek, de gemoedstoestand waarin het binnenkomt, de ene actie en wat je moet vermijden. De vierde noemt structuur, maar laat elke afweging open — en structuur zonder intentie is hoe je een pagina krijgt die netjes geordend is en toch niets zegt."
+        },
+        {
+          "question": "Wat gebeurt er werkelijk als je in een nieuw gesprek zegt: 'denk aan wat we eerder hebben besproken'?",
+          "options": [
+            "Het model haalt je vorige sessie op",
+            "Niets — een nieuw gesprek begint zonder enige herinnering aan het oude",
+            "Het leest automatisch je projectbestanden",
+            "Het vraagt je om in te loggen"
+          ],
+          "why": "Context is wat er in het huidige gesprek staat, meer niet. Daarom is context opnieuw opbouwen aan het begin van een sessie een vaardigheid, geen corvee."
+        },
+        {
+          "question": "Welke hiervan zijn beperkingen, in de nuttige zin van het woord? Selecteer alles wat van toepassing is.",
+          "options": [
+            "Geen externe libraries",
+            "Maak het mooi",
+            "Moet werken op 360px breed",
+            "Gebruik semantische HTML en houd het contrast boven 4.5:1"
+          ],
+          "why": "Een beperking sluit iets uit op een manier die je achteraf kunt controleren. 'Maak het mooi' sluit niets uit en is niet te verifiëren, dus het verandert niets aan het resultaat."
+        },
+        {
+          "question": "Je plakt 400 regels van je eigen CSS en vraagt om een wijziging aan één component. Wat doe je om een betrouwbaar antwoord te krijgen?",
+          "options": [
+            "Voor de zekerheid een groter deel van het bestand plakken",
+            "Zeggen om welk component het gaat, wat er moet veranderen en wat niet mag veranderen",
+            "Om een volledige herschrijving vragen zodat het consistent is",
+            "Eerst de comments verwijderen"
+          ],
+          "why": "Werken met bestaande code draait vooral om het afbakenen van de wijziging. Benoemen wat hetzelfde moet blijven, is wat een behulpzaam model ervan weerhoudt drie dingen te herontwerpen die je juist goed vond."
+        },
+        {
+          "question": "Een langere prompt is altijd een betere prompt.",
+          "options": [
+            "Waar",
+            "Niet waar"
+          ],
+          "why": "Lengte is een bijeffect, geen doel. Een lange prompt vol bijvoeglijke naamwoorden is nog steeds vaag. Een korte prompt die het publiek, de actie en twee harde beperkingen noemt, is dat niet."
+        },
+        {
+          "question": "Welke zin geeft echte ontwerprichting?",
+          "options": [
+            "Maak het modern en clean",
+            "Gebruik een mooi font en goede spacing",
+            "Redactionele layout: één accentkleur, oversized kop strak gezet, royale whitespace, asymmetrische rijen, geen cards",
+            "Laat het op Apple lijken"
+          ],
+          "why": "De derde noemt beslissingen waar een developer mee aan de slag kan en die jij kunt controleren. 'Modern en clean' en 'zoals Apple' zijn complimenten, geen instructies — en het model vertaalt ze naar de meest gemiddelde versie van dat idee."
+        },
+        {
+          "question": "Claude geeft je een component dat werkt, maar de klassennamen botsen met je bestaande systeem. Welke reactie levert het meeste op?",
+          "options": [
+            "Accepteren en het achteraf met de hand hernoemen",
+            "Claude je naamgevingsconventie vertellen en vragen zich eraan te houden, en die instructie de rest van de sessie hergebruiken",
+            "Een nieuw gesprek beginnen",
+            "Vragen om helemaal geen klassen te gebruiken"
+          ],
+          "why": "Conventies zijn context. Er één keer een uitspreken en hem daarna hergebruiken verandert een reeks losse correcties in een sessie die op jouw rails blijft."
+        },
+        {
+          "question": "Welke onderdelen horen in een eerste ontwikkelprompt? Selecteer alles wat van toepassing is.",
+          "options": [
+            "Het doel",
+            "Het publiek",
+            "Wat je moet vermijden",
+            "Hoe dankbaar je bent"
+          ],
+          "why": "Doel, publiek en uitsluitingen veranderen allemaal het resultaat. Beleefdheid niet — beleefd zijn mag, maar het doet geen werk."
+        },
+        {
+          "question": "Je wilt drie varianten van een hero om uit te kiezen. Wat is de betrouwbare manier om dat te vragen?",
+          "options": [
+            "Om een hero vragen en het daarna nog twee keer vragen",
+            "In één bericht om drie varianten vragen die verschillen op één benoemde as",
+            "Om 'wat opties' vragen",
+            "Om een hero vragen en zeggen 'wees creatief'"
+          ],
+          "why": "De as benoemen — layout, toon, dichtheid — maakt de varianten echt verschillend en vergelijkbaar. 'Wat opties' levert drie versies van hetzelfde idee op."
+        },
+        {
+          "question": "Als het eerste resultaat fout is, is de snelste oplossing meestal de prompt herschrijven in plaats van het probleem beschrijven.",
+          "options": [
+            "Waar",
+            "Niet waar"
+          ],
+          "why": "Beschrijven wat er mis is, behoudt alles wat goed was. Opnieuw beginnen gooit de delen weg die je al werkend had, en brengt vaak problemen terug die je al had opgelost."
+        }
+      ]
+    },
+    "prompt-engineering-assessment": {
+      "title": "Toets prompt engineering",
+      "subtitle": "Negen vormen, één sessie.",
+      "questions": []
+    },
+    "debugging-challenge": {
+      "title": "Debug-uitdaging",
+      "subtitle": "Vind de oorzaak, niet het symptoom.",
+      "questions": []
+    },
+    "final-assessment": {
+      "title": "Eindtoets",
+      "subtitle": "Alles, in één keer.",
+      "questions": []
+    }
+  },
+  "prompts": {
+    "project-scaffold": {
+      "title": "Een project vanuit niets starten",
+      "purpose": "Opent een sessie met genoeg context dat het eerste resultaat de moeite van het bewerken waard is.",
+      "body": "Ik bouw een website van één pagina voor {WHO}. De bezoekers zijn {AUDIENCE}, en het enige wat de pagina hen moet laten doen is {ACTION}.\n\nVoordat je code schrijft: stel een structuur voor, sectie voor sectie, en vertel me wat je in elke sectie zou zetten en waarom. Schrijf nog geen HTML.\n\nBeperkingen: gewone HTML, CSS en JavaScript in drie bestanden. Geen frameworks, geen externe libraries, geen stockbeeld. Moet leesbaar zijn op 360px breed.",
+      "explanation": {
+        "context": "Voor wie de site is en wie hem leest — elke layoutbeslissing wordt hiertegen afgewogen.",
+        "constraints": "Drie bestanden, geen dependencies, een harde minimumbreedte. Elk daarvan haalt een categorie verkeerde antwoorden weg.",
+        "output": "Een structuur met redenering, geen code. Je beoordeelt het plan voordat iets duur is om te veranderen.",
+        "iteration": "Zodra de structuur vaststaat, vraag je om één sectie tegelijk en houd je dit bericht in het gesprek."
+      }
+    },
+    "design-system": {
+      "title": "Een designsysteem definiëren voordat je bouwt",
+      "purpose": "Voorkomt dat het model in elke sectie een nieuwe kleur en een nieuwe spacingwaarde verzint.",
+      "body": "Definieer een klein designsysteem voor dit project voordat we iets bouwen.\n\nGeef me: een kleurenset van maximaal zes waarden met de rol van elke waarde; een typeschaal van vijf groottes met line-height en letter-spacing; een spacingschaal op basis van één eenheid; en een schaal voor border-radius.\n\nSchrijf ze als CSS custom properties op :root. Elk later component mag alleen deze waarden gebruiken — geen letterlijke kleuren of pixelwaarden buiten dit blok.",
+      "explanation": {
+        "context": "Het model hoort dat er later componenten komen, dus ontwerpt het een systeem in plaats van één pagina.",
+        "constraints": "Vaste aantallen dwingen echte keuzes af. 'Geen letterlijke waarden buiten dit blok' is controleerbaar bij een review.",
+        "output": "Een tokenblok dat je in dertig seconden leest en in elke volgende prompt hergebruikt.",
+        "iteration": "Plak het tokenblok bovenaan latere prompts in plaats van de stijl opnieuw te beschrijven."
+      }
+    },
+    "hero-section": {
+      "title": "Bouw een hero die geen template is",
+      "purpose": "Levert een eerste scherm met een standpunt in plaats van kop-subtitel-knop.",
+      "body": "Bouw alleen de hero-sectie.\n\nDe boodschap is: {ONE SENTENCE}. De ene actie is {ACTION}.\n\nArt direction: oversized kop strak gezet, één accentkleur uit de tokens, royale whitespace, asymmetrische compositie, geen card, geen gradient, geen stockbeeld. De ondersteunende regel blijft onder de 20 woorden.\n\nGebruik alleen de al gedefinieerde design tokens. Geef de HTML en de CSS voor deze sectie, verder niets.",
+      "explanation": {
+        "context": "Eén boodschap en één actie, zodat de sectie een taak heeft.",
+        "constraints": "De uitsluitingen doen het meeste werk — elk daarvan haalt een standaardkeuze weg waar het model anders naar grijpt.",
+        "output": "Beperkt tot één sectie, zodat je hem echt kunt beoordelen in plaats van een hele pagina te scannen.",
+        "iteration": "Vraag om twee extra versies die alleen in compositie verschillen, en kies dan."
+      }
+    },
+    "component-spec": {
+      "title": "Vraag om een component, niet om een snippet",
+      "purpose": "Levert een component dat je kunt hergebruiken in plaats van markup die je twee keer plakt.",
+      "body": "Bouw een herbruikbaar {COMPONENT}-component.\n\nStates om af te handelen: rest, hover, focus-visible, active, disabled, loading.\nHet moet werken op een licht en op een donker vlak, bedienbaar zijn met het toetsenbord, en alleen de bestaande design tokens gebruiken.\n\nGeef me de markup, de CSS en één zin over hoe je het gebruikt. Houd alle stijlen binnen één class-namespace.",
+      "explanation": {
+        "context": "Het een component noemen vertelt het model dat het meer dan één keer wordt gebruikt.",
+        "constraints": "De states opsommen is wat voorkomt dat je twee weken later de ontbrekende focus-stijl ontdekt.",
+        "output": "Markup, CSS en gebruiksaanwijzing — genoeg om in te voegen en te hergebruiken.",
+        "iteration": "Vraag om een variant door alleen te benoemen wat afwijkt van de basis."
+      }
+    },
+    "responsive-pass": {
+      "title": "Doe een responsive ronde op echte breedtes",
+      "purpose": "Maakt van 'maak het responsive' iets dat je kunt controleren.",
+      "body": "Beoordeel deze sectie op deze breedtes: 360, 768, 1024, 1440.\n\nVertel me per breedte wat er stukgaat en waarom, voordat je iets verandert. Geef me daarna de kleinst mogelijke set wijzigingen die het oplost.\n\nRegels: geen vaste pixelbreedtes op containers, bij geen enkele breedte horizontale scroll op de pagina, tapdoelen van minstens 44px, en tekst mag niet onder 15px komen.",
+      "explanation": {
+        "context": "Benoemde breedtes maken van een vage eigenschap een test.",
+        "constraints": "Vier harde regels die het merendeel van de echte responsive-problemen afdekken.",
+        "output": "Eerst een diagnose, dan een minimale set wijzigingen — zodat je geen herschrijving krijgt.",
+        "iteration": "Los één breedte tegelijk op en controleer de andere opnieuw. Responsive-oplossingen gaan vaak ten koste van elkaar."
+      }
+    },
+    "debug-root-cause": {
+      "title": "Debuggen door te beschrijven, niet door te gokken",
+      "purpose": "Levert een oorzaak in plaats van een plausibel klinkende pleister.",
+      "body": "Er is iets mis en ik wil de oorzaak weten voordat er een oplossing komt.\n\nWat ik verwachtte: {EXPECTED}\nWat er in plaats daarvan gebeurt: {ACTUAL}\nWanneer het begon: {WHEN}\nOutput van de console: {PASTE}\nRelevante code: {PASTE}\n\nNoem de mogelijke oorzaken op volgorde van waarschijnlijkheid, met per oorzaak de redenering. Vertel me wat ik kan controleren om ze van elkaar te onderscheiden. Schrijf nog geen oplossing.",
+      "explanation": {
+        "context": "Verwacht gedrag, werkelijk gedrag en het moment waarop het begon zijn de drie feiten die een bug diagnosticeerbaar maken.",
+        "constraints": "'Schrijf nog geen oplossing' is de belangrijke regel — die voorkomt dat het gesprek meteen naar een pleister springt.",
+        "output": "Gerangschikte oorzaken plus een manier om ze te onderscheiden, zodat je hoe dan ook iets leert.",
+        "iteration": "Zodra je de oorzaak hebt bevestigd, vraag je om de kleinst mogelijke oplossing en zeg je wat niet mag veranderen."
+      }
+    },
+    "motion-system": {
+      "title": "Een bewegingssysteem definiëren",
+      "purpose": "Voorkomt dat elke animatie een eigen willekeurige duur en easing krijgt.",
+      "body": "Definieer één bewegingssysteem voor dit project.\n\nGeef me duurniveaus voor micro-interacties, UI-overgangen, content die in beeld komt en schermvullende verhaalmomenten, met één easing-curve per niveau en een zin over wanneer je welk niveau gebruikt.\n\nAnimeer alleen transform en opacity. Voeg een regel voor prefers-reduced-motion toe die elke filmische overgang vervangt door een eenvoudige fade en de interface volledig bruikbaar laat.",
+      "explanation": {
+        "context": "Een systeem, geen effect — het model ontwerpt voor hergebruik.",
+        "constraints": "Alleen transform en opacity is een performancebeslissing. Reduced motion is niet optioneel.",
+        "output": "Tokens plus richtlijnen, zodat latere prompts kunnen volstaan met 'gebruik het UI-niveau'.",
+        "iteration": "Als iets niet klopt, verander dan eerst het niveau dat het gebruikt, niet het getal."
+      }
+    },
+    "state-management": {
+      "title": "Krijg state onder controle",
+      "purpose": "Voor het moment waarop een pagina een applicatie wordt.",
+      "body": "In deze code zit state verspreid over meerdere plekken. Noem eerst, voordat je iets verandert, elk stuk state, waar het nu leeft, en wie het leest of schrijft.\n\nStel daarna één structuur voor die het bij elkaar houdt, en laat zien hoe één bestaande feature eruit zou lezen. Herschrijf nog niet alles.\n\nHoud het gewoon JavaScript, geen libraries.",
+      "explanation": {
+        "context": "Eerst een inventarisatie — je kunt niet herstructureren wat niet is opgesomd.",
+        "constraints": "Eén feature gemigreerd, niet allemaal, zodat je de aanpak goedkoop kunt beoordelen.",
+        "output": "Een structuur en een uitgewerkt voorbeeld.",
+        "iteration": "Migreer feature voor feature en test na elke stap."
+      }
+    },
+    "data-model": {
+      "title": "Schrijf eerst het datamodel uit",
+      "purpose": "Voorkomt een applicatie die is gebouwd rond de vorm die de eerste API-respons toevallig had.",
+      "body": "Ik bouw {APPLICATION}. Schrijf het datamodel uit voordat er code komt.\n\nPer entiteit: de velden, hun types, welke verplicht zijn, en hoe entiteiten zich tot elkaar verhouden. Noteer waar data wordt aangemaakt, gewijzigd en verwijderd, en wat op elk moment waar moet zijn.\n\nVertel me daarna welke daarvan op de server moeten worden afgedwongen in plaats van in de browser, en waarom.",
+      "explanation": {
+        "context": "De applicatie benoemen laat het model entiteiten afleiden waar jij nog niet aan hebt gedacht.",
+        "constraints": "Vragen wat op elk moment waar moet zijn, brengt de regels naar boven die later validatie worden.",
+        "output": "Een model plus een verdeling tussen client en server — die tweede helft is het deel dat over veiligheid gaat.",
+        "iteration": "Loop het model opnieuw na zodra een feature er niet in past. Die weerstand is informatie."
+      }
+    },
+    "empty-states": {
+      "title": "Ontwerp de states die niemand onthoudt",
+      "purpose": "Loading-, lege en foutstates zijn de plek waar gegenereerde interfaces het dunst zijn.",
+      "body": "Ontwerp voor elke view in deze applicatie de loading-, lege en foutstate.\n\nLoading: een skelet dat overeenkomt met de echte layout, geen spinner, geen layout shift als de content binnenkomt.\nLeeg: leg uit wat hier normaal zou staan en geef de ene actie die het vult.\nFout: zeg in gewone taal wat er misging en geef een weg vooruit. Geen excuses, geen foutcodes als kop.\n\nGebruik de bestaande tokens en componenten.",
+      "explanation": {
+        "context": "Geldt voor elke view, dus je krijgt een consistente set in plaats van één mooie lege state.",
+        "constraints": "Benoemde regels per state — elke regel voorkomt een specifieke, veelvoorkomende fout.",
+        "output": "Ontwerpen voor de drie states, in je eigen systeem.",
+        "iteration": "Test door de netwerkverbinding te verbreken en door al je data te verwijderen."
+      }
+    },
+    "seo-pass": {
+      "title": "Een nuttige SEO-ronde",
+      "purpose": "De onderdelen die structureel zijn in plaats van bijgeloof.",
+      "body": "Beoordeel deze pagina op de structurele onderdelen van vindbaarheid.\n\nControleer: één h1 die de pagina beschrijft, een koppenvolgorde zonder overgeslagen niveaus, een title en meta description die voor een mens zijn geschreven, alt-teksten die zeggen wat de afbeelding overbrengt, semantische landmarks, en een link naar elke pagina die bereikbaar moet zijn.\n\nVertel me wat er mis is en waarom het uitmaakt, voordat je iets verandert. Negeer keyword density.",
+      "explanation": {
+        "context": "Beperkt tot structuur, want dat is het deel dat echt standhoudt.",
+        "constraints": "'Negeer keyword density' sluit de folklore uit.",
+        "output": "Bevindingen met redenering, zodat jij bepaalt wat je aanpakt.",
+        "iteration": "Los eerst de koppen op. De meeste andere bevindingen hangen af van een kloppende documentstructuur."
+      }
+    },
+    "final-qa": {
+      "title": "De ronde voordat je live gaat",
+      "purpose": "Eén gestructureerde review in plaats van hoopvol rondklikken.",
+      "body": "Doe een laatste review van deze site alsof je hem oplevert aan een betalende klant.\n\nLoop langs: consistentie van spacing, naleving van de typeschaal, uitlijning, kleurgebruik ten opzichte van de tokens, hover- en focus-states op elk interactief element, tabvolgorde, responsive gedrag op 360 / 768 / 1440, fouten in de console, en layout shift bij het laden.\n\nGeef een lijst met bevindingen, gesorteerd op hoeveel schade elke bevinding aanricht, met het bestand en de reden erbij. Los nog niets op.",
+      "explanation": {
+        "context": "Het kader van een betalende klant legt de lat hoger waartegen de review wordt gemeten.",
+        "constraints": "Een benoemde checklist, zodat niets op gevoel wordt beoordeeld.",
+        "output": "Een geprioriteerde lijst die je kunt afwerken, geen herschrijving.",
+        "iteration": "Werk van boven naar beneden, draai de review opnieuw, en stop als de resterende bevindingen echt cosmetisch zijn."
+      }
+    }
+  }
+}

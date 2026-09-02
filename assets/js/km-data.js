@@ -306,10 +306,11 @@ window.KMDB = (function () {
         .sort(function (a, b) { return a.position - b.position; })
         .map(function (q) {
           return {
-            id: q.id, question: q.question, type: q.type, points: q.points,
+            id: q.id, question: q.question, question_nl: q.question_nl,
+            type: q.type, points: q.points,
             options: where(c.answers, function (a) { return a.question_id === q.id; })
               .sort(function (a, b) { return a.position - b.position; })
-              .map(function (a) { return { id: a.id, answer: a.answer }; })
+              .map(function (a) { return { id: a.id, answer: a.answer, answer_nl: a.answer_nl }; })
           };
         });
       return { quiz: clone(quiz), questions: qs };
@@ -332,7 +333,8 @@ window.KMDB = (function () {
                  correct.every(function (x, i) { return x === chosen[i]; });
         if (ok) score += q.points;
         detail.push({ question_id: q.id, correct: ok, chosen: chosen,
-                      answer: correct, explanation: q.explanation });
+                      answer: correct, explanation: q.explanation,
+                      explanation_nl: q.explanation_nl });
       });
 
       var pct = total ? Math.round(100 * score / total) : 0;
@@ -732,20 +734,21 @@ window.KMDB = (function () {
       fail(qz.error);
       if (!qz.data) return null;
       var qs = await sb.from('quiz_questions')
-        .select('id, question, type, points, position').eq('quiz_id', qz.data.id).order('position');
+        .select('id, question, question_nl, type, points, position')
+        .eq('quiz_id', qz.data.id).order('position');
       fail(qs.error);
       var ids = qs.data.map(function (q) { return q.id; });
       /* is_correct is not granted to students at the column level, so it is
          not merely omitted here — it cannot be selected. */
       var as = await sb.from('quiz_answers')
-        .select('id, question_id, answer, position').in('question_id', ids).order('position');
+        .select('id, question_id, answer, answer_nl, position').in('question_id', ids).order('position');
       fail(as.error);
       return {
         quiz: qz.data,
         questions: qs.data.map(function (q) {
           return Object.assign({}, q, {
             options: as.data.filter(function (a) { return a.question_id === q.id; })
-              .map(function (a) { return { id: a.id, answer: a.answer }; })
+              .map(function (a) { return { id: a.id, answer: a.answer, answer_nl: a.answer_nl }; })
           });
         })
       };
@@ -882,6 +885,68 @@ window.KMDB = (function () {
     }
   };
 
+  /* ========================================================== localization */
+  /* Course content is stored twice: the English column and, beside it, the
+     Dutch one. The reader's language decides which is handed to the interface.
+     An empty translation falls back to English — a gap is worse than a
+     sentence in the wrong language. The admin editors deliberately bypass this
+     and always see the English record, so a translation can never be saved
+     over the source.                                                         */
+
+  var NL_FIELDS = {
+    title: 'title_nl', description: 'description_nl', content: 'content_nl',
+    brief: 'brief_nl', purpose: 'purpose_nl', body: 'body_nl',
+    explanation: 'explanation_nl', subtitle: 'subtitle_nl',
+    question: 'question_nl', answer: 'answer_nl'
+  };
+
+  function lang() {
+    try {
+      if (window.KM && KM.currentLang) return KM.currentLang();
+      return localStorage.getItem('km-lang') || 'en';
+    } catch (e) { return 'en'; }
+  }
+
+  function filled(v) {
+    if (v == null) return false;
+    if (typeof v === 'string') return v.trim() !== '';
+    if (Array.isArray(v)) return v.length > 0;
+    if (typeof v === 'object') return Object.keys(v).length > 0;
+    return true;
+  }
+
+  function localizeRow(row) {
+    if (!row || typeof row !== 'object') return row;
+    var out = {}, k;
+    for (k in row) if (Object.prototype.hasOwnProperty.call(row, k)) out[k] = row[k];
+    for (k in NL_FIELDS) {
+      if (Object.prototype.hasOwnProperty.call(out, NL_FIELDS[k]) && filled(out[NL_FIELDS[k]])) {
+        out[k] = out[NL_FIELDS[k]];
+      }
+    }
+    return out;
+  }
+
+  function localize(v) {
+    if (lang() !== 'nl') return v;
+    if (Array.isArray(v)) return v.map(localizeRow);
+    return localizeRow(v);
+  }
+
+  function localizeContent(c) {
+    if (!c || lang() !== 'nl') return c;
+    return {
+      course: localize(c.course),
+      levels: localize(c.levels || []),
+      lessons: localize(c.lessons || []),
+      projects: localize(c.projects || []),
+      prompts: localize(c.prompts || []),
+      quizzes: localize(c.quizzes || []),
+      questions: localize(c.questions || []),
+      answers: localize(c.answers || [])
+    };
+  }
+
   /* ============================================================ public API */
 
   var A = LIVE ? live : preview;
@@ -913,7 +978,7 @@ window.KMDB = (function () {
     touch: function () { return A.touch(); },
 
     /* content + progress */
-    content: function () { return A.content(); },
+    content: function () { return A.content().then(localizeContent); },
     progressRows: function () { return A.progressRows(); },
     setLessonProgress: function (id, p) { return A.setLessonProgress(id, p); },
     getNote: function (id) { return A.getNote(id); },
@@ -922,9 +987,49 @@ window.KMDB = (function () {
     toggleBookmark: function (id) { return A.toggleBookmark(id); },
 
     /* quizzes */
-    quizWithQuestions: function (slug) { return A.quizWithQuestions(slug); },
-    submitQuiz: function (id, a) { return A.submitQuiz(id, a); },
-    attempts: function () { return A.attempts(); },
+    quizWithQuestions: function (slug) {
+      return A.quizWithQuestions(slug).then(function (r) {
+        if (!r || lang() !== 'nl') return r;
+        return {
+          quiz: localize(r.quiz),
+          questions: (r.questions || []).map(function (q) {
+            var out = localizeRow(q);
+            out.options = (q.options || []).map(localizeRow);
+            return out;
+          })
+        };
+      });
+    },
+    submitQuiz: function (id, a) {
+      return A.submitQuiz(id, a).then(function (r) {
+        if (!r || lang() !== 'nl') return r;
+        var out = {}, k;
+        for (k in r) if (Object.prototype.hasOwnProperty.call(r, k)) out[k] = r[k];
+        out.detail = (r.detail || []).map(function (d) {
+          var e = {}, kk;
+          for (kk in d) if (Object.prototype.hasOwnProperty.call(d, kk)) e[kk] = d[kk];
+          if (filled(e.explanation_nl)) e.explanation = e.explanation_nl;
+          return e;
+        });
+        return out;
+      });
+    },
+    attempts: function () {
+      return A.attempts().then(function (rows) {
+        if (lang() !== 'nl') return rows;
+        return (rows || []).map(function (r) {
+          var out = {}, k;
+          for (k in r) if (Object.prototype.hasOwnProperty.call(r, k)) out[k] = r[k];
+          out.detail = (r.detail || []).map(function (d) {
+            var e = {}, kk;
+            for (kk in d) if (Object.prototype.hasOwnProperty.call(d, kk)) e[kk] = d[kk];
+            if (filled(e.explanation_nl)) e.explanation = e.explanation_nl;
+            return e;
+          });
+          return out;
+        });
+      });
+    },
 
     /* projects + certificate */
     projectProgress: function () { return A.projectProgress(); },

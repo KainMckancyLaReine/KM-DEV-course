@@ -601,6 +601,11 @@
   border-top:1px solid var(--ink-line);padding-top:24px;
 }
 .statement__foot p{max-width:44ch;font-size:clamp(15px,1.4vw,19px);color:var(--on-ink-dim)}
+.statement__foot > p:only-child{grid-column:2}
+@media (max-width:700px){
+  .statement__foot{grid-template-columns:1fr;gap:12px}
+  .statement__foot > p:only-child{grid-column:auto}
+}
 
 /* typographic morph (19) */
 .morph{

@@ -554,8 +554,8 @@
   .stickybuy{ display:flex }
   .shots__tabs{ flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch }
   .shots__tab{ flex:0 0 auto }
-  .journey__pin{ position:static;min-height:0 }
-  .journey__body{ min-height:220px }
+  .journey__pin{ min-height:100svh;padding-block:24px }
+  .journey__body{ min-height:200px }
 }
 
 @media (max-width:420px){

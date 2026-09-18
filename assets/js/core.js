@@ -67,19 +67,38 @@ window.KM = window.KM || {};
 
   /* ====================================================== text splitting */
 
+  function splitInto(el, html) {
+    const lines = html.split(/<br\s*\/?>/i);
+    let i = 0;
+    el.innerHTML = lines.map((line) => {
+      const words = line.trim().split(/\s+/).filter(Boolean).map((w) => {
+        const d = (i++) * 65;
+        return '<span class="reveal-word" style="--wd:' + d + 'ms">' + w + '</span>';
+      }).join(' ');
+      return '<span class="reveal-line">' + words + '</span>';
+    }).join('');
+  }
+
+  /* A split heading can carry its Dutch text in data-nl-split ("line<br>line").
+     The English original is kept so the language toggle can switch back. */
   KM.split = function (root) {
     $$('[data-split]', root).forEach((el) => {
       if (el.dataset.splitDone) return;
       el.dataset.splitDone = '1';
-      const lines = el.innerHTML.split(/<br\s*\/?>/i);
-      let i = 0;
-      el.innerHTML = lines.map((line) => {
-        const words = line.trim().split(/\s+/).filter(Boolean).map((w) => {
-          const d = (i++) * 65;
-          return '<span class="reveal-word" style="--wd:' + d + 'ms">' + w + '</span>';
-        }).join(' ');
-        return '<span class="reveal-line">' + words + '</span>';
-      }).join('');
+      if (el.hasAttribute('data-nl-split')) el.dataset.enSplit = el.innerHTML;
+      const nl = el.dataset.nlSplit && KM.currentLang() === 'nl';
+      if (el.dataset.enSplit != null) el.dataset.splitLang = nl ? 'nl' : 'en';
+      splitInto(el, nl ? el.dataset.nlSplit : el.innerHTML);
+    });
+  };
+
+  KM.splitLang = function (lang) {
+    $$('[data-nl-split][data-split-done]').forEach((el) => {
+      const html = lang === 'nl' ? el.dataset.nlSplit : el.dataset.enSplit;
+      if (html != null && el.dataset.splitLang !== lang) {
+        el.dataset.splitLang = lang;
+        splitInto(el, html);
+      }
     });
   };
 
@@ -295,6 +314,7 @@ window.KM = window.KM || {};
       const v = el.getAttribute('data-' + lang + '-aria');
       if (v != null) el.setAttribute('aria-label', v);
     });
+    KM.splitLang(lang);
     $$('.lang__btn').forEach((b) => b.classList.toggle('is-active', b.dataset.lang === lang));
     document.dispatchEvent(new CustomEvent('km:lang', { detail: lang }));
   };
